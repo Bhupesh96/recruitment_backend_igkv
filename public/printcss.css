@@ -1,0 +1,127 @@
+@page {
+  padding: 0;
+  margin: 0.5cm;
+}
+
+h3 {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-size: 15px;
+  font-weight: bold !important;
+}
+
+.content-table>thead>tr>td,
+.content-table>thead>tr>th,
+.content-table>tbody>tr>td,
+.content-table>tfoot>tr>td {
+  border: unset !important;
+  background: unset !important;
+  text-align: left !important;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100% !important;
+}
+
+thead>tr>td,
+thead>tr>th,
+.table-footer>td {
+  font-size: 14px;
+  text-align: center !important;
+  font-weight: bold !important;
+  text-decoration: underline !important;
+  border: 1px solid #000;
+  color: #000 !important;
+  padding: 4px !important;
+}
+
+td {
+  padding: 4px !important;
+}
+
+table>tbody>tr>td {
+  border: 0.7px solid #000;
+  text-align: center !important;
+  font-size: 15px;
+}
+
+@media print {
+
+  /* Watermark style */
+  .watermark::before,
+  .watermark::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    color: rgba(0, 0, 0, 0.2);
+    z-index: 0;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .watermark::before {
+    content: '  Unified Farmer Portal';
+    font-size: 80px;
+    margin-top: -20px;
+  }
+
+  .watermark::after {
+    content: 'For Internal Use Only';
+    font-size: 40px;
+    margin-top: 80px;
+  }
+
+
+  .page-header,
+  .page-header-space {
+    height: 55px;
+  }
+
+  .page-footer,
+  .page-footer-space {
+    height: 75px;
+  }
+
+  .page-footer {
+    position: fixed;
+    bottom: 0;
+    width: calc(100% - 2.4cm);
+    left: 1.2cm;
+    right: 1.2cm;
+  }
+
+  .page-header {
+    position: fixed;
+    text-align: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-bottom: 1px solid #000;
+  }
+
+
+
+  .page {
+    page-break-after: always;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
+
+  .d-print-none {
+    display: none;
+  }
+}
+
+.text-start {
+  text-align: left !important;
+}
