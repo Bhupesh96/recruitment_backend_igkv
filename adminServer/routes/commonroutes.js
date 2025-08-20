@@ -11,6 +11,9 @@ var init = function (app) {
     app.post(prefix + '/master/post/:function_name', function (req, res, next) {
         securityService.commonFunctionToCall('master', req.params['function_name'], req, res, req.body, true);
     });
+     app.post(prefix + '/master/postFile/:function_name', fileUpload({ createParentPath: true, limits: { fileSize: 500 * 1024 }, abortOnLimit: true }), function (req, res, next) {
+        securityService.commonFunctionToCall('master', req.params['function_name'], req, res, req.body, true);
+    });
     app.get(prefix + '/list/get/:function_name', function (req, res, next) {
         securityService.commonFunctionToCall('list', req.params['function_name'], req, res, req.query, true);
     });

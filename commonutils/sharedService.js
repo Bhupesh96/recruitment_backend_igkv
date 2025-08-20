@@ -291,7 +291,7 @@ var shared = {
         if (!(params.table_name)) {
             return callback({ ...SECURITY_SERVICE.SECURITY_ERRORS.MANDATORY_FIELDS_ARE_MISSING, message: `table_name is required in validateAndInsertInTable function.` });
         }
-        const { table_name, database_name = dbkey.database } = params
+        const { table_name, database_name = dbkey.database ?? dbkey.dbkey.database } = params
         params.created_user_id = sessionDetails["emp_id"];
         params.created_ip_address = sessionDetails["ip_address"];
         shared.generateJoiValidatorFromTable({ table_name, database_name }, function (err, res) {
@@ -312,8 +312,8 @@ var shared = {
         if (!(params.table_name && params.data_arr)) {
             return callback({ ...SECURITY_SERVICE.SECURITY_ERRORS.MANDATORY_FIELDS_ARE_MISSING, message: `table_name is required in validateAndInsertArrInTable function.` });
         }
-        const { table_name, database_name = dbkey.database, data_arr } = params
-        if(data_arr.length == 0)return callback({ ...SECURITY_SERVICE.SECURITY_ERRORS.MANDATORY_FIELDS_ARE_MISSING, message: `data_arr is empty in validateAndInsertArrInTable function.` });
+        const { table_name, database_name = dbkey.database ??dbkey.dbkey.database, data_arr } = params
+        if (data_arr.length == 0) return callback({ ...SECURITY_SERVICE.SECURITY_ERRORS.MANDATORY_FIELDS_ARE_MISSING, message: `data_arr is empty in validateAndInsertArrInTable function.` });
         const insert_arr = data_arr.map(obj => ({
             ...obj,
             created_user_id: sessionDetails["emp_id"],
@@ -340,7 +340,7 @@ var shared = {
         if (!(params.table_name)) {
             return callback({ ...SECURITY_SERVICE.SECURITY_ERRORS.MANDATORY_FIELDS_ARE_MISSING, message: `table_name is required in validateAndInsertInTable function.` });
         }
-        const { table_name, database_name = dbkey.database } = params
+        const { table_name, database_name = dbkey.database ??dbkey.dbkey.database } = params
         params.updated_user_id = sessionDetails["emp_id"];
         params.updated_ip_address = sessionDetails["ip_address"];
         shared.generateJoiValidatorFromTable({ table_name, database_name, type: 'update' }, function (err, validator) {
@@ -466,9 +466,9 @@ function generateJoiValidator(queryResult) {
                 joiValidator = joi.any();  // Catch-all for any unhandled data types
         }
         // If there is a default value, add the `default()` option
-        if (columnDefault && columnDefault !== 'current_timestamp()') {
-            joiValidator = joiValidator.default(columnDefault);
-        }
+        // if (columnDefault && columnDefault !== 'current_timestamp()') {
+        //     joiValidator = joiValidator.default(columnDefault);
+        // }
         // If the column is not nullable, make it required
         if (!isNullable) {
             if (!columnDefault) {// If no default value is provided, make it required

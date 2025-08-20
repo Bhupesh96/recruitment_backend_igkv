@@ -7,24 +7,25 @@ var confs = {
     getWorkingDBDetails: function () {
         return JSON.parse(JSON.stringify(config.get('working_db')));
     },
-    getIgkvDBDetails: function () {
-        return JSON.parse(JSON.stringify(config.get('igkv_db')));
+    getigkv_academic: function () {
+        return JSON.parse(JSON.stringify(config.get('igkv_academic')));
     },
     getloginDBDetails: function () {
         return JSON.parse(JSON.stringify(config.get('working_db')));
     },
-    getDemoDBDetails: function () {
-        return JSON.parse(JSON.stringify(config.get('demo_db')));
+    getigkv_Recruitment: function () {
+        return JSON.parse(JSON.stringify(config.get('igkv_Recruitment')));
     },
-    getAcadmicDBDetails: function () {
-        return JSON.parse(JSON.stringify(config.get('acadmic_db')));
+    getigkv_establishment: function () {
+        return JSON.parse(JSON.stringify(config.get('igkv_establishment')));
     },
 
 }
 
 confs.map_dbkey_database = {
-    "3": confs.getAcadmicDBDetails(),
-    "2": confs.getDemoDBDetails(),
+    "4": confs.getigkv_Recruitment(),
+    "3": confs.getigkv_establishment(),
+    "2": confs.getigkv_academic(),
     "1": confs.getCommonDBDetails()
 }
 

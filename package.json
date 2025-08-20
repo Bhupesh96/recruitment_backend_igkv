@@ -6,7 +6,9 @@
   "scripts": {
     "common": "nodemon commonServer/bin/www",
     "admin": "nodemon adminServer/bin/www",
-    "demo": "nodemon demoServer/bin/www"
+    "demo": "nodemon demoServer/bin/www",
+    "academic": "nodemon academicServer/bin/www",
+    "recruitement": "nodemon recruitementServer/bin/www"
   },
   "author": "ayush",
   "license": "ISC",
@@ -16,7 +18,7 @@
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "config": "^3.3.9",
-    "connect-mssql-v2": "^5.1.0",
+    "connect-mssql-v2": "^6.0.0",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
     "date-format": "^4.0.14",
@@ -33,7 +35,7 @@
     "jsonwebtoken": "^9.0.1",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.20",
+    "nodemon": "^3.1.10",
     "pm2": "^6.0.6",
     "svg-captcha": "^1.4.0",
     "web-push": "^3.6.7",
