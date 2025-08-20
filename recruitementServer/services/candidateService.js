@@ -60,7 +60,8 @@ let candidateService = {
               }
 
               const parts = controlName.split("_");
-              if (parts.length < 4) {
+              if (parts.length < 5) {
+                // Expect file_${scoreFieldId}_${paramId}_${displayOrder}_${rowIndex}
                 console.warn(
                   `⚠️ Skipping invalid file control name: ${controlName}`
                 );
@@ -69,13 +70,14 @@ let candidateService = {
 
               const scoreFieldId = parseInt(parts[1]);
               const paramId = parseInt(parts[2]);
-              const index = parts[3];
+              const displayOrder = parseInt(parts[3]);
+              const rowIndex = parseInt(parts[4]);
 
               const fileNameFromRequest = file.name;
               const ext = path
                 .extname(fileNameFromRequest)
                 .replace(/\.pdf\.pdf$/, ".pdf");
-              const fileName = `${Date.now()}_scorecard_${scoreFieldId}_${paramId}_${index}${ext}`;
+              const fileName = `${Date.now()}_scorecard_${scoreFieldId}_${paramId}_${displayOrder}_${rowIndex}${ext}`;
 
               const uploadOptions = {
                 file_name: fileName,
@@ -117,14 +119,25 @@ let candidateService = {
                       );
                     }
 
-                    const param = paramList.find(
-                      (p) =>
+                    // Find the parameter for this scoreFieldId, paramId, and rowIndex
+                    const paramIndex = paramList.findIndex(
+                      (p, idx) =>
                         p.m_rec_score_field_id === scoreFieldId &&
                         p.m_rec_score_field_parameter_id === paramId &&
-                        p.unique_parameter_display_no === index
+                        p.parameter_display_no === displayOrder &&
+                        // Match the parameter for the specific row by counting occurrences
+                        paramList
+                          .slice(0, idx + 1)
+                          .filter(
+                            (p2) =>
+                              p2.m_rec_score_field_id === scoreFieldId &&
+                              p2.m_rec_score_field_parameter_id === paramId
+                          ).length ===
+                          rowIndex + 1
                     );
 
-                    if (param) {
+                    if (paramIndex !== -1) {
+                      const param = paramList[paramIndex];
                       param.parameter_value = `recruitment/${params.registration_no}/${fileName}`;
                       console.log(
                         `✅ Uploaded and mapped file ${controlName} to ${correctFilePath}, parameter_value: ${param.parameter_value}`
@@ -153,7 +166,7 @@ let candidateService = {
                       }
                     } else {
                       console.warn(
-                        `⚠️ File ${controlName} has no matching parameter`
+                        `⚠️ File ${controlName} has no matching parameter for scoreFieldId=${scoreFieldId}, paramId=${paramId}, rowIndex=${rowIndex}`
                       );
                     }
                     return uploadCb();
@@ -387,9 +400,10 @@ let candidateService = {
     async.series(
       [
         // STEP 1: Upload files to recruitment/registration_no/
+        // STEP 1: Upload files to recruitment/registration_no/
         function (cback) {
           if (!request.files || Object.keys(request.files).length === 0) {
-            console.log("No files to upload");
+            console.log("No files to upload.");
             return cback();
           }
 
@@ -404,7 +418,8 @@ let candidateService = {
               }
 
               const parts = controlName.split("_");
-              if (parts.length < 4) {
+              if (parts.length < 5) {
+                // Expect file_${scoreFieldId}_${paramId}_${displayOrder}_${rowIndex}
                 console.warn(
                   `⚠️ Skipping invalid file control name: ${controlName}`
                 );
@@ -413,13 +428,14 @@ let candidateService = {
 
               const scoreFieldId = parseInt(parts[1]);
               const paramId = parseInt(parts[2]);
-              const index = parts[3];
+              const displayOrder = parseInt(parts[3]);
+              const rowIndex = parseInt(parts[4]);
 
               const fileNameFromRequest = file.name;
               const ext = path
                 .extname(fileNameFromRequest)
                 .replace(/\.pdf\.pdf$/, ".pdf");
-              const fileName = `${Date.now()}_scorecard_${scoreFieldId}_${paramId}_${index}${ext}`;
+              const fileName = `${Date.now()}_scorecard_${scoreFieldId}_${paramId}_${displayOrder}_${rowIndex}${ext}`;
 
               const uploadOptions = {
                 file_name: fileName,
@@ -461,14 +477,25 @@ let candidateService = {
                       );
                     }
 
-                    const param = paramList.find(
-                      (p) =>
+                    // Find the parameter for this scoreFieldId, paramId, and rowIndex
+                    const paramIndex = paramList.findIndex(
+                      (p, idx) =>
                         p.m_rec_score_field_id === scoreFieldId &&
                         p.m_rec_score_field_parameter_id === paramId &&
-                        p.parameter_display_no === index
+                        p.parameter_display_no === displayOrder &&
+                        // Match the parameter for the specific row by counting occurrences
+                        paramList
+                          .slice(0, idx + 1)
+                          .filter(
+                            (p2) =>
+                              p2.m_rec_score_field_id === scoreFieldId &&
+                              p2.m_rec_score_field_parameter_id === paramId
+                          ).length ===
+                          rowIndex + 1
                     );
 
-                    if (param) {
+                    if (paramIndex !== -1) {
+                      const param = paramList[paramIndex];
                       param.parameter_value = `recruitment/${params.registration_no}/${fileName}`;
                       console.log(
                         `✅ Uploaded and mapped file ${controlName} to ${correctFilePath}, parameter_value: ${param.parameter_value}`
@@ -497,7 +524,7 @@ let candidateService = {
                       }
                     } else {
                       console.warn(
-                        `⚠️ File ${controlName} has no matching parameter`
+                        `⚠️ File ${controlName} has no matching parameter for scoreFieldId=${scoreFieldId}, paramId=${paramId}, rowIndex=${rowIndex}`
                       );
                     }
                     return uploadCb();
