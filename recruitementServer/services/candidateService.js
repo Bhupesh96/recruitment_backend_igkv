@@ -17,6 +17,27 @@ let candidateService = {
     let tranObj, tranCallback;
 
     try {
+      console.log(
+        "📥 Incoming Request Body:",
+        JSON.stringify(request.body, null, 2)
+      );
+      if (request.files) {
+        console.log(
+          "📂 Incoming Files:",
+          JSON.stringify(
+            Object.keys(request.files).map((k) => ({
+              key: k,
+              name: request.files[k]?.name,
+              size: request.files[k]?.size,
+              mimetype: request.files[k]?.mimetype,
+            })),
+            null,
+            2
+          )
+        );
+      } else {
+        console.log("📂 No files found in request.");
+      }
       params.registration_no = request.body.registration_no;
       params.scoreFieldDetailList = JSON.parse(
         request.body.scoreFieldDetailList || "[]"
@@ -43,122 +64,143 @@ let candidateService = {
     async.series(
       [
         // STEP 1: Upload files to recruitment/registration_no/
-        function (cback) {
-          if (!request.files || Object.keys(request.files).length === 0) {
-            console.log("No files to upload.");
-            return cback();
-          }
-
-async.eachOf(
-  request.files,
-  function (file, controlName, uploadCb) {
-    if (!file || !file.name) {
-      console.warn(`⚠️ Skipping file upload for '${controlName}' due to missing or invalid file object.`);
-      return uploadCb();
-    }
-
-    const parts = controlName.split("_");
-    if (parts.length < 5) {
-      console.warn(`⚠️ Skipping invalid file control name: ${controlName}`);
-      return uploadCb();
-    }
-
-    const scoreFieldId = parseInt(parts[1]);
-    const paramId = parseInt(parts[2]);
-    const displayOrder = parseInt(parts[3]);
-    const rowIndex = parseInt(parts[4]);
-
-    const fileNameFromRequest = file.name;
-    
-    // Sanitize the filename
-    const sanitizedName = fileNameFromRequest
-      .replace(/[^a-zA-Z0-9._-]/g, '_')
-      .replace(/_+/g, '_')
-      .replace(/^_+|_+$/g, '');
-    
-  
-    const fileName = `${params.registration_no}_${scoreFieldId}_${paramId}_${rowIndex}_${sanitizedName}`;
-
-    const uploadOptions = {
-      file_name: fileName,
-      file_buffer: file.data,
-      control_name: controlName,
-      folder_name: `recruitment/${params.registration_no}`,
-    };
-
-    DOC_UPLOAD_SERVICE.docUploadWithFolder(
-      dbkey,
-      request,
-      uploadOptions,
-      sessionDetails,
-      function (err, res) {
-        if (err) {
-          console.error(`❌ Upload error for ${controlName}:`, err);
-          return uploadCb(err);
-        }
-
-        if (res && res.file_path) {
-          const correctFilePath = res.file_path.replace(/\.pdf\.pdf$/, ".pdf");
-          try {
-            if (res.file_path !== correctFilePath) {
-              fs.renameSync(res.file_path, correctFilePath);
-              console.log(`✅ Renamed file from ${res.file_path} to ${correctFilePath}`);
-            }
-          } catch (renameErr) {
-            console.error(`❌ Failed to rename file ${res.file_path}:`, renameErr);
-            return uploadCb(`Failed to rename file: ${renameErr.message}`);
-          }
-
-          // Find the parameter for this file
-         // Find the parameter with matching IDs AND the correct row_index
-const paramIndex = paramList.findIndex(
-  (p) =>
-    p.m_rec_score_field_id === scoreFieldId &&
-    p.m_rec_score_field_parameter_new_id === paramId &&
-    p.parameter_display_no === displayOrder &&
-    p.row_index === rowIndex // Use the row_index from frontend
-);
-
-// If not found, try without row_index (for backward compatibility)
-if (paramIndex === -1) {
-  const paramIndex = paramList.findIndex(
-    (p) =>
-      p.m_rec_score_field_id === scoreFieldId &&
-      p.m_rec_score_field_parameter_new_id === paramId &&
-      p.parameter_display_no === displayOrder
-  );
-}
-
-          if (paramIndex !== -1) {
-            const param = paramList[paramIndex];
-            param.parameter_value = `recruitment/${params.registration_no}/${fileName}`;
-            console.log(`✅ Uploaded and mapped file ${controlName} to ${correctFilePath}, parameter_value: ${param.parameter_value}`);
-
-            const destPath = path.join(__dirname, "recruitment", params.registration_no, fileName);
-            try {
-              fs.mkdirSync(path.dirname(destPath), { recursive: true });
-              fs.copyFileSync(correctFilePath, destPath);
-              console.log(`✅ Copied file to ${destPath}`);
-            } catch (copyErr) {
-              console.error(`❌ Failed to copy file to ${destPath}:`, copyErr);
-              return uploadCb(`Failed to copy file: ${copyErr.message}`);
-            }
-          } else {
-            console.warn(`⚠️ File ${controlName} has no matching parameter for scoreFieldId=${scoreFieldId}, paramId=${paramId}, rowIndex=${rowIndex}`);
-          }
-          return uploadCb();
-        } else {
-          console.error(`❌ Upload failed for ${controlName}: No file_path returned`);
-          return uploadCb(`File upload failed for ${controlName}`);
-        }
-      }
-    );
-  },
-  function (err) {
-    return cback(err);
+      
+function (cback) {
+  if (!request.files || Object.keys(request.files).length === 0) {
+    console.log("No files to upload.");
+    return cback();
   }
-);
-        },
+
+  async.eachOf(
+    request.files,
+    function (file, controlName, uploadCb) {
+      if (!file || !file.name) {
+        console.warn(
+          `⚠️ Skipping file upload for '${controlName}' due to missing or invalid file object.`
+        );
+        return uploadCb();
+      }
+
+      const parts = controlName.split("_");
+      if (parts.length < 6) { // Updated to expect 6 parts: file_subHeadingId_scoreFieldId_paramId_displayOrder_rowIndex
+        console.warn(
+          `⚠️ Skipping invalid file control name: ${controlName}`
+        );
+        return uploadCb();
+      }
+
+      const subHeadingId = parseInt(parts[1]); // New: Extract subHeadingId
+      const scoreFieldId = parseInt(parts[2]); // Shifted from parts[1]
+      const paramId = parseInt(parts[3]); // Shifted from parts[2]
+      const rowIndex = parseInt(parts[5]); // Shifted from parts[4]
+
+      const fileNameFromRequest = file.name;
+
+      // Sanitize the filename
+      const sanitizedName = fileNameFromRequest
+        .replace(/[^a-zA-Z0-9._-]/g, "_")
+        .replace(/_+/g, "_")
+        .replace(/^_+|_+$/g, "");
+
+      const fileName = `${params.registration_no}_${subHeadingId}_${scoreFieldId}_${paramId}_${rowIndex}_${sanitizedName}`; // Updated to include subHeadingId
+
+      const uploadOptions = {
+        file_name: fileName,
+        file_buffer: file.data,
+        control_name: controlName,
+        folder_name: `recruitment/${params.registration_no}`,
+      };
+
+      DOC_UPLOAD_SERVICE.docUploadWithFolder(
+        dbkey,
+        request,
+        uploadOptions,
+        sessionDetails,
+        function (err, res) {
+          if (err) {
+            console.error(`❌ Upload error for ${controlName}:`, err);
+            return uploadCb(err);
+          }
+
+          if (res && res.file_path) {
+            const correctFilePath = res.file_path.replace(
+              /\.pdf\.pdf$/,
+              ".pdf"
+            );
+            try {
+              if (res.file_path !== correctFilePath) {
+                fs.renameSync(res.file_path, correctFilePath);
+                console.log(
+                  `✅ Renamed file from ${res.file_path} to ${correctFilePath}`
+                );
+              }
+            } catch (renameErr) {
+              console.error(
+                `❌ Failed to rename file ${res.file_path}:`,
+                renameErr
+              );
+              return uploadCb(
+                `Failed to rename file: ${renameErr.message}`
+              );
+            }
+
+            // Find the parameter for this file
+            const paramIndex = paramList.findIndex(
+              (p) =>
+                p.score_field_parent_id === subHeadingId && // New: Match subHeadingId
+                p.m_rec_score_field_id === scoreFieldId &&
+                p.m_rec_score_field_parameter_new_id === paramId &&
+                p.parameter_row_index === rowIndex
+            );
+
+            if (paramIndex !== -1) {
+              const param = paramList[paramIndex];
+              param.parameter_value = `recruitment/${params.registration_no}/${fileName}`;
+              console.log(
+                `✅ Uploaded and mapped file ${controlName} to ${correctFilePath}, parameter_value: ${param.parameter_value}`
+              );
+
+              const destPath = path.join(
+                __dirname,
+                "recruitment",
+                params.registration_no,
+                fileName
+              );
+              try {
+                fs.mkdirSync(path.dirname(destPath), {
+                  recursive: true,
+                });
+                fs.copyFileSync(correctFilePath, destPath);
+                console.log(`✅ Copied file to ${destPath}`);
+              } catch (copyErr) {
+                console.error(
+                  `❌ Failed to copy file to ${destPath}:`,
+                  copyErr
+                );
+                return uploadCb(
+                  `Failed to copy file: ${copyErr.message}`
+                );
+              }
+            } else {
+              console.warn(
+                `⚠️ File ${controlName} has no matching parameter for subHeadingId=${subHeadingId}, scoreFieldId=${scoreFieldId}, paramId=${paramId}, rowIndex=${rowIndex}`
+              );
+            }
+            return uploadCb();
+          } else {
+            console.error(
+              `❌ Upload failed for ${controlName}: No file_path returned`
+            );
+            return uploadCb(`File upload failed for ${controlName}`);
+          }
+        }
+      );
+    },
+    function (err) {
+      return cback(err);
+    }
+  );
+},
 
         // STEP 2: Create transaction
         function (cback) {
@@ -274,22 +316,33 @@ if (paramIndex === -1) {
         },
 
         // STEP 4: Insert into a_rec_app_score_field_detail (children)
-        function (cback) {
-          if (!detailList.length) return cback();
-          console.log(
-            `➡️ Inserting ${detailList.length} child detail records.`
-          );
-          SHARED_SERVICE.validateAndInsertArrInTable(
-            dbkey,
-            request,
-            {
-              table_name: "a_rec_app_score_field_detail",
-              data_arr: detailList,
-            },
-            sessionDetails,
-            cback
-          );
-        },
+       function (cback) {
+  // ✅ FIX: Filter the list to only include records that are genuinely new (no existing ID)
+  const newDetailsToInsert = detailList.filter(
+    (d) => !d.a_rec_app_score_field_detail_id
+  );
+
+  // If the list is empty after filtering, it means we were only provided context. Skip the insert.
+  if (!newDetailsToInsert.length) {
+    console.log("No new child detail records to insert (only context was provided).");
+    return cback();
+  }
+
+  console.log(
+    `➡️ Inserting ${newDetailsToInsert.length} new child detail records.`
+  );
+  
+  SHARED_SERVICE.validateAndInsertArrInTable(
+    dbkey,
+    request,
+    {
+      table_name: "a_rec_app_score_field_detail",
+      data_arr: newDetailsToInsert, // Use the filtered list
+    },
+    sessionDetails,
+    cback
+  );
+},
 
         // STEP 5: Insert into a_rec_app_score_field_parameter_detail
         function (cback) {
@@ -339,217 +392,240 @@ if (paramIndex === -1) {
       }
     );
   },
-updateCandidateScoreCard: function (
-  dbkey,
-  request,
-  params,
-  sessionDetails,
-  callback
-) {
-  let tranObj, tranCallback;
+  updateCandidateScoreCard: function (
+    dbkey,
+    request,
+    params,
+    sessionDetails,
+    callback
+  ) {
+    let tranObj, tranCallback;
 
-  try {
-    params.registration_no = request.body.registration_no;
-    params.scoreFieldDetailList = JSON.parse(
-      request.body.scoreFieldDetailList || "[]"
-    );
-    params.scoreFieldParameterList = JSON.parse(
-      request.body.scoreFieldParameterList || "[]"
-    );
-    params.parentScore = request.body.parentScore
-      ? JSON.parse(request.body.parentScore)
-      : null;
-  } catch (e) {
-    return callback({
-      status: "error",
-      message:
-        "Invalid JSON in scoreFieldDetailList, scoreFieldParameterList, or parentScore",
-      details: e.message,
-    });
+    try {
+      params.registration_no = request.body.registration_no;
+      params.scoreFieldDetailList = JSON.parse(
+        request.body.scoreFieldDetailList || "[]"
+      );
+      params.scoreFieldParameterList = JSON.parse(
+        request.body.scoreFieldParameterList || "[]"
+      );
+      params.parentScore = request.body.parentScore
+        ? JSON.parse(request.body.parentScore)
+        : null;
+      console.log("✅ Parsed Params:", JSON.stringify(params, null, 2));
+    } catch (e) {
+      console.error("❌ JSON Parse Error:", e.message);
+      return callback({
+        status: "error",
+        message:
+          "Invalid JSON in scoreFieldDetailList, scoreFieldParameterList, or parentScore",
+        details: e.message,
+      });
+    }
+
+    const detailList = params.scoreFieldDetailList;
+    const paramList = params.scoreFieldParameterList;
+    const parentRecord = params.parentScore;
+
+    async.series(
+      [
+        // STEP 1: Upload files to recruitment/registration_no/
+        
+function (cback) {
+  if (!request.files || Object.keys(request.files).length === 0) {
+    console.log("No files to upload.");
+    return cback();
   }
 
-  const detailList = params.scoreFieldDetailList;
-  const paramList = params.scoreFieldParameterList;
-  const parentRecord = params.parentScore;
-
-  async.series(
-    [
-      // STEP 1: Upload files to recruitment/registration_no/
-      function (cback) {
-        if (!request.files || Object.keys(request.files).length === 0) {
-          console.log("No files to upload.");
-          return cback();
-        }
-
-     async.eachOf(
-  request.files,
-  function (file, controlName, uploadCb) {
-    if (!file || !file.name) {
-      console.warn(`⚠️ Skipping file upload for '${controlName}' due to missing or invalid file object.`);
-      return uploadCb();
-    }
-
-    const parts = controlName.split("_");
-    if (parts.length < 5) {
-      console.warn(`⚠️ Skipping invalid file control name: ${controlName}`);
-      return uploadCb();
-    }
-
-    const scoreFieldId = parseInt(parts[1]);
-    const paramId = parseInt(parts[2]);
-    const displayOrder = parseInt(parts[3]);
-    const rowIndex = parseInt(parts[4]);
-
-    const fileNameFromRequest = file.name;
-    
-    // Sanitize the filename
-    const sanitizedName = fileNameFromRequest
-      .replace(/[^a-zA-Z0-9._-]/g, '_')
-      .replace(/_+/g, '_')
-      .replace(/^_+|_+$/g, '');
-    
-  
-    const fileName = `${params.registration_no}_${scoreFieldId}_${paramId}_${rowIndex}_${sanitizedName}`;
-
-    const uploadOptions = {
-      file_name: fileName,
-      file_buffer: file.data,
-      control_name: controlName,
-      folder_name: `recruitment/${params.registration_no}`,
-    };
-
-    DOC_UPLOAD_SERVICE.docUploadWithFolder(
-      dbkey,
-      request,
-      uploadOptions,
-      sessionDetails,
-      function (err, res) {
-        if (err) {
-          console.error(`❌ Upload error for ${controlName}:`, err);
-          return uploadCb(err);
-        }
-
-        if (res && res.file_path) {
-          const correctFilePath = res.file_path.replace(/\.pdf\.pdf$/, ".pdf");
-          try {
-            if (res.file_path !== correctFilePath) {
-              fs.renameSync(res.file_path, correctFilePath);
-              console.log(`✅ Renamed file from ${res.file_path} to ${correctFilePath}`);
-            }
-          } catch (renameErr) {
-            console.error(`❌ Failed to rename file ${res.file_path}:`, renameErr);
-            return uploadCb(`Failed to rename file: ${renameErr.message}`);
-          }
-
-          // Find the parameter for this file
-       // Find the parameter with matching IDs AND the correct row_index
-const paramIndex = paramList.findIndex(
-  (p) =>
-    p.m_rec_score_field_id === scoreFieldId &&
-    p.m_rec_score_field_parameter_new_id === paramId &&
-    p.parameter_display_no === displayOrder &&
-    p.row_index === rowIndex // Use the row_index from frontend
-);
-
-// If not found, try without row_index (for backward compatibility)
-if (paramIndex === -1) {
-  const paramIndex = paramList.findIndex(
-    (p) =>
-      p.m_rec_score_field_id === scoreFieldId &&
-      p.m_rec_score_field_parameter_new_id === paramId &&
-      p.parameter_display_no === displayOrder
-  );
-}
-          if (paramIndex !== -1) {
-            const param = paramList[paramIndex];
-            param.parameter_value = `recruitment/${params.registration_no}/${fileName}`;
-            console.log(`✅ Uploaded and mapped file ${controlName} to ${correctFilePath}, parameter_value: ${param.parameter_value}`);
-
-            const destPath = path.join(__dirname, "recruitment", params.registration_no, fileName);
-            try {
-              fs.mkdirSync(path.dirname(destPath), { recursive: true });
-              fs.copyFileSync(correctFilePath, destPath);
-              console.log(`✅ Copied file to ${destPath}`);
-            } catch (copyErr) {
-              console.error(`❌ Failed to copy file to ${destPath}:`, copyErr);
-              return uploadCb(`Failed to copy file: ${copyErr.message}`);
-            }
-          } else {
-            console.warn(`⚠️ File ${controlName} has no matching parameter for scoreFieldId=${scoreFieldId}, paramId=${paramId}, rowIndex=${rowIndex}`);
-          }
-          return uploadCb();
-        } else {
-          console.error(`❌ Upload failed for ${controlName}: No file_path returned`);
-          return uploadCb(`File upload failed for ${controlName}`);
-        }
+  async.eachOf(
+    request.files,
+    function (file, controlName, uploadCb) {
+      if (!file || !file.name) {
+        console.warn(
+          `⚠️ Skipping file upload for '${controlName}' due to missing or invalid file object.`
+        );
+        return uploadCb();
       }
-    );
-  },
-  function (err) {
-    return cback(err);
-  }
-);
-      },
 
-      // STEP 2: Create transaction
-      function (cback) {
-        DB_SERVICE.createTransaction(
-          dbkey,
-          function (err, tranobj, trancallback) {
-            if (err) return cback(err);
-            tranObj = tranobj;
-            tranCallback = trancallback;
-            dbkey = { dbkey: dbkey, connectionobj: tranObj };
+      const parts = controlName.split("_");
+      if (parts.length < 6) { // Updated to expect 6 parts: file_subHeadingId_scoreFieldId_paramId_displayOrder_rowIndex
+        console.warn(
+          `⚠️ Skipping invalid file control name: ${controlName}`
+        );
+        return uploadCb();
+      }
+
+      const subHeadingId = parseInt(parts[1]); // New: Extract subHeadingId
+      const scoreFieldId = parseInt(parts[2]); // Shifted from parts[1]
+      const paramId = parseInt(parts[3]); // Shifted from parts[2]
+      const rowIndex = parseInt(parts[5]); // Shifted from parts[4]
+
+      const fileNameFromRequest = file.name;
+
+      // Sanitize the filename
+      const sanitizedName = fileNameFromRequest
+        .replace(/[^a-zA-Z0-9._-]/g, "_")
+        .replace(/_+/g, "_")
+        .replace(/^_+|_+$/g, "");
+
+      const fileName = `${params.registration_no}_${subHeadingId}_${scoreFieldId}_${paramId}_${rowIndex}_${sanitizedName}`; // Updated to include subHeadingId
+
+      const uploadOptions = {
+        file_name: fileName,
+        file_buffer: file.data,
+        control_name: controlName,
+        folder_name: `recruitment/${params.registration_no}`,
+      };
+
+      DOC_UPLOAD_SERVICE.docUploadWithFolder(
+        dbkey,
+        request,
+        uploadOptions,
+        sessionDetails,
+        function (err, res) {
+          if (err) {
+            console.error(`❌ Upload error for ${controlName}:`, err);
+            return uploadCb(err);
+          }
+
+          if (res && res.file_path) {
+            const correctFilePath = res.file_path.replace(
+              /\.pdf\.pdf$/,
+              ".pdf"
+            );
+            try {
+              if (res.file_path !== correctFilePath) {
+                fs.renameSync(res.file_path, correctFilePath);
+                console.log(
+                  `✅ Renamed file from ${res.file_path} to ${correctFilePath}`
+                );
+              }
+            } catch (renameErr) {
+              console.error(
+                `❌ Failed to rename file ${res.file_path}:`,
+                renameErr
+              );
+              return uploadCb(
+                `Failed to rename file: ${renameErr.message}`
+              );
+            }
+
+            // Find the parameter for this file
+            const paramIndex = paramList.findIndex(
+              (p) =>
+                p.score_field_parent_id === subHeadingId && // New: Match subHeadingId
+                p.m_rec_score_field_id === scoreFieldId &&
+                p.m_rec_score_field_parameter_new_id === paramId &&
+                p.parameter_row_index === rowIndex
+            );
+
+            if (paramIndex !== -1) {
+              const param = paramList[paramIndex];
+              param.parameter_value = `recruitment/${params.registration_no}/${fileName}`;
+              console.log(
+                `✅ Uploaded and mapped file ${controlName} to ${correctFilePath}, parameter_value: ${param.parameter_value}`
+              );
+
+              const destPath = path.join(
+                __dirname,
+                "recruitment",
+                params.registration_no,
+                fileName
+              );
+              try {
+                fs.mkdirSync(path.dirname(destPath), {
+                  recursive: true,
+                });
+                fs.copyFileSync(correctFilePath, destPath);
+                console.log(`✅ Copied file to ${destPath}`);
+              } catch (copyErr) {
+                console.error(
+                  `❌ Failed to copy file to ${destPath}:`,
+                  copyErr
+                );
+                return uploadCb(
+                  `Failed to copy file: ${copyErr.message}`
+                );
+              }
+            } else {
+              console.warn(
+                `⚠️ File ${controlName} has no matching parameter for subHeadingId=${subHeadingId}, scoreFieldId=${scoreFieldId}, paramId=${paramId}, rowIndex=${rowIndex}`
+              );
+            }
+            return uploadCb();
+          } else {
+            console.error(
+              `❌ Upload failed for ${controlName}: No file_path returned`
+            );
+            return uploadCb(`File upload failed for ${controlName}`);
+          }
+        }
+      );
+    },
+    function (err) {
+      return cback(err);
+    }
+  );
+},
+        // STEP 2: Create transaction
+        function (cback) {
+          DB_SERVICE.createTransaction(
+            dbkey,
+            function (err, tranobj, trancallback) {
+              if (err) return cback(err);
+              tranObj = tranobj;
+              tranCallback = trancallback;
+              dbkey = { dbkey: dbkey, connectionobj: tranObj };
+              return cback();
+            }
+          );
+        },
+
+        // STEP 3: Fetch and Update Parent Record
+        function (cback) {
+          if (!parentRecord) {
+            console.log("No parent record to update.");
             return cback();
           }
-        );
-      },
 
-      // STEP 3: Fetch and Update Parent Record
-      function (cback) {
-        if (!parentRecord) {
-          console.log("No parent record to update.");
-          return cback();
-        }
+          // Check if parentRecord already has a_rec_app_score_field_detail_id
+          if (parentRecord.a_rec_app_score_field_detail_id) {
+            console.log(
+              `➡️ Updating existing parent record with ID: ${parentRecord.a_rec_app_score_field_detail_id}`
+            );
+            const updateObj = {
+              a_rec_app_score_field_detail_id:
+                parentRecord.a_rec_app_score_field_detail_id,
+              score_field_value: parentRecord.score_field_value,
+              score_field_actual_value: parentRecord.score_field_actual_value,
+              score_field_calculated_value:
+                parentRecord.score_field_calculated_value,
+              verify_remark: parentRecord.verify_remark,
+              updated_user_id: sessionDetails.emp_id,
+              updated_ip_address: sessionDetails.ip_address,
+              action_type: "U",
+              action_date: new Date().toISOString(),
+              delete_flag: "N",
+            };
 
-        // Check if parentRecord already has a_rec_app_score_field_detail_id
-        if (parentRecord.a_rec_app_score_field_detail_id) {
-          console.log(
-            `➡️ Updating existing parent record with ID: ${parentRecord.a_rec_app_score_field_detail_id}`
-          );
-          const updateObj = {
-            a_rec_app_score_field_detail_id:
-              parentRecord.a_rec_app_score_field_detail_id,
-            score_field_value: parentRecord.score_field_value,
-            score_field_actual_value: parentRecord.score_field_actual_value,
-            score_field_calculated_value:
-              parentRecord.score_field_calculated_value,
-            verify_remark: parentRecord.verify_remark,
-            updated_user_id: sessionDetails.emp_id,
-            updated_ip_address: sessionDetails.ip_address,
-            action_type: "U",
-            action_date: new Date().toISOString(),
-            delete_flag: "N",
-          };
-
-          SHARED_SERVICE.validateAndUpdateInTable(
-            dbkey,
-            request,
-            { table_name: "a_rec_app_score_field_detail", ...updateObj },
-            sessionDetails,
-            function (err, res) {
-              if (err) {
-                console.error("❌ Error updating parent record:", err);
-                return cback(err);
+            SHARED_SERVICE.validateAndUpdateInTable(
+              dbkey,
+              request,
+              { table_name: "a_rec_app_score_field_detail", ...updateObj },
+              sessionDetails,
+              function (err, res) {
+                if (err) {
+                  console.error("❌ Error updating parent record:", err);
+                  return cback(err);
+                }
+                console.log("✅ Parent record updated successfully.");
+                return cback(null);
               }
-              console.log("✅ Parent record updated successfully.");
-              return cback(null);
-            }
-          );
-        } else {
-          // Fetch the a_rec_app_score_field_detail_id from the database
-          console.log("➡️ Fetching parent record ID from database.");
-          const query = `
+            );
+          } else {
+            // Fetch the a_rec_app_score_field_detail_id from the database
+            console.log("➡️ Fetching parent record ID from database.");
+            const query = `
             SELECT a_rec_app_score_field_detail_id
             FROM a_rec_app_score_field_detail
             WHERE registration_no = ?
@@ -558,190 +634,181 @@ if (paramIndex === -1) {
               AND m_rec_score_field_id = ?
               AND score_field_parent_id = 0
               AND delete_flag = 'N'`;
-          const queryParams = [
-            parentRecord.registration_no,
-            parentRecord.a_rec_app_main_id,
-            parentRecord.a_rec_adv_post_detail_id,
-            parentRecord.m_rec_score_field_id,
-          ];
+            const queryParams = [
+              parentRecord.registration_no,
+              parentRecord.a_rec_app_main_id,
+              parentRecord.a_rec_adv_post_detail_id,
+              parentRecord.m_rec_score_field_id,
+            ];
 
-          DB_SERVICE.executeQueryWithParameters(
-            dbkey,
-            query,
-            queryParams,
-            function (err, result) {
-              if (err) {
-                console.error(
-                  "❌ Error fetching parent record ID:",
-                  err
-                );
-                return cback(err);
-              }
+            DB_SERVICE.executeQueryWithParameters(
+              dbkey,
+              query,
+              queryParams,
+              function (err, result) {
+                if (err) {
+                  console.error("❌ Error fetching parent record ID:", err);
+                  return cback(err);
+                }
 
-              if (result && result.data && result.data.length > 0) {
-                parentRecord.a_rec_app_score_field_detail_id =
-                  result.data[0].a_rec_app_score_field_detail_id;
-                console.log(
-                  `✅ Found parent record with ID: ${parentRecord.a_rec_app_score_field_detail_id}`
-                );
+                if (result && result.data && result.data.length > 0) {
+                  parentRecord.a_rec_app_score_field_detail_id =
+                    result.data[0].a_rec_app_score_field_detail_id;
+                  console.log(
+                    `✅ Found parent record with ID: ${parentRecord.a_rec_app_score_field_detail_id}`
+                  );
 
-                const updateObj = {
-                  a_rec_app_score_field_detail_id:
-                    parentRecord.a_rec_app_score_field_detail_id,
-                  score_field_value: parentRecord.score_field_value,
-                  score_field_actual_value: parentRecord.score_field_actual_value,
-                  score_field_calculated_value:
-                    parentRecord.score_field_calculated_value,
-                  verify_remark: parentRecord.verify_remark,
-                  updated_user_id: sessionDetails.emp_id,
-                  updated_ip_address: sessionDetails.ip_address,
-                  action_type: "U",
-                  action_date: new Date().toISOString(),
-                  delete_flag: "N",
-                };
+                  const updateObj = {
+                    a_rec_app_score_field_detail_id:
+                      parentRecord.a_rec_app_score_field_detail_id,
+                    score_field_value: parentRecord.score_field_value,
+                    score_field_actual_value:
+                      parentRecord.score_field_actual_value,
+                    score_field_calculated_value:
+                      parentRecord.score_field_calculated_value,
+                    verify_remark: parentRecord.verify_remark,
+                    updated_user_id: sessionDetails.emp_id,
+                    updated_ip_address: sessionDetails.ip_address,
+                    action_type: "U",
+                    action_date: new Date().toISOString(),
+                    delete_flag: "N",
+                  };
 
-                SHARED_SERVICE.validateAndUpdateInTable(
-                  dbkey,
-                  request,
-                  { table_name: "a_rec_app_score_field_detail", ...updateObj },
-                  sessionDetails,
-                  function (err, res) {
-                    if (err) {
-                      console.error("❌ Error updating parent record:", err);
-                      return cback(err);
+                  SHARED_SERVICE.validateAndUpdateInTable(
+                    dbkey,
+                    request,
+                    {
+                      table_name: "a_rec_app_score_field_detail",
+                      ...updateObj,
+                    },
+                    sessionDetails,
+                    function (err, res) {
+                      if (err) {
+                        console.error("❌ Error updating parent record:", err);
+                        return cback(err);
+                      }
+                      console.log("✅ Parent record updated successfully.");
+                      return cback(null);
                     }
-                    console.log("✅ Parent record updated successfully.");
-                    return cback(null);
-                  }
-                );
-              } else {
-                console.error(
-                  "❌ No parent record found for the given criteria."
-                );
-                return cback({
-                  status: "error",
-                  message:
-                    "No parent record found for the given registration_no, a_rec_app_main_id, a_rec_adv_post_detail_id, and m_rec_score_field_id",
-                });
+                  );
+                } else {
+                  console.error(
+                    "❌ No parent record found for the given criteria."
+                  );
+                  return cback({
+                    status: "error",
+                    message:
+                      "No parent record found for the given registration_no, a_rec_app_main_id, a_rec_adv_post_detail_id, and m_rec_score_field_id",
+                  });
+                }
               }
+            );
+          }
+        },
+
+        // STEP 4: Update a_rec_app_score_field_detail records (children)
+      function (cback) {
+  // ✅ FIX: Filter the list to only include records that are genuinely new (no existing ID)
+  const newDetailsToInsert = detailList.filter(
+    (d) => !d.a_rec_app_score_field_detail_id
+  );
+
+  // If the list is empty after filtering, it means we were only provided context. Skip the insert.
+  if (!newDetailsToInsert.length) {
+    console.log("No new child detail records to insert (only context was provided).");
+    return cback();
+  }
+
+  console.log(
+    `➡️ Inserting ${newDetailsToInsert.length} new child detail records.`
+  );
+  
+  SHARED_SERVICE.validateAndInsertArrInTable(
+    dbkey,
+    request,
+    {
+      table_name: "a_rec_app_score_field_detail",
+      data_arr: newDetailsToInsert, // Use the filtered list
+    },
+    sessionDetails,
+    cback
+  );
+},
+
+        // STEP 5: Update a_rec_app_score_field_parameter_detail records
+        function (cback) {
+          if (!paramList.length) return cback();
+
+          async.eachSeries(
+            paramList,
+            function (param, paramCb) {
+              if (!param.a_rec_app_score_field_parameter_detail_id) {
+                console.warn(
+                  "⚠️ Skipping parameter without primary key:",
+                  param
+                );
+                return paramCb();
+              }
+
+              const updateObj = {
+                parameter_value: param.parameter_value,
+                updated_user_id: sessionDetails.user_id,
+                updated_ip_address: sessionDetails.ip_address,
+              };
+
+              const whereObj = {
+                a_rec_app_score_field_parameter_detail_id:
+                  param.a_rec_app_score_field_parameter_detail_id,
+              };
+
+              SHARED_SERVICE.validateAndUpdateInTable(
+                dbkey,
+                request,
+                {
+                  table_name: "a_rec_app_score_field_parameter_detail",
+                  ...updateObj,
+                  ...whereObj,
+                },
+                sessionDetails,
+                paramCb
+              );
+            },
+            cback
+          );
+        },
+      ],
+      function (err) {
+        if (err) {
+          DB_SERVICE.rollbackPartialTransaction(
+            tranObj,
+            tranCallback,
+            function () {
+              console.error("❌ Error updating candidate scorecard:", err);
+              return callback({
+                status: "error",
+                message: "Failed to update candidate scorecard",
+                details: err,
+              });
+            }
+          );
+        } else {
+          DB_SERVICE.commitPartialTransaction(
+            tranObj,
+            tranCallback,
+            function () {
+              console.log("✅ Candidate scorecard updated successfully.");
+              return callback(null, {
+                status: "success",
+                message: "Candidate scorecard updated successfully",
+              });
             }
           );
         }
-      },
-
-      // STEP 4: Update a_rec_app_score_field_detail records (children)
-      function (cback) {
-        if (!detailList.length) return cback();
-
-        async.eachSeries(
-          detailList,
-          function (detail, detailCb) {
-            if (!detail.a_rec_app_score_field_detail_id) {
-              console.warn("⚠️ Skipping detail without primary key:", detail);
-              return detailCb();
-            }
-
-            const updateObj = {
-              score_field_value: detail.score_field_value,
-              score_field_actual_value: detail.score_field_actual_value,
-              score_field_calculated_value:
-                detail.score_field_calculated_value,
-              updated_user_id: sessionDetails.emp_id,
-              updated_ip_address: sessionDetails.ip_address,
-            };
-            const whereObj = {
-              a_rec_app_score_field_detail_id:
-                detail.a_rec_app_score_field_detail_id,
-            };
-
-            SHARED_SERVICE.validateAndUpdateInTable(
-              dbkey,
-              request,
-              {
-                table_name: "a_rec_app_score_field_detail",
-                ...updateObj,
-                ...whereObj,
-              },
-              sessionDetails,
-              detailCb
-            );
-          },
-          cback
-        );
-      },
-
-      // STEP 5: Update a_rec_app_score_field_parameter_detail records
-      function (cback) {
-        if (!paramList.length) return cback();
-
-        async.eachSeries(
-          paramList,
-          function (param, paramCb) {
-            if (!param.a_rec_app_score_field_parameter_detail_id) {
-              console.warn(
-                "⚠️ Skipping parameter without primary key:",
-                param
-              );
-              return paramCb();
-            }
-
-            const updateObj = {
-              parameter_value: param.parameter_value,
-              updated_user_id: sessionDetails.user_id,
-              updated_ip_address: sessionDetails.ip_address,
-            };
-
-            const whereObj = {
-              a_rec_app_score_field_parameter_detail_id:
-                param.a_rec_app_score_field_parameter_detail_id,
-            };
-
-            SHARED_SERVICE.validateAndUpdateInTable(
-              dbkey,
-              request,
-              {
-                table_name: "a_rec_app_score_field_parameter_detail",
-                ...updateObj,
-                ...whereObj,
-              },
-              sessionDetails,
-              paramCb
-            );
-          },
-          cback
-        );
-      },
-    ],
-    function (err) {
-      if (err) {
-        DB_SERVICE.rollbackPartialTransaction(
-          tranObj,
-          tranCallback,
-          function () {
-            console.error("❌ Error updating candidate scorecard:", err);
-            return callback({
-              status: "error",
-              message: "Failed to update candidate scorecard",
-              details: err,
-            });
-          }
-        );
-      } else {
-        DB_SERVICE.commitPartialTransaction(
-          tranObj,
-          tranCallback,
-          function () {
-            console.log("✅ Candidate scorecard updated successfully.");
-            return callback(null, {
-              status: "success",
-              message: "Candidate scorecard updated successfully",
-            });
-          }
-        );
       }
-    }
-  );
-},
+    );
+  },
+
+  
   saveCandidateDetail: function (
     dbkey,
     request,
