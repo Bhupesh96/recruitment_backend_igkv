@@ -100,7 +100,7 @@ app.use(
     res.header("Cross-Origin-Resource-Policy", "cross-origin");
     next();
   },
-  express.static(path.join(__dirname, "services/recruitment"))
+  express.static(path.join(__dirname, "recruitment"))
 );
 
 var initAllFiles = function () {
@@ -112,6 +112,7 @@ var initAllFiles = function () {
   global.COMMON_SECURITY_SERVICE = require("../commonutils/securityservice.js");
   global.SHARED_SERVICE = require("../commonutils/sharedService.js");
   global.DOC_UPLOAD_SERVICE = require("../commonutils/fileUploadService.js");
+  
   //only init method of all below files are called and pass app.
   require("./routes/commonroutes").init(app);
 };
