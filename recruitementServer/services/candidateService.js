@@ -7,7 +7,6 @@ const path = require("path");
 const fs = require("fs");
 
 let candidateService = {
-  
   saveOrUpdateCandidateScoreCard: function (
     dbkey,
     request,
@@ -19,10 +18,6 @@ let candidateService = {
 
     // STEP 0: Parse request body (no changes here)
     try {
-      console.log(
-        "📥 Incoming Request Body:",
-        JSON.stringify(request.body, null, 2)
-      );
       if (request.files) {
         console.log(
           "📂 Incoming Files:",
@@ -60,8 +55,9 @@ let candidateService = {
       });
     }
 
-    const detailList = params.scoreFieldDetailList;
-    const paramList = params.scoreFieldParameterList;
+    // Use 'let' to allow re-assignment after filtering
+    let detailList = params.scoreFieldDetailList;
+    let paramList = params.scoreFieldParameterList;
     const parentRecord = params.parentScore;
 
     async.series(
@@ -69,40 +65,27 @@ let candidateService = {
         // STEP 1: Upload files (no changes here)
         function (cback) {
           if (!request.files || Object.keys(request.files).length === 0) {
-            console.log("No files to upload.");
             return cback();
           }
-
           async.eachOf(
             request.files,
             function (file, controlName, uploadCb) {
               if (!file || !file.name) {
-                console.warn(
-                  `⚠️ Skipping file upload for '${controlName}' due to missing file.`
-                );
                 return uploadCb();
               }
               const parts = controlName.split("_");
               if (parts.length < 6) {
-                console.warn(
-                  `⚠️ Skipping invalid file control name: ${controlName}`
-                );
                 return uploadCb();
               }
-
               const subHeadingId = parseInt(parts[1]);
               const scoreFieldId = parseInt(parts[2]);
               const paramId = parseInt(parts[3]);
               const rowIndex = parseInt(parts[5]);
-
               const baseName = path.parse(file.name).name;
-
-              const sanitizedName = baseName // Use baseName here instead of file.name
+              const sanitizedName = baseName
                 .replace(/[^a-zA-Z0-9._-]/g, "_")
                 .replace(/_+/g, "_")
                 .replace(/^_+|_+$/g, "");
-
-              // This fileName now correctly has NO extension
               const fileName = `${params.registration_no}_${subHeadingId}_${scoreFieldId}_${paramId}_${rowIndex}_${sanitizedName}`;
               const uploadOptions = {
                 file_name: fileName,
@@ -110,7 +93,6 @@ let candidateService = {
                 control_name: controlName,
                 folder_name: `recruitment/${params.registration_no}`,
               };
-
               DOC_UPLOAD_SERVICE.docUploadWithFolder(
                 dbkey,
                 request,
@@ -127,18 +109,10 @@ let candidateService = {
                         p.parameter_row_index === rowIndex
                     );
                     if (paramIndex !== -1) {
-                      // ✅ CORRECTED LOGIC
-                      // Get the actual, full filename from the upload service's response
                       const finalFileName = path.basename(res.file_path);
-
-                      // Use the final, correct filename to update the parameter value
                       paramList[
                         paramIndex
                       ].parameter_value = `recruitment/${params.registration_no}/${finalFileName}`;
-
-                      console.log(
-                        `✅ File mapped for ${controlName} with path: ${paramList[paramIndex].parameter_value}`
-                      );
                     }
                     return uploadCb();
                   } else {
@@ -165,36 +139,15 @@ let candidateService = {
           );
         },
 
-        // STEP 3: Handle Parent Record (Upsert Logic - this is already correct)
+        // STEP 3: Handle Parent Record (Upsert Logic - no changes here)
         function (cback) {
           if (!parentRecord) return cback();
-
-          // Trust the frontend to send the ID for existing records.
           if (parentRecord.a_rec_app_score_field_detail_id) {
-            console.log(
-              `➡️ Updating parent record ID from payload: ${parentRecord.a_rec_app_score_field_detail_id}`
-            );
-
-            // Construct the object for the update service
             const updateObj = {
               table_name: "a_rec_app_score_field_detail",
-              a_rec_app_score_field_detail_id:
-                parentRecord.a_rec_app_score_field_detail_id,
-              score_field_value: parentRecord.score_field_value,
-              score_field_actual_value: parentRecord.score_field_actual_value,
-              score_field_calculated_value:
-                parentRecord.score_field_calculated_value,
-              verify_remark: parentRecord.verify_remark,
-              // also include other fields from parentRecord that might change
-              field_marks: parentRecord.field_marks,
-              field_weightage: parentRecord.field_weightage,
-              action_type: parentRecord.action_type,
-              action_date: parentRecord.action_date,
-              action_remark: parentRecord.action_remark,
+              ...parentRecord,
               action_ip_address: sessionDetails.ip_address,
-              action_by: parentRecord.action_by,
             };
-
             SHARED_SERVICE.validateAndUpdateInTable(
               dbkey,
               request,
@@ -203,8 +156,6 @@ let candidateService = {
               cback
             );
           } else {
-            console.log("➡️ Inserting new parent record from payload.");
-            // Use the existing INSERT logic
             SHARED_SERVICE.validateAndInsertInTable(
               dbkey,
               request,
@@ -215,9 +166,9 @@ let candidateService = {
               sessionDetails,
               function (err, res) {
                 if (err) return cback(err);
-                // This part is important if an insert happens
-                if (res && res.insertId) {
-                  parentRecord.a_rec_app_score_field_detail_id = res.insertId;
+                if (res && res.data.insertId) {
+                  parentRecord.a_rec_app_score_field_detail_id =
+                    res.data.insertId;
                 }
                 return cback(null);
               }
@@ -225,9 +176,89 @@ let candidateService = {
           }
         },
 
-        // ✅ STEP 4: MODIFIED - Handle Child Detail Records (Update existing, Insert new)
+        // ✅ NEW STEP 3.5: Handle Deletions
         function (cback) {
-          if (!detailList.length) return cback();
+          // Find records that are marked for deletion AND already exist in the DB
+          const detailsToDelete = detailList.filter(
+            (d) => d.delete_flag === "Y" && d.a_rec_app_score_field_detail_id
+          );
+
+          if (detailsToDelete.length === 0) {
+            return cback();
+          }
+
+          console.log(
+            `➡️ Deleting ${detailsToDelete.length} child detail records.`
+          );
+
+          // Process each deletion one by one
+          async.eachSeries(
+            detailsToDelete,
+            (detailToDelete, eachCb) => {
+              const detailId = detailToDelete.a_rec_app_score_field_detail_id;
+
+              // Delete child parameters first, then the parent detail record
+              async.series(
+                [
+                  // A. Delete Parameters associated with this detail record
+                  function (deleteParamsCb) {
+                    const deleteParamsPayload = {
+                      delete_table_name:
+                        "a_rec_app_score_field_parameter_detail",
+                      whereObj: { a_rec_app_score_field_detail_id: detailId },
+                    };
+                    SHARED_SERVICE.insrtAndDltOperation(
+                      dbkey,
+                      request,
+                      deleteParamsPayload,
+                      sessionDetails,
+                      deleteParamsCb
+                    );
+                  },
+                  // B. Delete the main detail record itself
+                  function (deleteDetailCb) {
+                    const deleteDetailPayload = {
+                      delete_table_name: "a_rec_app_score_field_detail",
+                      whereObj: { a_rec_app_score_field_detail_id: detailId },
+                    };
+                    SHARED_SERVICE.insrtAndDltOperation(
+                      dbkey,
+                      request,
+                      deleteDetailPayload,
+                      sessionDetails,
+                      deleteDetailCb
+                    );
+                  },
+                ],
+                eachCb
+              ); // End of inner async.series
+            },
+            (err) => {
+              // Final callback for async.eachSeries
+              if (err) return cback(err);
+
+              // IMPORTANT: Filter the main lists to remove the deleted items
+              // so they aren't processed in the next steps.
+              const deletedDetailIds = detailsToDelete.map(
+                (d) => d.a_rec_app_score_field_detail_id
+              );
+              detailList = detailList.filter(
+                (d) =>
+                  !deletedDetailIds.includes(d.a_rec_app_score_field_detail_id)
+              );
+              paramList = paramList.filter(
+                (p) =>
+                  !deletedDetailIds.includes(p.a_rec_app_score_field_detail_id)
+              );
+
+              return cback();
+            }
+          );
+        },
+
+        // ✅ MODIFIED STEP 4: Handle Child Detail Records (Updates & Inserts)
+        function (cback) {
+          if (!detailList || detailList.length === 0) return cback();
 
           const detailsToUpdate = detailList.filter(
             (d) => d.a_rec_app_score_field_detail_id
@@ -238,11 +269,10 @@ let candidateService = {
 
           async.series(
             [
-              // Update existing details
               function (updateCallback) {
-                if (!detailsToUpdate.length) return updateCallback();
+                if (detailsToUpdate.length === 0) return updateCallback();
                 console.log(
-                  `➡️ Updating ${detailsToUpdate.length} child detail records.`
+                  `➡️ Updating ${detailsToUpdate.length} existing child detail records.`
                 );
                 async.eachSeries(
                   detailsToUpdate,
@@ -250,10 +280,7 @@ let candidateService = {
                     SHARED_SERVICE.validateAndUpdateInTable(
                       dbkey,
                       request,
-                      {
-                        table_name: "a_rec_app_score_field_detail",
-                        ...detail,
-                      },
+                      { table_name: "a_rec_app_score_field_detail", ...detail },
                       sessionDetails,
                       eachCb
                     );
@@ -261,20 +288,70 @@ let candidateService = {
                   updateCallback
                 );
               },
-              // Insert new details
               function (insertCallback) {
-                if (!detailsToInsert.length) return insertCallback();
+                if (detailsToInsert.length === 0) return insertCallback();
                 console.log(
-                  `➡️ Inserting ${detailsToInsert.length} new child detail records.`
+                  `➡️ Inserting ${detailsToInsert.length} new child detail records individually.`
                 );
-                SHARED_SERVICE.validateAndInsertArrInTable(
-                  dbkey,
-                  request,
-                  {
-                    table_name: "a_rec_app_score_field_detail",
-                    data_arr: detailsToInsert,
+                async.eachSeries(
+                  detailsToInsert,
+                  (detail, eachCb) => {
+                    SHARED_SERVICE.validateAndInsertInTable(
+                      dbkey,
+                      request,
+                      { table_name: "a_rec_app_score_field_detail", ...detail },
+                      sessionDetails,
+                      (err, res) => {
+                        if (err) return eachCb(err);
+                        const newDetailId = res.data.insertId;
+                        if (!newDetailId) {
+                          return eachCb(
+                            new Error(
+                              "Insert operation did not return a new ID."
+                            )
+                          );
+                        }
+
+                        paramList.forEach((param) => {
+                          let isMatch = false;
+
+                          // Strategy for Academic Excellence (Method ID 3)
+                          if (detail.m_rec_score_field_method_id === 3) {
+                            if (
+                              param.score_field_parent_id ===
+                                detail.score_field_parent_id &&
+                              param.m_rec_score_field_id ===
+                                detail.m_rec_score_field_id
+                            ) {
+                              isMatch = true;
+                            }
+                          }
+                          // Strategy for Experience Page (Method ID 2 or other)
+                          else {
+                            if (
+                              param.score_field_parent_id ===
+                                detail.score_field_parent_id &&
+                              param.m_rec_score_field_id ===
+                                detail.m_rec_score_field_id &&
+                              param.parameter_row_index ===
+                                detail.score_field_row_index
+                            ) {
+                              isMatch = true;
+                            }
+                          }
+
+                          if (isMatch) {
+                            param.a_rec_app_score_field_detail_id = newDetailId;
+                            console.log(
+                              `✅ Linked new detail ID ${newDetailId} to param for item ${param.m_rec_score_field_id}`
+                            );
+                          }
+                        });
+
+                        eachCb();
+                      }
+                    );
                   },
-                  sessionDetails,
                   insertCallback
                 );
               },
@@ -283,19 +360,18 @@ let candidateService = {
           );
         },
 
-        // ✅ STEP 5: MODIFIED - Handle Parameter Records (Upsert Logic)
+        // ✅ MODIFIED STEP 5: Handle Parameter Records
         function (cback) {
+          // The main 'paramList' has already been filtered
           if (!paramList.length) return cback();
 
           console.log(
-            `➡️ Processing ${paramList.length} parameter detail records.`
+            `➡️ Processing ${paramList.length} parameter records for insert/update.`
           );
-
           async.eachSeries(
             paramList,
             function (param, paramCb) {
-              // If param has a primary key, update it
-               param.action_ip_address = sessionDetails.ip_address;
+              param.action_ip_address = sessionDetails.ip_address;
               if (param.a_rec_app_score_field_parameter_detail_id) {
                 SHARED_SERVICE.validateAndUpdateInTable(
                   dbkey,
@@ -308,7 +384,6 @@ let candidateService = {
                   paramCb
                 );
               } else {
-                // If param does NOT have a primary key, insert it
                 SHARED_SERVICE.validateAndInsertInTable(
                   dbkey,
                   request,
@@ -325,7 +400,7 @@ let candidateService = {
           );
         },
       ],
-      // Final callback to commit or rollback transaction (no changes here)
+      // Final callback (no changes here)
       function (err) {
         if (err) {
           DB_SERVICE.rollbackPartialTransaction(
@@ -336,7 +411,7 @@ let candidateService = {
               return callback({
                 status: "error",
                 message: "Failed to process candidate scorecard",
-                details: err,
+                details: err.message || err,
               });
             }
           );
@@ -345,7 +420,9 @@ let candidateService = {
             tranObj,
             tranCallback,
             function () {
-              console.log("✅ Candidate scorecard processed successfully.");
+              console.log(
+                "✅ Candidate scorecard processed successfully (C/U/D)."
+              );
               return callback(null, {
                 status: "success",
                 message: "Candidate scorecard processed successfully",
@@ -353,6 +430,98 @@ let candidateService = {
             }
           );
         }
+      }
+    );
+  },
+  getAddtionalInforList: function (
+    dbkey,
+    request,
+    params,
+    sessionDetails,
+    callback
+  ) {
+    let response = {};
+
+    async.series(
+      [
+        // 1. Get all questions
+        function (c1) {
+          sessionDetails.query_id = 182; // 👉 query for questions
+          DB_SERVICE.getQueryDataFromId(
+            dbkey,
+            request,
+            params,
+            sessionDetails,
+            (err, res) => {
+              if (err) return c1(err);
+              response.questions = res || [];
+              return c1();
+            }
+          );
+        },
+
+        // 2. For each question, get options and conditions
+        function (c2) {
+          async.eachSeries(
+            response.questions,
+            function (q, cb1) {
+              // 👉 Fetch options for this question
+              sessionDetails.query_id = 182; // 👉 query for options
+              const optParams = { additional_options_option: q.question_id };
+
+              DB_SERVICE.getQueryDataFromId(
+                dbkey,
+                request,
+                optParams,
+                sessionDetails,
+                (err, options) => {
+                  if (err) return cb1(err);
+                  q.options = options || [];
+
+                  // 👉 For each option, only fetch conditions if has_condition = 'Y'
+                  async.eachSeries(
+                    q.options,
+                    function (o, cb2) {
+                      if (o.has_condition === "Y") {
+                        sessionDetails.query_id = 182; // 👉 query for conditions
+                        const condParams = {
+                          m_datatype_master_name: o.question_id,
+                        };
+
+                        DB_SERVICE.getQueryDataFromId(
+                          dbkey,
+                          request,
+                          condParams,
+                          sessionDetails,
+                          (err, conditions) => {
+                            if (err) return cb2(err);
+                            o.conditions = conditions || [];
+                            return cb2();
+                          }
+                        );
+                        // return cb2();
+                      } else {
+                        // ❌ No conditions for this option
+                        o.conditions = [];
+                        return cb2();
+                      }
+                    },
+                    cb1
+                  );
+                }
+              );
+            },
+            c2
+          );
+        },
+      ],
+      function (err) {
+        if (err) return callback(err, null);
+
+        // ✅ Final JSON response
+        return callback(null, {
+          questions: response.questions,
+        });
       }
     );
   },
@@ -642,11 +811,11 @@ let candidateService = {
                 });
               }
 
-              const fileName = `${controlName}_${
+              const fileNameWithoutExt = `${controlName}_${
                 params.registration_no
-              }_${Date.now()}${ext}`;
+              }_${Date.now()}`;
               const uploadOptions = {
-                file_name: fileName,
+                file_name: fileNameWithoutExt,
                 control_name: controlName,
                 folder_name: `recruitment/${params.registration_no}`,
               };
@@ -663,7 +832,8 @@ let candidateService = {
                   }
 
                   if (res && res.file_path) {
-                    const filePath = `recruitment/${params.registration_no}/${fileName}`;
+                    const fullFileName = `${fileNameWithoutExt}${ext}`;
+                    const filePath = `recruitment/${params.registration_no}/${fullFileName}`;
                     console.log(
                       `✅ Uploaded file ${controlName} to ${filePath}`
                     );
@@ -680,7 +850,7 @@ let candidateService = {
                       __dirname,
                       "recruitment",
                       params.registration_no,
-                      fileName
+                      fileNameWithoutExt
                     );
                     try {
                       fs.mkdirSync(path.dirname(destPath), { recursive: true });

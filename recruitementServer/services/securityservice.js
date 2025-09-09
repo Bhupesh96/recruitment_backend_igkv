@@ -119,7 +119,8 @@ let noApiPermissionRequiredServices = {
   candidate: [
     "saveCandidateDetail",
     "updateCandidateDetail",
-    "saveOrUpdateCandidateScoreCard"
+    "saveOrUpdateCandidateScoreCard",
+    "getAddtionalInforList"
   ],
 };
 
