@@ -117,10 +117,10 @@ let service_files = {
 // add file and function name here
 let noApiPermissionRequiredServices = {
   candidate: [
-    "saveCandidateDetail",
-    "updateCandidateDetail",
     "saveOrUpdateCandidateScoreCard",
-    "getAddtionalInforList"
+    "getAddtionalInforList",
+    "saveOrUpdateQuantityBasedCandidateDetails",
+    "saveOrUpdateFullCandidateProfile",
   ],
 };
 

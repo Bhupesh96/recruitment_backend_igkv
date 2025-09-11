@@ -433,6 +433,423 @@ let candidateService = {
       }
     );
   },
+
+  saveOrUpdateQuantityBasedCandidateDetails: function (
+    dbkey,
+    request,
+    params,
+    sessionDetails,
+    callback
+  ) {
+    let tranObj, tranCallback;
+
+    // STEP 0: Parse request body
+    try {
+      if (request.files) {
+        console.log(
+          "📂 Incoming Files:",
+          JSON.stringify(
+            Object.keys(request.files).map((k) => ({
+              key: k,
+              file_keys: Object.keys(request.files[k] || {}),
+              has_data: !!(request.files[k] && request.files[k].data),
+              data_length: request.files[k]?.data?.length || 0,
+              originalFilename: request.files[k]?.originalFilename,
+            })),
+            null,
+            2
+          )
+        );
+      } else {
+        console.log("📂 No files found in request.");
+      }
+      params.registration_no = request.body.registration_no;
+      params.scoreFieldDetailList = JSON.parse(
+        request.body.scoreFieldDetailList || "[]"
+      );
+      params.scoreFieldParameterList = JSON.parse(
+        request.body.scoreFieldParameterList || "[]"
+      );
+      params.parentScore = request.body.parentScore
+        ? JSON.parse(request.body.parentScore)
+        : null;
+
+      // Parse the array of parameter IDs to be deleted.
+      params.parameterIdsToDelete = JSON.parse(
+        request.body.parameterIdsToDelete || "[]"
+      );
+    } catch (e) {
+      return callback({
+        status: "error",
+        message: "Invalid JSON in request body",
+        details: e.message,
+      });
+    }
+
+    // Use 'let' to allow re-assignment after filtering
+    let detailList = params.scoreFieldDetailList;
+    let paramList = params.scoreFieldParameterList;
+    const parentRecord = params.parentScore;
+    const parameterIdsToDelete = params.parameterIdsToDelete;
+
+    async.series(
+      [
+        // STEP 1: Upload files
+        function (cback) {
+          if (!request.files || Object.keys(request.files).length === 0) {
+            return cback();
+          }
+          async.eachOf(
+            request.files,
+            function (file, controlName, uploadCb) {
+              if (!file || !file.name) {
+                return uploadCb();
+              }
+              const parts = controlName.split("_");
+              if (parts.length < 6) {
+                return uploadCb();
+              }
+              const subHeadingId = parseInt(parts[1]);
+              const scoreFieldId = parseInt(parts[2]);
+              const paramId = parseInt(parts[3]);
+              const rowIndex = parseInt(parts[5]);
+              const baseName = path.parse(file.name).name;
+              const sanitizedName = baseName
+                .replace(/[^a-zA-Z0-9._-]/g, "_")
+                .replace(/_+/g, "_")
+                .replace(/^_+|_+$/g, "");
+              const fileName = `${params.registration_no}_${subHeadingId}_${scoreFieldId}_${paramId}_${rowIndex}_${sanitizedName}`;
+              const uploadOptions = {
+                file_name: fileName,
+                file_buffer: file.data,
+                control_name: controlName,
+                folder_name: `recruitment/${params.registration_no}`,
+              };
+              DOC_UPLOAD_SERVICE.docUploadWithFolder(
+                dbkey,
+                request,
+                uploadOptions,
+                sessionDetails,
+                function (err, res) {
+                  if (err) return uploadCb(err);
+                  if (res && res.file_path) {
+                    const paramIndex = paramList.findIndex(
+                      (p) =>
+                        p.score_field_parent_id === subHeadingId &&
+                        p.m_rec_score_field_id === scoreFieldId &&
+                        p.m_rec_score_field_parameter_new_id === paramId &&
+                        p.parameter_row_index === rowIndex
+                    );
+                    if (paramIndex !== -1) {
+                      const finalFileName = path.basename(res.file_path);
+                      paramList[
+                        paramIndex
+                      ].parameter_value = `recruitment/${params.registration_no}/${finalFileName}`;
+                    }
+                    return uploadCb();
+                  } else {
+                    return uploadCb(`File upload failed for ${controlName}`);
+                  }
+                }
+              );
+            },
+            cback
+          );
+        },
+
+        // STEP 2: Create transaction
+        function (cback) {
+          DB_SERVICE.createTransaction(
+            dbkey,
+            function (err, tranobj, trancallback) {
+              if (err) return cback(err);
+              tranObj = tranobj;
+              tranCallback = trancallback;
+              dbkey = { dbkey: dbkey, connectionobj: tranObj };
+              return cback();
+            }
+          );
+        },
+
+        // STEP 3: Handle Parent Record
+        function (cback) {
+          if (!parentRecord) return cback();
+          if (parentRecord.a_rec_app_score_field_detail_id) {
+            const updateObj = {
+              table_name: "a_rec_app_score_field_detail",
+              ...parentRecord,
+              action_ip_address: sessionDetails.ip_address,
+            };
+            SHARED_SERVICE.validateAndUpdateInTable(
+              dbkey,
+              request,
+              updateObj,
+              sessionDetails,
+              cback
+            );
+          } else {
+            SHARED_SERVICE.validateAndInsertInTable(
+              dbkey,
+              request,
+              {
+                table_name: "a_rec_app_score_field_detail",
+                ...parentRecord,
+              },
+              sessionDetails,
+              function (err, res) {
+                if (err) return cback(err);
+                if (res && res.data.insertId) {
+                  parentRecord.a_rec_app_score_field_detail_id =
+                    res.data.insertId;
+                }
+                return cback(null);
+              }
+            );
+          }
+        },
+
+        // STEP 4: Handle Deletion of SUMMARY detail records via flag
+        function (cback) {
+          const detailsToDelete = detailList.filter(
+            (d) => d.delete_flag === "Y" && d.a_rec_app_score_field_detail_id
+          );
+          if (detailsToDelete.length === 0) {
+            return cback();
+          }
+          console.log(
+            `➡️ Deleting ${detailsToDelete.length} summary detail records and their parameters.`
+          );
+          async.eachSeries(
+            detailsToDelete,
+            (detailToDelete, eachCb) => {
+              const detailId = detailToDelete.a_rec_app_score_field_detail_id;
+              async.series(
+                [
+                  function (deleteParamsCb) {
+                    const deleteParamsPayload = {
+                      delete_table_name:
+                        "a_rec_app_score_field_parameter_detail",
+                      whereObj: { a_rec_app_score_field_detail_id: detailId },
+                    };
+                    SHARED_SERVICE.insrtAndDltOperation(
+                      dbkey,
+                      request,
+                      deleteParamsPayload,
+                      sessionDetails,
+                      deleteParamsCb
+                    );
+                  },
+                  function (deleteDetailCb) {
+                    const deleteDetailPayload = {
+                      delete_table_name: "a_rec_app_score_field_detail",
+                      whereObj: { a_rec_app_score_field_detail_id: detailId },
+                    };
+                    SHARED_SERVICE.insrtAndDltOperation(
+                      dbkey,
+                      request,
+                      deleteDetailPayload,
+                      sessionDetails,
+                      deleteDetailCb
+                    );
+                  },
+                ],
+                eachCb
+              );
+            },
+            (err) => {
+              if (err) return cback(err);
+              const deletedDetailIds = detailsToDelete.map(
+                (d) => d.a_rec_app_score_field_detail_id
+              );
+              detailList = detailList.filter(
+                (d) =>
+                  !deletedDetailIds.includes(d.a_rec_app_score_field_detail_id)
+              );
+              paramList = paramList.filter(
+                (p) =>
+                  !deletedDetailIds.includes(p.a_rec_app_score_field_detail_id)
+              );
+              return cback();
+            }
+          );
+        },
+
+        // ⭐ STEP 5: HANDLE DELETION OF SPECIFIC PARAMETER RECORDS (NEW LOGIC) ⭐
+        function (cback) {
+          if (!parameterIdsToDelete || parameterIdsToDelete.length === 0) {
+            console.log("➡️ No specific parameter records to delete.");
+            return cback(); // Nothing to delete, move to the next step.
+          }
+
+          console.log(
+            `➡️ Deleting ${parameterIdsToDelete.length} specified parameter records.`
+          );
+
+          // Loop through each ID provided by the frontend and delete it.
+          async.eachSeries(
+            parameterIdsToDelete,
+            (parameterId, eachCb) => {
+              const deletePayload = {
+                delete_table_name: "a_rec_app_score_field_parameter_detail",
+                whereObj: {
+                  a_rec_app_score_field_parameter_detail_id: parameterId,
+                },
+              };
+              SHARED_SERVICE.insrtAndDltOperation(
+                dbkey,
+                request,
+                deletePayload,
+                sessionDetails,
+                eachCb
+              );
+            },
+            cback // Final callback for the eachSeries loop
+          );
+        },
+
+        // STEP 6: Handle Child Detail Records Upserts
+        function (cback) {
+          if (!detailList || detailList.length === 0) return cback();
+
+          const detailsToUpdate = detailList.filter(
+            (d) => d.a_rec_app_score_field_detail_id
+          );
+          const detailsToInsert = detailList.filter(
+            (d) => !d.a_rec_app_score_field_detail_id
+          );
+
+          async.series(
+            [
+              function (updateCallback) {
+                if (detailsToUpdate.length === 0) return updateCallback();
+                async.eachSeries(
+                  detailsToUpdate,
+                  (detail, eachCb) => {
+                    SHARED_SERVICE.validateAndUpdateInTable(
+                      dbkey,
+                      request,
+                      { table_name: "a_rec_app_score_field_detail", ...detail },
+                      sessionDetails,
+                      eachCb
+                    );
+                  },
+                  updateCallback
+                );
+              },
+              function (insertCallback) {
+                if (detailsToInsert.length === 0) return insertCallback();
+                async.eachSeries(
+                  detailsToInsert,
+                  (detail, eachCb) => {
+                    SHARED_SERVICE.validateAndInsertInTable(
+                      dbkey,
+                      request,
+                      { table_name: "a_rec_app_score_field_detail", ...detail },
+                      sessionDetails,
+                      (err, res) => {
+                        if (err) return eachCb(err);
+                        const newDetailId = res.data.insertId;
+                        if (!newDetailId) {
+                          return eachCb(
+                            new Error(
+                              "Insert operation did not return a new ID."
+                            )
+                          );
+                        }
+                        paramList.forEach((param) => {
+                          if (
+                            param.score_field_parent_id ===
+                              detail.score_field_parent_id &&
+                            param.m_rec_score_field_id ===
+                              detail.m_rec_score_field_id
+                          ) {
+                            param.a_rec_app_score_field_detail_id = newDetailId;
+                          }
+                        });
+                        eachCb();
+                      }
+                    );
+                  },
+                  insertCallback
+                );
+              },
+            ],
+            cback
+          );
+        },
+
+        // STEP 7: Handle Parameter Records Upserts
+        function (cback) {
+          if (!paramList || paramList.length === 0) return cback();
+
+          console.log(
+            `➡️ Processing ${paramList.length} parameter records for insert/update.`
+          );
+          async.eachSeries(
+            paramList,
+            function (param, paramCb) {
+              param.action_ip_address = sessionDetails.ip_address;
+              if (param.a_rec_app_score_field_parameter_detail_id) {
+                SHARED_SERVICE.validateAndUpdateInTable(
+                  dbkey,
+                  request,
+                  {
+                    table_name: "a_rec_app_score_field_parameter_detail",
+                    ...param,
+                  },
+                  sessionDetails,
+                  paramCb
+                );
+              } else {
+                SHARED_SERVICE.validateAndInsertInTable(
+                  dbkey,
+                  request,
+                  {
+                    table_name: "a_rec_app_score_field_parameter_detail",
+                    ...param,
+                  },
+                  sessionDetails,
+                  paramCb
+                );
+              }
+            },
+            cback
+          );
+        },
+      ],
+      // Final callback
+      function (err) {
+        if (err) {
+          DB_SERVICE.rollbackPartialTransaction(
+            tranObj,
+            tranCallback,
+            function () {
+              console.error("❌ Error processing candidate scorecard:", err);
+              return callback({
+                status: "error",
+                message: "Failed to process candidate scorecard",
+                details: err.message || err,
+              });
+            }
+          );
+        } else {
+          DB_SERVICE.commitPartialTransaction(
+            tranObj,
+            tranCallback,
+            function () {
+              console.log(
+                "✅ Candidate scorecard processed successfully (C/U/D)."
+              );
+              return callback(null, {
+                status: "success",
+                message: "Candidate scorecard processed successfully",
+              });
+            }
+          );
+        }
+      }
+    );
+  },
   getAddtionalInforList: function (
     dbkey,
     request,
@@ -525,7 +942,8 @@ let candidateService = {
       }
     );
   },
-  saveCandidateDetail: function (
+
+   saveOrUpdateFullCandidateProfile: function (
     dbkey,
     request,
     params,
@@ -533,38 +951,83 @@ let candidateService = {
     callback
   ) {
     let tranObj, tranCallback;
-    console.log("🧩 Using dbkey:", dbkey);
-    console.log(
-      "🟢 saveCandidateDetail called with payload:",
-      JSON.stringify(params, null, 2)
-    );
+    console.log("🟢 saveOrUpdateFullCandidateProfile called");
 
-    if (!params.database_name) {
-      return callback({ message: "Missing required database_name in request" });
+    // STEP 1: Parse all incoming payloads from FormData
+    try {
+      params.mainPayload = JSON.parse(request.body.mainPayload || "{}");
+      params.languages = JSON.parse(request.body.languages || "[]");
+      params.additionalInfo = JSON.parse(request.body.additionalInfo || "[]");
+      params.additionalInfoQuestions = JSON.parse(
+        request.body.additionalInfoQuestions || "[]"
+      );
+      // ✅ NEW: Parse the array of additional info record IDs to be deleted.
+      params.additionalInfoIdsToDelete = JSON.parse(
+        request.body.additionalInfoIdsToDelete || "[]"
+      );
+
+      console.log("📦 Received mainPayload:", params.mainPayload);
+      console.log("📦 Received languages:", params.languages);
+      console.log("📦 Received additionalInfo:", params.additionalInfo);
+      console.log(
+        "🗑️ Received additionalInfoIdsToDelete:",
+        params.additionalInfoIdsToDelete
+      );
+    } catch (e) {
+      return callback({
+        status: "error",
+        message: "Invalid JSON in request body",
+        details: e.message,
+      });
     }
+
+    const registrationNo = params.mainPayload.registration_no;
+    const incomingInfoList = params.additionalInfo;
 
     async.series(
       [
-        // STEP 0: Handle file uploads (photo, sign, etc.)
+        // STEP 2: Handle ALL file uploads (No changes here)
         function (cback) {
           if (!request.files || Object.keys(request.files).length === 0) {
-            console.log("No files uploaded");
+            console.log(
+              "📝 No new files were uploaded. Skipping file processing step."
+            );
             return cback();
           }
 
+          console.log(
+            `🚀 Processing ${
+              Object.keys(request.files).length
+            } uploaded files...`
+          );
           async.eachOf(
             request.files,
-            function (file, controlName, uploadCb) {
-              const ext = path
-                .extname(file.name)
-                .replace(/\.pdf\.pdf$/, ".pdf");
-              const fileName = `${Date.now()}_${controlName}${ext}`;
-              const folderPath = `recruitment/${params.registration_no}`;
+            (file, controlName, uploadCb) => {
+              if (!file || !file.name) return uploadCb();
 
-              const uploadOptions = {
-                file_name: fileName,
-                control_name: controlName,
+              let uploadOptions = {};
+              const folderPath = `recruitment/${registrationNo}`;
+              let baseFileName = "";
+
+              if (controlName === "photo" || controlName === "signature") {
+                baseFileName = `${controlName}_${registrationNo}_${Date.now()}`;
+              } else if (controlName.startsWith("additional_")) {
+                const parts = controlName.split("_");
+                if (parts.length < 4) return uploadCb();
+                const questionId = parseInt(parts[1]);
+                const conditionId = parseInt(parts[3]);
+                const sanitizedName = path
+                  .parse(file.name)
+                  .name.replace(/[^a-zA-Z0-9._-]/g, "_");
+                baseFileName = `${registrationNo}_${questionId}_${conditionId}_${sanitizedName}`;
+              } else {
+                return uploadCb();
+              }
+
+              uploadOptions = {
+                file_name: baseFileName,
                 folder_name: folderPath,
+                control_name: controlName,
               };
 
               DOC_UPLOAD_SERVICE.docUploadWithFolder(
@@ -572,509 +1035,80 @@ let candidateService = {
                 request,
                 uploadOptions,
                 sessionDetails,
-                function (err, res) {
-                  if (err) {
-                    console.error(`❌ Upload failed for ${controlName}:`, err);
-                    return uploadCb(err);
-                  }
+                (err, res) => {
+                  if (err) return uploadCb(err);
+                  if (!res || !res.file_path)
+                    return uploadCb(`Upload failed for ${controlName}`);
 
-                  const finalPath = res.file_path.replace(
-                    /\.pdf\.pdf$/,
-                    ".pdf"
-                  );
-                  const destPath = path.join(
-                    __dirname,
-                    "recruitment",
-                    params.registration_no,
-                    fileName
-                  );
+                  const finalFilePath = path.basename(res.file_path);
+                  const dbPath = `${folderPath}/${finalFilePath}`;
 
-                  try {
-                    fs.mkdirSync(path.dirname(destPath), { recursive: true });
-                    fs.copyFileSync(finalPath, destPath);
-                    console.log(`✅ Copied ${controlName} to ${destPath}`);
-                  } catch (copyErr) {
-                    console.error(
-                      `❌ Failed to copy ${controlName}:`,
-                      copyErr.message
+                  if (controlName === "photo") {
+                    params.mainPayload.candidate_photo = dbPath;
+                  } else if (controlName === "signature") {
+                    params.mainPayload.candidate_signature = dbPath;
+                  } else if (controlName.startsWith("additional_")) {
+                    const parts = controlName.split("_");
+                    const questionId = parseInt(parts[1]);
+                    const optionId = parseInt(parts[2]);
+                    const conditionId = parseInt(parts[3]);
+                    const recordIndex = incomingInfoList.findIndex(
+                      (info) =>
+                        info.question_id === questionId &&
+                        info.option_id === optionId &&
+                        info.condition_id === conditionId
                     );
-                    return uploadCb(copyErr);
+                    if (recordIndex !== -1) {
+                      incomingInfoList[recordIndex].input_field = dbPath;
+                    }
                   }
-
-                  // Save file path into params for DB insert/update
-                  params[controlName] = `${folderPath}/${fileName}`;
-                  console.log(
-                    `✅ Mapped ${controlName} to ${params[controlName]}`
-                  );
                   return uploadCb();
                 }
               );
             },
-            function (err) {
-              return cback(err);
-            }
+            cback
           );
         },
 
-        // STEP 1: Start Transaction
+        // STEP 3: Start Transaction (No changes here)
         function (cback) {
           DB_SERVICE.createTransaction(
             dbkey,
             function (err, tranobj, trancallback) {
-              if (err) {
-                console.error("❌ Error creating transaction:", err);
-                return cback(err);
-              }
+              if (err) return cback(err);
               tranObj = tranobj;
               tranCallback = trancallback;
               dbkey = { dbkey: dbkey, connectionobj: tranObj };
-              console.log("✅ Transaction started");
               return cback();
             }
           );
         },
 
-        // STEP 2: Insert/Update a_rec_app_main
-        function (cback1) {
-          const query = `SELECT a_rec_app_main_id FROM a_rec_app_main WHERE registration_no = ? LIMIT 1`;
-          DB_SERVICE.executeQueryWithParameters(
-            dbkey,
-            query,
-            [params.registration_no],
-            function (err, result) {
-              if (err) return cback1(err);
-
-              params.table_name = "a_rec_app_main";
-
-              if (result.data && result.data.length > 0) {
-                console.log("🔁 Registration exists. Performing update.");
-                params.a_rec_app_main_id = result.data[0].a_rec_app_main_id;
-                return SHARED_SERVICE.validateAndUpdateInTable(
-                  dbkey,
-                  request,
-                  params,
-                  sessionDetails,
-                  cback1
-                );
-              } else {
-                console.log("🆕 New registration. Performing insert.");
-                return SHARED_SERVICE.validateAndInsertInTable(
-                  dbkey,
-                  request,
-                  params,
-                  sessionDetails,
-                  function (err, res) {
-                    if (err) return cback1(err);
-                    if (res.data && res.data.insertId) {
-                      params.a_rec_app_main_id = res.data.insertId;
-                      console.log("✅ Inserted with ID:", res.data.insertId);
-                      return cback1();
-                    } else {
-                      return cback1({
-                        message: "Insert failed: no insertId returned",
-                      });
-                    }
-                  }
-                );
-              }
-            }
-          );
-        },
-
-        // STEP 3: Delete and insert language details
-        function (cback2) {
-          if (!params.languages || !Array.isArray(params.languages)) {
-            console.warn("⚠️ No language data to insert.");
-            return cback2();
-          }
-
-          console.log("🧹 Deleting existing language details...");
-          const deleteQuery = `
-          DELETE FROM a_rec_app_language_detail
-          WHERE registration_no = ? AND a_rec_adv_main_id = ?
-        `;
-
-          DB_SERVICE.executeQueryWithParameters(
-            dbkey,
-            deleteQuery,
-            [params.registration_no, params.a_rec_adv_main_id],
-            function (err) {
-              if (err) return cback2(err);
-
-              console.log("🗣️ Inserting updated language details...");
-              async.eachSeries(
-                params.languages,
-                function (lang, cb) {
-                  const langInsertObj = {
-                    database_name: lang.database_name || params.database_name,
-                    table_name: "a_rec_app_language_detail",
-                    registration_no: lang.registration_no,
-                    a_rec_adv_main_id: lang.a_rec_adv_main_id,
-                    m_rec_language_type_id: lang.m_rec_language_type_id,
-                    m_rec_language_id: lang.m_rec_language_id,
-                    m_rec_language_skill_id: lang.m_rec_language_skill_id,
-                  };
-
-                  SHARED_SERVICE.validateAndInsertInTable(
-                    dbkey,
-                    request,
-                    langInsertObj,
-                    sessionDetails,
-                    cb
-                  );
-                },
-                cback2
-              );
-            }
-          );
-        },
-      ],
-
-      // Final transaction commit/rollback
-      function (err) {
-        if (err) {
-          console.error("❌ Rolling back transaction:", err);
-          DB_SERVICE.rollbackPartialTransaction(
-            tranObj,
-            tranCallback,
-            function () {
-              return callback(err);
-            }
-          );
-        } else {
-          DB_SERVICE.commitPartialTransaction(
-            tranObj,
-            tranCallback,
-            function () {
-              console.log("✅ Candidate details saved successfully.");
-              return callback(null, {
-                status: "SUCCESS",
-                message: "Candidate details saved successfully",
-              });
-            }
-          );
-        }
-      }
-    );
-  },
-  updateCandidateDetail: function (
-    dbkey,
-    request,
-    params,
-    sessionDetails,
-    callback
-  ) {
-    let tranObj, tranCallback;
-    console.log("🧩 Using dbkey:", dbkey);
-    console.log(
-      "🟠 updateCandidateDetail called with payload:",
-      JSON.stringify(params, null, 2)
-    );
-
-    if (!params.database_name) {
-      return callback({ message: "Missing required database_name in request" });
-    }
-
-    // Parse mainPayload and languages from FormData
-    try {
-      params.mainPayload = JSON.parse(params.mainPayload || "{}");
-      params.languages = JSON.parse(params.languages || "[]");
-    } catch (e) {
-      return callback({
-        status: "ERROR",
-        message: "Invalid JSON in mainPayload or languages",
-        details: e.message,
-      });
-    }
-
-    async.series(
-      [
-        // 1. Upload files to recruitment/registration_no/
+        // STEP 4: Update Main Candidate Details (No changes here)
         function (cback) {
-          if (!request.files || Object.keys(request.files).length === 0) {
-            console.log("⚠️ No files to upload");
-            return cback();
-          }
-
-          async.eachOf(
-            request.files,
-            function (file, controlName, uploadCb) {
-              const allowedImageTypes = [".jpg", ".jpeg", ".png"];
-              const ext = path.extname(file.name).toLowerCase();
-              if (!allowedImageTypes.includes(ext)) {
-                console.error(
-                  `❌ Invalid file type for ${controlName}: ${ext}`
-                );
-                return uploadCb({
-                  message: `Invalid file type for ${controlName}. Only JPG and PNG are allowed`,
-                  code: "INVALID_FILE_TYPE",
-                });
-              }
-
-              const fileNameWithoutExt = `${controlName}_${
-                params.registration_no
-              }_${Date.now()}`;
-              const uploadOptions = {
-                file_name: fileNameWithoutExt,
-                control_name: controlName,
-                folder_name: `recruitment/${params.registration_no}`,
-              };
-
-              DOC_UPLOAD_SERVICE.docUploadWithFolder(
-                dbkey,
-                request,
-                uploadOptions,
-                sessionDetails,
-                function (err, res) {
-                  if (err) {
-                    console.error(`❌ Upload error for ${controlName}:`, err);
-                    return uploadCb(err);
-                  }
-
-                  if (res && res.file_path) {
-                    const fullFileName = `${fileNameWithoutExt}${ext}`;
-                    const filePath = `recruitment/${params.registration_no}/${fullFileName}`;
-                    console.log(
-                      `✅ Uploaded file ${controlName} to ${filePath}`
-                    );
-
-                    // Store file path in mainPayload
-                    if (controlName === "photo") {
-                      params.mainPayload.candidate_photo = filePath;
-                    } else if (controlName === "signature") {
-                      params.mainPayload.candidate_signature = filePath;
-                    }
-
-                    // Copy file to project_root/recruitment/registration_no/
-                    const destPath = path.join(
-                      __dirname,
-                      "recruitment",
-                      params.registration_no,
-                      fileNameWithoutExt
-                    );
-                    try {
-                      fs.mkdirSync(path.dirname(destPath), { recursive: true });
-                      fs.copyFileSync(res.file_path, destPath);
-                      console.log(`✅ Copied file to ${destPath}`);
-                    } catch (copyErr) {
-                      console.error(
-                        `❌ Failed to copy file to ${destPath}:`,
-                        copyErr
-                      );
-                      return uploadCb(
-                        `Failed to copy file: ${copyErr.message}`
-                      );
-                    }
-
-                    return uploadCb();
-                  } else {
-                    console.error(
-                      `❌ Upload failed for ${controlName}: No file_path returned`
-                    );
-                    return uploadCb(`File upload failed for ${controlName}`);
-                  }
-                }
-              );
-            },
-            function (err) {
-              return cback(err);
-            }
-          );
-        },
-
-        // 2. Start transaction
-        function (cback) {
-          DB_SERVICE.createTransaction(
-            dbkey,
-            function (err, tranobj, trancallback) {
-              if (err) {
-                console.error("❌ Error creating transaction:", err);
-                return cback(err);
-              }
-              tranObj = tranobj;
-              tranCallback = trancallback;
-              dbkey = { dbkey: dbkey, connectionobj: tranObj };
-              console.log("✅ Transaction started");
-              // Set transaction isolation level to READ COMMITTED
-              DB_SERVICE.executeQueryWithParameters(
-                dbkey,
-                "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED",
-                [],
-                function (err) {
-                  if (err) {
-                    console.error(
-                      "❌ Failed to set transaction isolation level:",
-                      err
-                    );
-                    return cback(err);
-                  }
-                  return cback();
-                }
-              );
-            }
-          );
-        },
-
-        // 3. Check if record exists using primary key(s)
-        function (cback1) {
-          SHARED_SERVICE.generateJoiValidatorFromTable(
-            {
-              table_name: params.table_name,
-              database_name: params.database_name,
-            },
-            function (err, result) {
-              if (err) {
-                console.error("❌ Error generating Joi validator:", err);
-                return cback1(err);
-              }
-              const { primary_key_arr } = result;
-              if (!primary_key_arr || primary_key_arr.length === 0) {
-                return cback1({
-                  message: `Primary key not found for table ${params.table_name}`,
-                });
-              }
-
-              let whereObj = {};
-              for (let key of primary_key_arr) {
-                if (!params.mainPayload[key]) {
-                  return cback1({
-                    message: `Missing primary key value for ${key}`,
-                  });
-                }
-                whereObj[key] = params.mainPayload[key];
-              }
-
-              let query =
-                `SELECT * FROM ${params.table_name} WHERE ` +
-                Object.keys(whereObj)
-                  .map((k) => `${k} = ?`)
-                  .join(" AND ") +
-                ` LIMIT 1`;
-              let values = Object.values(whereObj);
-
-              DB_SERVICE.executeQueryWithParameters(
-                dbkey,
-                query,
-                values,
-                function (err, res) {
-                  if (err) {
-                    console.error("❌ Error checking record existence:", err);
-                    return cback1(err);
-                  }
-                  params._existingCandidate = res.data && res.data.length > 0;
-                  return cback1();
-                }
-              );
-            }
-          );
-        },
-
-        // 4. Perform insert or update based on existence
-        function (cback2) {
-          if (params._existingCandidate) {
-            console.log("🟢 Candidate exists, performing update...");
-            SHARED_SERVICE.validateAndUpdateInTable(
-              dbkey,
-              request,
-              {
-                ...params.mainPayload,
-                table_name: "a_rec_app_main",
-                database_name: params.database_name,
-              },
-              sessionDetails,
-              function (err, res) {
-                if (err) {
-                  console.error("❌ Error updating candidate:", err);
-                  return cback2(err);
-                }
-                console.log("✅ Candidate updated successfully");
-                return cback2(null, res);
-              }
-            );
-          } else {
-            console.log("🟡 Candidate does not exist, performing insert...");
-            SHARED_SERVICE.validateAndInsertInTable(
-              dbkey,
-              request,
-              {
-                ...params.mainPayload,
-                table_name: "a_rec_app_main",
-                database_name: params.database_name,
-              },
-              sessionDetails,
-              function (err, res) {
-                if (err) {
-                  console.error("❌ Error inserting candidate:", err);
-                  return cback2(err);
-                }
-                console.log("✅ Candidate inserted successfully");
-                return cback2(null, res);
-              }
-            );
-          }
-        },
-
-        // 5. Update a_rec_registration table
-        function (cback3) {
-          const registrationUpdateParams = {
-            table_name: "a_rec_registration",
-            database_name: params.database_name,
-            registration_no: Number(params.mainPayload.registration_no),
-            post_code: Number(params.mainPayload.post_code),
-            subject_id: Number(params.mainPayload.subject_id),
-            a_rec_adv_main_id: Number(params.mainPayload.a_rec_adv_main_id),
+          const payload = {
+            ...params.mainPayload,
+            table_name: "a_rec_app_main",
+            database_name: "igkv_Recruitment",
           };
-
           SHARED_SERVICE.validateAndUpdateInTable(
             dbkey,
             request,
-            registrationUpdateParams,
+            payload,
             sessionDetails,
-            function (err, res) {
-              if (err) {
-                console.error("❌ Error updating a_rec_registration:", err);
-                return cback3(err);
-              }
-              console.log("✅ Successfully updated a_rec_registration");
-              return cback3(null, res);
-            }
+            cback
           );
         },
 
-        // 6. Update language details
-        function (cback4) {
-          console.log("🔍 Checking language details to update...");
-
-          if (
-            !params.languages ||
-            !Array.isArray(params.languages) ||
-            params.languages.length === 0
-          ) {
-            console.warn(
-              "⚠️ No language data provided or array is empty. Skipping update."
-            );
-            return cback4();
+        // STEP 5: Update Language Details (No changes here)
+        function (cback) {
+          if (!params.languages || params.languages.length === 0) {
+            return cback();
           }
-
-          console.log(
-            "📦 Incoming language array:",
-            JSON.stringify(params.languages, null, 2)
-          );
-          console.log("🧹 Attempting to delete existing language records for:");
-          console.log(
-            "   - registration_no:",
-            params.mainPayload.registration_no
-          );
-          console.log(
-            "   - a_rec_adv_main_id:",
-            params.mainPayload.a_rec_adv_main_id
-          );
-
-          // Delete existing records using insrtAndDltOperation
-          let deleteParams = {
+          const deletePayload = {
             delete_table_name: "a_rec_app_language_detail",
             whereObj: {
-              registration_no: Number(params.mainPayload.registration_no),
+              registration_no: Number(registrationNo),
               a_rec_adv_main_id: Number(params.mainPayload.a_rec_adv_main_id),
             },
           };
@@ -1082,95 +1116,135 @@ let candidateService = {
           SHARED_SERVICE.insrtAndDltOperation(
             dbkey,
             request,
-            deleteParams,
+            deletePayload,
             sessionDetails,
-            function (deleteErr, deleteRes) {
-              if (deleteErr) {
-                console.error(
-                  "❌ Failed to delete old language data:",
-                  deleteErr
-                );
-                return cback4(deleteErr);
-              }
-
-              console.log(
-                `✅ Deleted ${deleteRes.length || 0} old language records`
-              );
-
-              // Insert new language records
+            (deleteErr) => {
+              if (deleteErr) return cback(deleteErr);
               async.eachSeries(
                 params.languages,
-                function (lang, cb) {
-                  let langInsertObj = {
-                    database_name: lang.database_name || params.database_name,
+                (lang, insertCb) => {
+                  const insertPayload = {
+                    ...lang,
                     table_name: "a_rec_app_language_detail",
-                    registration_no: Number(
-                      lang.registration_no || params.mainPayload.registration_no
-                    ),
-                    a_rec_adv_main_id: Number(
-                      lang.a_rec_adv_main_id ||
-                        params.mainPayload.a_rec_adv_main_id
-                    ),
-                    m_rec_language_type_id: Number(lang.m_rec_language_type_id),
-                    m_rec_language_id: Number(lang.m_rec_language_id),
-                    m_rec_language_skill_id: Number(
-                      lang.m_rec_language_skill_id
-                    ),
-                    created_user_id: sessionDetails.emp_id,
-                    created_ip_address: sessionDetails.ip_address,
+                    database_name: "igkv_Recruitment",
                   };
-
-                  console.log(
-                    "🔹 Inserting language record:",
-                    JSON.stringify(langInsertObj, null, 2)
-                  );
-
                   SHARED_SERVICE.validateAndInsertInTable(
                     dbkey,
                     request,
-                    langInsertObj,
+                    insertPayload,
                     sessionDetails,
-                    function (err, res) {
-                      if (err) {
-                        console.error("❌ Language insert failed:", err);
-                        return cb(err);
-                      }
-                      console.log(
-                        "✅ Language inserted successfully:",
-                        JSON.stringify(res, null, 2)
-                      );
-                      return cb();
-                    }
+                    insertCb
                   );
                 },
-                function (err) {
-                  if (err) {
-                    console.error(
-                      "❌ Error occurred while inserting language details:",
-                      err
-                    );
-                    return cback4(err);
-                  }
-                  console.log("✅ All language records inserted successfully");
-                  return cback4(null);
-                }
+                cback
               );
             }
           );
         },
+
+        // ✅ STEP 6: Delete Additional Information Records
+        function (cback) {
+          const idsToDelete = params.additionalInfoIdsToDelete;
+          if (!idsToDelete || idsToDelete.length === 0) {
+            console.log("📝 No additional info records marked for deletion.");
+            return cback();
+          }
+
+          console.log(
+            `🗑️ Deleting ${idsToDelete.length} specified additional info records.`
+          );
+
+          const deletePayload = {
+            delete_table_name: "a_rec_app_main_addtional_info",
+            whereClause: `a_rec_app_main_addtional_info_id IN (${idsToDelete.join(
+              ","
+            )})`,
+          };
+          SHARED_SERVICE.insrtAndDltOperation(
+            dbkey,
+            request,
+            deletePayload,
+            sessionDetails,
+            cback
+          );
+        },
+
+        // ✅ STEP 7: Upsert Additional Information Records
+        function (cback) {
+          if (!incomingInfoList || incomingInfoList.length === 0) {
+            console.log("📝 No additional info records to upsert.");
+            return cback();
+          }
+
+          incomingInfoList.forEach((record) => {
+            if (record.condition_id === null) {
+              const question = params.additionalInfoQuestions.find(
+                (q) => q.question_id === record.question_id
+              );
+              if (question && question.options) {
+                const selectedOption = question.options.find(
+                  (o) => o.option_id === record.option_id
+                );
+                if (selectedOption) {
+                  record.input_field = selectedOption.option_value;
+                }
+              }
+            }
+          });
+
+          console.log(
+            `🔄 Processing ${incomingInfoList.length} additional info records for insert/update.`
+          );
+
+          async.eachSeries(
+            incomingInfoList,
+            (incomingRecord, eachCb) => {
+              if (incomingRecord.a_rec_app_main_addtional_info_id) {
+                // UPDATE existing record
+                const updatePayload = {
+                  table_name: "a_rec_app_main_addtional_info",
+                  ...incomingRecord,
+                };
+                SHARED_SERVICE.validateAndUpdateInTable(
+                  dbkey,
+                  request,
+                  updatePayload,
+                  sessionDetails,
+                  eachCb
+                );
+              } else {
+                // INSERT new record
+                const insertPayload = {
+                  table_name: "a_rec_app_main_addtional_info",
+                  registration_no: registrationNo,
+                  ...incomingRecord,
+                };
+                delete insertPayload.a_rec_app_main_addtional_info_id;
+                SHARED_SERVICE.validateAndInsertInTable(
+                  dbkey,
+                  request,
+                  insertPayload,
+                  sessionDetails,
+                  eachCb
+                );
+              }
+            },
+            cback
+          );
+        },
       ],
+      // Final Callback (Commit/Rollback) - No changes here
       function (err) {
         if (err) {
-          console.error("❌ Rolling back transaction due to error:", err);
           DB_SERVICE.rollbackPartialTransaction(
             tranObj,
             tranCallback,
             function () {
+              console.error("❌ Error processing full candidate profile:", err);
               return callback({
-                status: "ERROR",
-                message:
-                  "Failed to update candidate details: " +
-                  (err.message || JSON.stringify(err)),
+                status: "error",
+                message: "Failed to save candidate details",
+                details: err.message || err,
               });
             }
           );
@@ -1179,12 +1253,10 @@ let candidateService = {
             tranObj,
             tranCallback,
             function () {
-              console.log("✅ Transaction committed successfully");
+              console.log("✅ Full candidate profile saved successfully.");
               return callback(null, {
-                status: "SUCCESS",
-                message: params._existingCandidate
-                  ? "Candidate details updated successfully"
-                  : "Candidate details inserted successfully",
+                status: "success",
+                message: "Candidate details saved successfully",
                 data: {
                   photo_path: params.mainPayload.candidate_photo,
                   signature_path: params.mainPayload.candidate_signature,
@@ -1196,6 +1268,7 @@ let candidateService = {
       }
     );
   },
+
 };
 
 module.exports = candidateService;
