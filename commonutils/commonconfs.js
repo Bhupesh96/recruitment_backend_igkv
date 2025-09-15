@@ -19,10 +19,14 @@ var confs = {
     getigkv_establishment: function () {
         return JSON.parse(JSON.stringify(config.get('igkv_establishment')));
     },
+    getigkv_OnlineExam: function () {
+        return JSON.parse(JSON.stringify(config.get('igkv_online_exam')));
+    },
 
 }
 
 confs.map_dbkey_database = {
+    "7": confs.getigkv_OnlineExam(),
     "4": confs.getigkv_Recruitment(),
     "3": confs.getigkv_establishment(),
     "2": confs.getigkv_academic(),

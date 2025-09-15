@@ -533,7 +533,27 @@ var executeQueryWithParametersandDbObj = function (dbobj, query, params, callbac
         });
     }, dbconnection);
 };
+var getInsertWithUpdateClauseWithParams = function (obj, updateObj, tablename) {
+    const params = [];
+    const keys = Object.keys(obj);
+    const values = Object.values(obj);
 
+    const columnList = keys.join(', ');
+    const parameterList = keys.map((_, idx) => `$${idx + 1}`).join(', ');
+
+    // Build ON DUPLICATE KEY UPDATE part
+    const updateList = Object.keys(updateObj)
+        .map((key, idx) => `${key} = VALUES(${key})`)
+        .join(', ');
+
+    const query = `
+        INSERT INTO ${tablename} (${columnList})
+        VALUES (${parameterList})
+       ON DUPLICATE KEY UPDATE ${updateList};
+    `.trim();
+    return { query, params: values };
+};
+module.exports.getInsertWithUpdateClauseWithParams = getInsertWithUpdateClauseWithParams;
 var getConnectiontoDbObj = function (connectionParams, callback, dbconnection) {
     if (dbconnection) {
         connectionParams = dbconnection;
@@ -845,7 +865,7 @@ let getQueryFromID = function (dbkey, params, sessionDetails, callback) {
                     break;
                 }
             }
-            //console.log(qAnpPObj.query, p);
+            console.log(qAnpPObj.query, p);
 
             if (validParam) {
                 return callback(null, { query: qAnpPObj.query, params: p, dbkey: excuteQueryDbkey });

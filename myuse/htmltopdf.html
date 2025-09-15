@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to HTML</title>
+    <style>
+        body {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        h3 {
+            margin-top: 20px;
+            margin-bottom: 5px;
+            font-size: 15px;
+            font-weight: bold !important;
+        }
+
+        header {
+            border-bottom: 1px solid #000;
+            padding-bottom: 15px !important;
+        }
+
+        footer {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100% !important;
+        }
+
+        thead>tr>td,
+        thead>tr>th,
+        .table-footer>td {
+            font-size: 15px;
+            text-align: center !important;
+            font-weight: bold !important;
+            text-decoration: underline !important;
+            border: 1px solid #000
+        }
+
+        td {
+            padding: 2px;
+        }
+
+        table>tbody>tr>td {
+            border: 0.7px solid #000;
+            text-align: center !important;
+            font-size: 15px;
+        }
+
+        /* Watermark style */
+        .watermark::before,
+        .watermark::after {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+
+            color: rgba(0, 0, 0, 0.2);
+            z-index: 0;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .watermark::before {
+            content: '  Unified Farmer Portal';
+            font-size: 80px;
+            margin-top: -20px;
+        }
+
+        .watermark::after {
+            content: 'For Internal Use Only';
+            font-size: 40px;
+            margin-top: 80px;
+        }
+
+        .text-start {
+            text-align: left !important;
+        }
+
+        .text-end {
+            text-align: right !important;
+        }
+    </style>
+</head>
+
+<body class="watermark">
+    {{{html}}}
+</body>
+
+</html>

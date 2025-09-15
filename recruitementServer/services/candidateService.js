@@ -403,32 +403,16 @@ let candidateService = {
       // Final callback (no changes here)
       function (err) {
         if (err) {
-          DB_SERVICE.rollbackPartialTransaction(
-            tranObj,
-            tranCallback,
-            function () {
-              console.error("❌ Error processing candidate scorecard:", err);
-              return callback({
-                status: "error",
-                message: "Failed to process candidate scorecard",
-                details: err.message || err,
-              });
-            }
+          DB_SERVICE.rollbackPartialTransaction(tranObj, tranCallback, () =>
+            callback(err)
           );
         } else {
-          DB_SERVICE.commitPartialTransaction(
-            tranObj,
-            tranCallback,
-            function () {
-              console.log(
-                "✅ Candidate scorecard processed successfully (C/U/D)."
-              );
-              return callback(null, {
-                status: "success",
-                message: "Candidate scorecard processed successfully",
-              });
-            }
-          );
+          DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
+            callback(null, {
+              ...securityService.SECURITY_ERRORS.SUCCESS,
+              message: "Template format saved successfully",
+            });
+          });
         }
       }
     );
@@ -850,100 +834,8 @@ let candidateService = {
       }
     );
   },
-  getAddtionalInforList: function (
-    dbkey,
-    request,
-    params,
-    sessionDetails,
-    callback
-  ) {
-    let response = {};
 
-    async.series(
-      [
-        // 1. Get all questions
-        function (c1) {
-          sessionDetails.query_id = 182; // 👉 query for questions
-          DB_SERVICE.getQueryDataFromId(
-            dbkey,
-            request,
-            params,
-            sessionDetails,
-            (err, res) => {
-              if (err) return c1(err);
-              response.questions = res || [];
-              return c1();
-            }
-          );
-        },
-
-        // 2. For each question, get options and conditions
-        function (c2) {
-          async.eachSeries(
-            response.questions,
-            function (q, cb1) {
-              // 👉 Fetch options for this question
-              sessionDetails.query_id = 182; // 👉 query for options
-              const optParams = { additional_options_option: q.question_id };
-
-              DB_SERVICE.getQueryDataFromId(
-                dbkey,
-                request,
-                optParams,
-                sessionDetails,
-                (err, options) => {
-                  if (err) return cb1(err);
-                  q.options = options || [];
-
-                  // 👉 For each option, only fetch conditions if has_condition = 'Y'
-                  async.eachSeries(
-                    q.options,
-                    function (o, cb2) {
-                      if (o.has_condition === "Y") {
-                        sessionDetails.query_id = 182; // 👉 query for conditions
-                        const condParams = {
-                          m_datatype_master_name: o.question_id,
-                        };
-
-                        DB_SERVICE.getQueryDataFromId(
-                          dbkey,
-                          request,
-                          condParams,
-                          sessionDetails,
-                          (err, conditions) => {
-                            if (err) return cb2(err);
-                            o.conditions = conditions || [];
-                            return cb2();
-                          }
-                        );
-                        // return cb2();
-                      } else {
-                        // ❌ No conditions for this option
-                        o.conditions = [];
-                        return cb2();
-                      }
-                    },
-                    cb1
-                  );
-                }
-              );
-            },
-            c2
-          );
-        },
-      ],
-      function (err) {
-        if (err) return callback(err, null);
-
-        // ✅ Final JSON response
-        return callback(null, {
-          questions: response.questions,
-        });
-      }
-    );
-  },
-
-   saveOrUpdateFullCandidateProfile: function (
+    saveOrUpdateFullCandidateProfile: function (
     dbkey,
     request,
     params,

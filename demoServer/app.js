@@ -23,14 +23,14 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 5
 
 
 
-const limit = rateLimit({
-    windowMs: 60 * 1000,
-    max: 100,
-    message: 'Too Many Request',
-    standardHeaders: true,
-})
+// const limit = rateLimit({
+//     windowMs: 60 * 1000,
+//     max: 100,
+//     message: 'Too Many Request',
+//     standardHeaders: true,
+// })
 
-app.use(limit);
+// app.use(limit);
 
 var getDbKey = function (req, callback) {
     return callback(null, global.COMMON_CONFS.getDemoDBDetails());

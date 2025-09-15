@@ -1,10 +1,8 @@
 let ERROR_SERVICE = global.ERROR_SERVICE;
 let COMMON_SECURITY_SERVICE = global.COMMON_SECURITY_SERVICE;
 
-const candidateService = require("./candidateService.js");
-let masterService = require("./masterService.js");
-
-let scoreCardEntryService = require("./scoreCardEntryService.js");
+let masterService = require("../services/masterService.js");
+let candidateService = require("../services/candidateService.js");
 
 var security = {
   commonFunctionToCall: function (
@@ -107,9 +105,6 @@ var security = {
 
 let service_files = {
   master: masterService,
-
-  scoreCardEntry: scoreCardEntryService,
-
   candidate: candidateService,
 };
 
@@ -118,7 +113,6 @@ let service_files = {
 let noApiPermissionRequiredServices = {
   candidate: [
     "saveOrUpdateCandidateScoreCard",
-    "getAddtionalInforList",
     "saveOrUpdateQuantityBasedCandidateDetails",
     "saveOrUpdateFullCandidateProfile",
   ],

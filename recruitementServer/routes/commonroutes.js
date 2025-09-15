@@ -22,6 +22,24 @@ var init = function (app) {
       true
     );
   });
+  app.post(
+    prefix + "/master/postFile/:function_name",
+    fileUpload({
+      createParentPath: true,
+      limits: { fileSize: 5000 * 1024 },
+      abortOnLimit: true,
+    }),
+    function (req, res, next) {
+      securityService.commonFunctionToCall(
+        "master",
+        req.params["function_name"],
+        req,
+        res,
+        req.body,
+        true
+      );
+    }
+  );
   app.delete(
     prefix + "/master/delete/:function_name",
     function (req, res, next) {
@@ -45,25 +63,6 @@ var init = function (app) {
       true
     );
   });
-
-  app.post(
-    prefix + "/master/postFile/:function_name",
-    fileUpload({
-      createParentPath: true,
-      limits: { fileSize: 5000 * 1024 },
-      abortOnLimit: true,
-    }),
-    function (req, res, next) {
-      securityService.commonFunctionToCall(
-        "master",
-        req.params["function_name"],
-        req,
-        res,
-        req.body,
-        true
-      );
-    }
-  );
 
   app.get(
     prefix + "/scoreCardEntry/get/:function_name",

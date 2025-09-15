@@ -1,8 +1,11 @@
 let ERROR_SERVICE = global.ERROR_SERVICE;
 let COMMON_SECURITY_SERVICE = global.COMMON_SECURITY_SERVICE;
-var masterService = require('../services/masterService.js');
-let loginServeice = require('../services/loginService.js');
 
+let masterService = require('./masterService.js');
+
+let scoreCardEntryService = require('./scoreCardEntryService.js');
+
+let candidateService = require('./candidateService.js');
 
 var security = {
     commonFunctionToCall: function (service_name, funcName, req, res, params, ispermreq, resSendCallback) {
@@ -32,24 +35,28 @@ var security = {
                     console.error(error);
                     COMMON_SECURITY_SERVICE.sendErrorResponse(COMMON_SECURITY_SERVICE.SECURITY_ERRORS.UNKNOWN_ERROR, res, resSendCallback, 500);
                 }
-            } else {
+            }else {
                 return COMMON_SECURITY_SERVICE.handleAuthorizationError(err, ispermit, sessionDetails, res);
             }
         });
     },
 }
+
 let service_files = {
-    "master": masterService,
-    "login": loginServeice,
+    
+ "master" : masterService,
+
+ "scoreCardEntry" : scoreCardEntryService,
+
+ "candidate" : candidateService,
+
 }
+
+
 // no need to check designation_id in header 
 // add file and function name here 
 let noApiPermissionRequiredServices = {
-    "master": ["getAllMenuByEmpId", "getDesignationDetailsByEmpId", "getMenuPermissionDetailsByMenuRoute"]
+    scoreCardEntry:["saveAdvertisementDetail"]
 }
-
-
-
-
 
 module.exports = security

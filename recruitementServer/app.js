@@ -71,19 +71,18 @@ app.use((req, res, next) => {
 
 let sessionStore = new MySQLStore(option);
 
-var session_config = {
-  secret: "secret_key",
-  name: "session",
+const session_config = {
+  secret: 'secret_key',
+  name: 'session',
   resave: false,
   saveUninitialized: false,
   store: sessionStore,
   cookie: {
-    httpOnly: false,
-    maxAge: 6 * 60 * 60 * 1000, //set the expiry of token to 6hour
-    // sameSite: 'none',
-    secure: false,
-  },
-  //rolling: false // Stop session rolling
+    httpOnly: true,
+    maxAge: 6 * 60 * 60 * 1000, // 6 hours
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+  }
 };
 
 app.use(session(session_config));
@@ -93,15 +92,15 @@ if (app.get("env") === "production") {
   session_config.cookie.secure = true; // serve secure cookies
 }
 
-app.use(
-  "/recruitment",
-  function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Cross-Origin-Resource-Policy", "cross-origin");
-    next();
-  },
-  express.static(path.join(__dirname, "recruitment"))
-);
+// app.use(
+//   "/recruitment",
+//   function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Cross-Origin-Resource-Policy", "cross-origin");
+//     next();
+//   },
+//   express.static(path.join(__dirname, "recruitment"))
+// );
 
 var initAllFiles = function () {
   global.apiPrefix = "/recruitementApi"; // this is used to set the prefix for all the routes.
