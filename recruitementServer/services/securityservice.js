@@ -116,7 +116,6 @@ let noApiPermissionRequiredServices = {
   candidate: [
     "saveOrUpdateCandidateScoreCard",
     "saveOrUpdateQuantityBasedCandidateDetails",
-    "saveOrUpdateFullCandidateProfile",
     "updateFinalDeclaration",
   ],
 };

@@ -31,11 +31,10 @@ var init = function (app) {
         securityService.commonFunctionToCall(service_file, 'resetPasswordByDept', req, res, req.body, true)
     });
     app.get(prefix + "/security/logout", function (req, res, next) {
-        securityService.commonFunctionToCall(service_file, 'logout', req, res, req.body, true)
-        // securityService.logout(req.query.dbkey, req, req.body, req.session, function (err, result) {
-        //     // console.log(err, result);
-        //     res.json({ error: err, data: result });
-        // })
+        LOGIN_SERVICE.logout(req.query.dbkey, req, req.body, req.session, function (err, result) {
+            // console.log(err, result);
+            res.json({error: err, data: result});
+        })
     });
     app.get(prefix + "/security/refreshSession", function (req, res, next) {
         securityService.commonFunctionToCall(service_file, 'refreshSession', req, res, req.body, true, (err, result) => {
