@@ -202,5 +202,54 @@ var init = function (app) {
       );
     }
   );
+  app.get(prefix + "/publicApi/get/:function_name", function (req, res, next) {
+    securityService.commonFunctionToCall(
+      "publicApi",
+      req.params["function_name"],
+      req,
+      res,
+      req.query,
+      false
+    );
+  });
+  app.post(
+    prefix + "/publicApi/post/:function_name",
+    function (req, res, next) {
+      securityService.commonFunctionToCall(
+        "publicApi",
+        req.params["function_name"],
+        req,
+        res,
+        req.body,
+        false
+      );
+    }
+  );
+  app.delete(
+    prefix + "/publicApi/delete/:function_name",
+    function (req, res, next) {
+      securityService.commonFunctionToCall(
+        "publicApi",
+        req.params["function_name"],
+        req,
+        res,
+        req.query,
+        false
+      );
+    }
+  );
+  app.put(
+    prefix + "/publicApi/update/:function_name",
+    function (req, res, next) {
+      securityService.commonFunctionToCall(
+        "publicApi",
+        req.params["function_name"],
+        req,
+        res,
+        req.body,
+        false
+      );
+    }
+  );
 };
 module.exports.init = init;

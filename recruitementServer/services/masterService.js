@@ -327,8 +327,36 @@ let masterService = {
       });
   },
   
+ // masterService
  
+       getDataByQueryId: function (dbkey, request, params, sessionDetails, callback) {
+        let response = {};
 
+        // Parse query_id safely
+        const query_id = Number(params.query_id);
+
+        async.series([
+            // 1. Get main data by query_id
+            function (c_1) {
+                if (!query_id) return c_1(new Error("query_id is required and must be number."));
+
+                console.log("query_id:", query_id);
+
+                sessionDetails.query_id = query_id; // ✅ now number
+                DB_SERVICE.getQueryDataFromId(dbkey, request, params, sessionDetails, (err, res) => {
+                    if (err) return c_1(err);
+
+                    // store base data
+                    response = res || [];
+                    return c_1();
+                });
+            }
+
+        ], function (err) {
+            if (err) return callback(err, null);
+            return callback(null, response);
+        });
+    },
   // getPostType: function (dbkey, request, params, sessionDetails, callback) {
   //     return DB_SERVICE.getQueryDataFromId(dbkey, request, params, sessionDetails, callback)
   // },

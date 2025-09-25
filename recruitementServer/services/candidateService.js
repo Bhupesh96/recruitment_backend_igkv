@@ -410,7 +410,7 @@ let candidateService = {
           DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
             callback(null, {
               ...securityService.SECURITY_ERRORS.SUCCESS,
-              message: "Template format saved successfully",
+              message: "Candidate Data saved successfully",
             });
           });
         }
@@ -817,25 +817,18 @@ let candidateService = {
             }
           );
         } else {
-          DB_SERVICE.commitPartialTransaction(
-            tranObj,
-            tranCallback,
-            function () {
-              console.log(
-                "✅ Candidate scorecard processed successfully (C/U/D)."
-              );
-              return callback(null, {
-                status: "success",
-                message: "Candidate scorecard processed successfully",
-              });
-            }
-          );
+          DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
+            callback(null, {
+              ...securityService.SECURITY_ERRORS.SUCCESS,
+              message: "Candidate Data saved successfully",
+            });
+          });
         }
       }
     );
   },
 
-    saveOrUpdateFullCandidateProfile: function (
+  saveOrUpdateFullCandidateProfile: function (
     dbkey,
     request,
     params,
@@ -853,7 +846,6 @@ let candidateService = {
       params.additionalInfoQuestions = JSON.parse(
         request.body.additionalInfoQuestions || "[]"
       );
-      // ✅ NEW: Parse the array of additional info record IDs to be deleted.
       params.additionalInfoIdsToDelete = JSON.parse(
         request.body.additionalInfoIdsToDelete || "[]"
       );
@@ -878,7 +870,7 @@ let candidateService = {
 
     async.series(
       [
-        // STEP 2: Handle ALL file uploads (No changes here)
+        // STEP 2: Handle ALL file uploads
         function (cback) {
           if (!request.files || Object.keys(request.files).length === 0) {
             console.log(
@@ -962,7 +954,7 @@ let candidateService = {
           );
         },
 
-        // STEP 3: Start Transaction (No changes here)
+        // STEP 3: Start Transaction
         function (cback) {
           DB_SERVICE.createTransaction(
             dbkey,
@@ -976,8 +968,13 @@ let candidateService = {
           );
         },
 
-        // STEP 4: Update Main Candidate Details (No changes here)
+        // STEP 4: Update Main Candidate Details
         function (cback) {
+          Object.keys(params.mainPayload).forEach((key) => {
+            if (params.mainPayload[key] === "") {
+              params.mainPayload[key] = null;
+            }
+          });
           const payload = {
             ...params.mainPayload,
             table_name: "a_rec_app_main",
@@ -992,7 +989,7 @@ let candidateService = {
           );
         },
 
-        // STEP 5: Update Language Details (No changes here)
+        // STEP 5: Update Language Details
         function (cback) {
           if (!params.languages || params.languages.length === 0) {
             return cback();
@@ -1034,7 +1031,7 @@ let candidateService = {
           );
         },
 
-        // ✅ STEP 6: Delete Additional Information Records
+        // STEP 6: ⭐ CORRECTED LOGIC - Delete orphaned Additional Information records
         function (cback) {
           const idsToDelete = params.additionalInfoIdsToDelete;
           if (!idsToDelete || idsToDelete.length === 0) {
@@ -1043,25 +1040,33 @@ let candidateService = {
           }
 
           console.log(
-            `🗑️ Deleting ${idsToDelete.length} specified additional info records.`
+            `🗑️ Deleting ${idsToDelete.length} specified additional info records one by one.`
           );
 
-          const deletePayload = {
-            delete_table_name: "a_rec_app_main_addtional_info",
-            whereClause: `a_rec_app_main_addtional_info_id IN (${idsToDelete.join(
-              ","
-            )})`,
-          };
-          SHARED_SERVICE.insrtAndDltOperation(
-            dbkey,
-            request,
-            deletePayload,
-            sessionDetails,
-            cback
+          // Iterate over each ID and delete it individually using the correct 'whereObj' key
+          async.eachSeries(
+            idsToDelete,
+            (recordIdToDelete, eachCb) => {
+              const deletePayload = {
+                delete_table_name: "a_rec_app_main_addtional_info",
+                // The service expects 'whereObj'
+                whereObj: {
+                  a_rec_app_main_addtional_info_id: recordIdToDelete,
+                },
+              };
+              SHARED_SERVICE.insrtAndDltOperation(
+                dbkey,
+                request,
+                deletePayload,
+                sessionDetails,
+                eachCb // Callback for the next item in the loop
+              );
+            },
+            cback // Final callback for when the entire loop is finished
           );
         },
 
-        // ✅ STEP 7: Upsert Additional Information Records
+        // STEP 7: Upsert the remaining Additional Information records
         function (cback) {
           if (!incomingInfoList || incomingInfoList.length === 0) {
             console.log("📝 No additional info records to upsert.");
@@ -1125,7 +1130,7 @@ let candidateService = {
           );
         },
       ],
-      // Final Callback (Commit/Rollback) - No changes here
+      // Final Callback (Commit/Rollback)
       function (err) {
         if (err) {
           DB_SERVICE.rollbackPartialTransaction(
@@ -1141,26 +1146,68 @@ let candidateService = {
             }
           );
         } else {
-          DB_SERVICE.commitPartialTransaction(
-            tranObj,
-            tranCallback,
-            function () {
-              console.log("✅ Full candidate profile saved successfully.");
-              return callback(null, {
-                status: "success",
-                message: "Candidate details saved successfully",
-                data: {
-                  photo_path: params.mainPayload.candidate_photo,
-                  signature_path: params.mainPayload.candidate_signature,
-                },
-              });
-            }
-          );
+          DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
+            callback(null, {
+              ...securityService.SECURITY_ERRORS.SUCCESS,
+              message: "Candidate Data saved successfully",
+            });
+          });
         }
       }
     );
   },
+  updateFinalDeclaration: function (
+    dbkey,
+    request,
+    params,
+    sessionDetails,
+    callback
+  ) {
+    let registration_no;
 
+    try {
+      registration_no = request.body.registration_no;
+      if (!registration_no) {
+        throw new Error("Registration number is required.");
+      }
+    } catch (e) {
+      return callback({
+        status: "error",
+        message: "Invalid request body",
+        details: e.message,
+      });
+    }
+
+    console.log(
+      `📝 Marking final declaration for registration_no: ${registration_no}`
+    );
+
+    // This is the only data we are updating
+    const updatePayload = {
+      table_name: "a_rec_app_main",
+      registration_no: registration_no,
+      Is_Final_Decl_YN: "Y", // Set the declaration flag to 'Yes'
+    };
+
+    // Use the existing shared service to perform the update securely
+    SHARED_SERVICE.validateAndUpdateInTable(
+      dbkey,
+      request,
+      updatePayload,
+      sessionDetails,
+      (err, result) => {
+        if (err) {
+          console.error("❌ Error updating final declaration:", err);
+          return callback(err);
+        }
+        console.log(`✅ Successfully updated final declaration for ${registration_no}`);
+        return callback(null, {
+          ...securityService.SECURITY_ERRORS.SUCCESS,
+          message: "Application successfully submitted.",
+        });
+      }
+    );
+  },
 };
 
 module.exports = candidateService;

@@ -92,15 +92,15 @@ if (app.get("env") === "production") {
   session_config.cookie.secure = true; // serve secure cookies
 }
 
-// app.use(
-//   "/recruitment",
-//   function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Cross-Origin-Resource-Policy", "cross-origin");
-//     next();
-//   },
-//   express.static(path.join(__dirname, "recruitment"))
-// );
+app.use(
+  "/recruitment",
+  function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Cross-Origin-Resource-Policy", "cross-origin");
+    next();
+  },
+  express.static(path.join(__dirname, "recruitment"))
+);
 
 var initAllFiles = function () {
   global.apiPrefix = "/recruitementApi"; // this is used to set the prefix for all the routes.

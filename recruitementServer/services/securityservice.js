@@ -3,7 +3,8 @@ let COMMON_SECURITY_SERVICE = global.COMMON_SECURITY_SERVICE;
 
 let masterService = require("../services/masterService.js");
 let candidateService = require("../services/candidateService.js");
-
+let publicService = require("../services/publicApiService.js");
+const publicApiService = require("../services/publicApiService.js");
 var security = {
   commonFunctionToCall: function (
     service_name,
@@ -106,6 +107,7 @@ var security = {
 let service_files = {
   master: masterService,
   candidate: candidateService,
+  publicApi: publicApiService,
 };
 
 // no need to check designation_id in header
@@ -115,6 +117,7 @@ let noApiPermissionRequiredServices = {
     "saveOrUpdateCandidateScoreCard",
     "saveOrUpdateQuantityBasedCandidateDetails",
     "saveOrUpdateFullCandidateProfile",
+    "updateFinalDeclaration",
   ],
 };
 
