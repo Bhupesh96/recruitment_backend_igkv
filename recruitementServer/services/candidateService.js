@@ -379,8 +379,10 @@ let candidateService = {
                   request,
                   {
                     table_name: "a_rec_app_score_field_parameter_detail",
+                    
                     ...param,
                   },
+                  
                   sessionDetails,
                   paramCb
                 );
