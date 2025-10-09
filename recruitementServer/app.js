@@ -78,7 +78,7 @@ const session_config = {
   saveUninitialized: false,
   store: sessionStore,
   cookie: {
-    httpOnly: true,
+    httpOnly: false,
     maxAge: 6 * 60 * 60 * 1000, // 6 hours
     secure: process.env.NODE_ENV === 'production',
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'

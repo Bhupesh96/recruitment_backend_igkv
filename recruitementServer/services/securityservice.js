@@ -5,6 +5,7 @@ let masterService = require("../services/masterService.js");
 let candidateService = require("../services/candidateService.js");
 let publicService = require("../services/publicApiService.js");
 const publicApiService = require("../services/publicApiService.js");
+const scoreCardEntryService = require("./scoreCardEntryService.js");
 var security = {
   commonFunctionToCall: function (
     service_name,
@@ -108,6 +109,7 @@ let service_files = {
   master: masterService,
   candidate: candidateService,
   publicApi: publicApiService,
+  scoreCardEntry: scoreCardEntryService,
 };
 
 // no need to check designation_id in header
@@ -117,7 +119,9 @@ let noApiPermissionRequiredServices = {
     "saveOrUpdateCandidateScoreCard",
     "saveOrUpdateQuantityBasedCandidateDetails",
     "updateFinalDeclaration",
+    "saveOrUpdateCandidateScoreCardForScreening",
   ],
+  publicApi: [],
 };
 
 module.exports = security;

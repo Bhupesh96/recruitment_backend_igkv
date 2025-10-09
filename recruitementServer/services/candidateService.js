@@ -7,6 +7,7 @@ const path = require("path");
 const fs = require("fs");
 
 let candidateService = {
+  //candidate
   saveOrUpdateCandidateScoreCard: function (
     dbkey,
     request,
@@ -970,23 +971,49 @@ let candidateService = {
 
         // STEP 4: Update Main Candidate Details
         function (cback) {
+          // Sanitize empty strings to null, which is good for the database
           Object.keys(params.mainPayload).forEach((key) => {
             if (params.mainPayload[key] === "") {
               params.mainPayload[key] = null;
             }
           });
+
           const payload = {
             ...params.mainPayload,
             table_name: "a_rec_app_main",
             database_name: "igkv_Recruitment",
           };
-          SHARED_SERVICE.validateAndUpdateInTable(
-            dbkey,
-            request,
-            payload,
-            sessionDetails,
-            cback
-          );
+
+          // Check if we are updating an existing record or inserting a new one
+          if (payload.a_rec_app_main_id) {
+            // --- UPDATE PATH ---
+            // The record already exists, so we update it.
+            console.log(
+              `🔄 Updating existing record in a_rec_app_main with ID: ${payload.a_rec_app_main_id}`
+            );
+            SHARED_SERVICE.validateAndUpdateInTable(
+              dbkey,
+              request,
+              payload,
+              sessionDetails,
+              cback
+            );
+          } else {
+            // --- INSERT PATH ---
+            // The record is new, so we insert it.
+            console.log(
+              `➕ Inserting new record into a_rec_app_main for registration_no: ${payload.registration_no}`
+            );
+            // It's good practice to remove the null primary key before inserting.
+            delete payload.a_rec_app_main_id;
+            SHARED_SERVICE.validateAndInsertInTable(
+              dbkey,
+              request,
+              payload,
+              sessionDetails,
+              cback
+            );
+          }
         },
 
         // STEP 5: Update Language Details
@@ -1133,17 +1160,8 @@ let candidateService = {
       // Final Callback (Commit/Rollback)
       function (err) {
         if (err) {
-          DB_SERVICE.rollbackPartialTransaction(
-            tranObj,
-            tranCallback,
-            function () {
-              console.error("❌ Error processing full candidate profile:", err);
-              return callback({
-                status: "error",
-                message: "Failed to save candidate details",
-                details: err.message || err,
-              });
-            }
+          DB_SERVICE.rollbackPartialTransaction(tranObj, tranCallback, () =>
+            callback(err)
           );
         } else {
           DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
@@ -1163,12 +1181,16 @@ let candidateService = {
     sessionDetails,
     callback
   ) {
-    let registration_no;
+    let registration_no, a_rec_app_main_id; // Declare both variables
 
     try {
+      // ✅ Read both required fields from the request body
       registration_no = request.body.registration_no;
-      if (!registration_no) {
-        throw new Error("Registration number is required.");
+      a_rec_app_main_id = request.body.a_rec_app_main_id;
+
+      // ✅ Validate that both fields exist
+      if (!registration_no || !a_rec_app_main_id) {
+        throw new Error("Registration number and Application ID are required.");
       }
     } catch (e) {
       return callback({
@@ -1179,17 +1201,20 @@ let candidateService = {
     }
 
     console.log(
-      `📝 Marking final declaration for registration_no: ${registration_no}`
+      `📝 Marking final declaration for registration_no: ${registration_no}, a_rec_app_main_id: ${a_rec_app_main_id}`
     );
 
-    // This is the only data we are updating
+    // This is the data for the update operation
     const updatePayload = {
       table_name: "a_rec_app_main",
+      // --- Fields for the WHERE clause ---
       registration_no: registration_no,
+      a_rec_app_main_id: a_rec_app_main_id, // ✅ Pass the ID for precise targeting
+      // --- Field to be SET ---
       Is_Final_Decl_YN: "Y", // Set the declaration flag to 'Yes'
     };
 
-    // Use the existing shared service to perform the update securely
+    // Use the existing SHARED_SERVICE service to perform the update securely
     SHARED_SERVICE.validateAndUpdateInTable(
       dbkey,
       request,
@@ -1200,11 +1225,544 @@ let candidateService = {
           console.error("❌ Error updating final declaration:", err);
           return callback(err);
         }
-        console.log(`✅ Successfully updated final declaration for ${registration_no}`);
+        console.log(
+          `✅ Successfully updated final declaration for ${registration_no}`
+        );
         return callback(null, {
           ...securityService.SECURITY_ERRORS.SUCCESS,
           message: "Application successfully submitted.",
         });
+      }
+    );
+  },
+
+  //screening
+  saveOrUpdateCandidateScoreCardForScreening: function (
+    dbkey,
+    request,
+    params,
+    sessionDetails,
+    callback
+  ) {
+    let tranObj, tranCallback;
+
+    // STEP 0: Parse request body from FormData
+    try {
+      params.registration_no = request.body.registration_no;
+      params.scoreFieldDetailList = JSON.parse(
+        request.body.scoreFieldDetailList || "[]"
+      );
+      params.scoreFieldParameterList = JSON.parse(
+        request.body.scoreFieldParameterList || "[]"
+      );
+      params.parentScore = request.body.parentScore
+        ? JSON.parse(request.body.parentScore)
+        : null;
+    } catch (e) {
+      return callback({
+        status: "error",
+        message: "Invalid JSON in request body",
+        details: e.message,
+      });
+    }
+
+    const detailList = params.scoreFieldDetailList;
+    let paramList = params.scoreFieldParameterList;
+    const parentRecord = params.parentScore;
+
+    async.series(
+      [
+        // STEP 1: Handle File Uploads (No changes needed here)
+        function (cback) {
+          if (!request.files || Object.keys(request.files).length === 0) {
+            console.log("📝 No new files to upload for screening.");
+            return cback();
+          }
+          console.log(
+            `🚀 Processing ${
+              Object.keys(request.files).length
+            } files for screening...`
+          );
+
+          async.eachOf(
+            request.files,
+            function (file, controlName, uploadCb) {
+              if (!file || !file.name) {
+                return uploadCb();
+              }
+              const parts = controlName.split("_");
+              if (parts.length < 6) {
+                return uploadCb();
+              }
+
+              const subHeadingId = parseInt(parts[1]);
+              const scoreFieldId = parseInt(parts[2]);
+              const paramId = parseInt(parts[3]);
+              const rowIndex = parseInt(parts[5]);
+              const baseName = path.parse(file.name).name;
+              const sanitizedName = baseName
+                .replace(/[^a-zA-Z0-9._-]/g, "_")
+                .replace(/_+/g, "_")
+                .replace(/^_+|_+$/g, "");
+              const fileName = `${params.registration_no}_${subHeadingId}_${scoreFieldId}_${paramId}_${rowIndex}_${sanitizedName}`;
+
+              const uploadOptions = {
+                file_name: fileName,
+                file_buffer: file.data,
+                control_name: controlName,
+                folder_name: `recruitment/${params.registration_no}`,
+              };
+
+              DOC_UPLOAD_SERVICE.docUploadWithFolder(
+                dbkey,
+                request,
+                uploadOptions,
+                sessionDetails,
+                function (err, res) {
+                  if (err) return uploadCb(err);
+                  if (res && res.file_path) {
+                    const paramIndex = paramList.findIndex(
+                      (p) =>
+                        p.score_field_parent_id === subHeadingId &&
+                        p.m_rec_score_field_id === scoreFieldId &&
+                        p.m_rec_score_field_parameter_new_id === paramId &&
+                        p.parameter_row_index === rowIndex
+                    );
+
+                    if (paramIndex !== -1) {
+                      const finalFileName = path.basename(res.file_path);
+                      paramList[
+                        paramIndex
+                      ].parameter_value = `recruitment/${params.registration_no}/${finalFileName}`;
+                      console.log(
+                        `    ✔️ Updated path for param ${paramId} to: ${paramList[paramIndex].parameter_value}`
+                      );
+                    }
+                    return uploadCb();
+                  } else {
+                    return uploadCb(`File upload failed for ${controlName}`);
+                  }
+                }
+              );
+            },
+            cback
+          );
+        },
+
+        // STEP 2: Create a database transaction
+        function (cback) {
+          DB_SERVICE.createTransaction(
+            dbkey,
+            function (err, tranobj, trancallback) {
+              if (err) return cback(err);
+              tranObj = tranobj;
+              tranCallback = trancallback;
+              dbkey = { dbkey: dbkey, connectionobj: tranObj };
+              return cback();
+            }
+          );
+        },
+
+        // STEP 3: Handle the Parent Score Record
+        function (cback) {
+          if (!parentRecord) return cback();
+          if (parentRecord.a_rec_app_score_field_detail_id) {
+            SHARED_SERVICE.validateAndUpdateInTable(
+              dbkey,
+              request,
+              { table_name: "a_rec_app_score_field_detail", ...parentRecord },
+              sessionDetails,
+              cback
+            );
+          } else {
+            SHARED_SERVICE.validateAndInsertInTable(
+              dbkey,
+              request,
+              { table_name: "a_rec_app_score_field_detail", ...parentRecord },
+              sessionDetails,
+              (err, res) => {
+                if (err) return cback(err);
+                if (res && res.data.insertId) {
+                  parentRecord.a_rec_app_score_field_detail_id =
+                    res.data.insertId;
+                }
+                return cback();
+              }
+            );
+          }
+        },
+
+        // STEP 4: Process the Child Detail Records
+        function (cback) {
+          if (!detailList || detailList.length === 0) return cback();
+
+          // ✅ REVISED LOGIC: Use 'action_type' to reliably determine insert vs. update.
+          // This makes the backend independent of any flags and respects the frontend's intent.
+          const detailsToUpdate = detailList.filter(
+            (d) => d.action_type === "U"
+          );
+          const detailsToInsert = detailList.filter(
+            (d) => d.action_type === "C"
+          );
+
+          async.series(
+            [
+              // Process all updates and deletions first
+              (updateCb) => {
+                if (detailsToUpdate.length === 0) return updateCb();
+                async.eachSeries(
+                  detailsToUpdate,
+                  (detail, eachCb) => {
+                    SHARED_SERVICE.validateAndUpdateInTable(
+                      dbkey,
+                      request,
+                      { table_name: "a_rec_app_score_field_detail", ...detail },
+                      sessionDetails,
+                      eachCb
+                    );
+                  },
+                  updateCb
+                );
+              },
+              // Process all new insertions
+              (insertCb) => {
+                if (detailsToInsert.length === 0) return insertCb();
+                async.eachSeries(
+                  detailsToInsert,
+                  (detail, eachCb) => {
+                    SHARED_SERVICE.validateAndInsertInTable(
+                      dbkey,
+                      request,
+                      { table_name: "a_rec_app_score_field_detail", ...detail },
+                      sessionDetails,
+                      (err, res) => {
+                        if (err) return eachCb(err);
+                        const newId = res.data.insertId;
+                        // Assign the newly created detail_id to its corresponding parameters
+                        paramList.forEach((p) => {
+                          if (
+                            p.score_field_parent_id ===
+                              detail.score_field_parent_id &&
+                            p.m_rec_score_field_id ===
+                              detail.m_rec_score_field_id &&
+                            p.parameter_row_index ===
+                              detail.score_field_row_index
+                          ) {
+                            p.a_rec_app_score_field_detail_id = newId;
+                          }
+                        });
+                        eachCb();
+                      }
+                    );
+                  },
+                  insertCb
+                );
+              },
+            ],
+            cback
+          );
+        },
+
+        // STEP 5: Process the Parameter Records
+        function (cback) {
+          if (!paramList || paramList.length === 0) return cback();
+
+          // ✅ REVISED LOGIC: Split parameters based on the presence of a primary key ID.
+          // This is the most reliable method for child records.
+          const paramsToUpdate = paramList.filter(
+            (p) => p.a_rec_app_score_field_parameter_detail_id
+          );
+          const paramsToInsert = paramList.filter(
+            (p) => !p.a_rec_app_score_field_parameter_detail_id
+          );
+
+          async.series(
+            [
+              // Process updates for existing parameters
+              (updateCb) => {
+                if (paramsToUpdate.length === 0) return updateCb();
+                async.eachSeries(
+                  paramsToUpdate,
+                  (param, eachCb) => {
+                    SHARED_SERVICE.validateAndUpdateInTable(
+                      dbkey,
+                      request,
+                      {
+                        table_name: "a_rec_app_score_field_parameter_detail",
+                        ...param,
+                      },
+                      sessionDetails,
+                      eachCb
+                    );
+                  },
+                  updateCb
+                );
+              },
+              // Process inserts for new parameters
+              (insertCb) => {
+                if (paramsToInsert.length === 0) return insertCb();
+                async.eachSeries(
+                  paramsToInsert,
+                  (param, eachCb) => {
+                    // Ensure the parameter has a detail_id before inserting
+                    if (!param.a_rec_app_score_field_detail_id) {
+                      console.warn(
+                        "Skipping parameter insert due to missing detail_id:",
+                        param
+                      );
+                      return eachCb();
+                    }
+                    SHARED_SERVICE.validateAndInsertInTable(
+                      dbkey,
+                      request,
+                      {
+                        table_name: "a_rec_app_score_field_parameter_detail",
+                        ...param,
+                      },
+                      sessionDetails,
+                      eachCb
+                    );
+                  },
+                  insertCb
+                );
+              },
+            ],
+            cback
+          );
+        },
+      ],
+      // Final Callback
+      function (err) {
+        if (err) {
+          DB_SERVICE.rollbackPartialTransaction(tranObj, tranCallback, () =>
+            callback(err)
+          );
+        } else {
+          DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
+            callback(null, {
+              ...securityService.SECURITY_ERRORS.SUCCESS,
+              message: "Candidate screening data saved successfully.",
+            });
+          });
+        }
+      }
+    );
+  },
+  saveOrUpdateQuantityBasedCandidateDetailsForScreening: function (
+    dbkey,
+    request,
+    params,
+    sessionDetails,
+    callback
+  ) {
+    let tranObj, tranCallback;
+
+    // STEP 0: Parse request body
+    try {
+      params.registration_no = request.body.registration_no;
+      params.scoreFieldDetailList = JSON.parse(
+        request.body.scoreFieldDetailList || "[]"
+      );
+      params.scoreFieldParameterList = JSON.parse(
+        request.body.scoreFieldParameterList || "[]"
+      );
+      params.parentScore = request.body.parentScore
+        ? JSON.parse(request.body.parentScore)
+        : null;
+      // Removed parsing for parameterIdsToDelete
+    } catch (e) {
+      return callback({
+        status: "error",
+        message: "Invalid JSON in request body",
+        details: e.message,
+      });
+    }
+
+    const detailList = params.scoreFieldDetailList;
+    const paramList = params.scoreFieldParameterList;
+    const parentRecord = params.parentScore;
+
+    async.series(
+      [
+        // STEP 1: Create transaction
+        function (cback) {
+          DB_SERVICE.createTransaction(
+            dbkey,
+            function (err, tranobj, trancallback) {
+              if (err) return cback(err);
+              tranObj = tranobj;
+              tranCallback = trancallback;
+              dbkey = { dbkey: dbkey, connectionobj: tranObj };
+              return cback();
+            }
+          );
+        },
+
+        // STEP 2: Handle Parent Record
+        function (cback) {
+          if (!parentRecord) return cback();
+          if (parentRecord.a_rec_app_score_field_detail_id) {
+            SHARED_SERVICE.validateAndUpdateInTable(
+              dbkey,
+              request,
+              { table_name: "a_rec_app_score_field_detail", ...parentRecord },
+              sessionDetails,
+              cback
+            );
+          } else {
+            SHARED_SERVICE.validateAndInsertInTable(
+              dbkey,
+              request,
+              { table_name: "a_rec_app_score_field_detail", ...parentRecord },
+              sessionDetails,
+              (err, res) => {
+                if (err) return cback(err);
+                if (res && res.data.insertId) {
+                  parentRecord.a_rec_app_score_field_detail_id =
+                    res.data.insertId;
+                }
+                return cback();
+              }
+            );
+          }
+        },
+
+        // Deletion steps have been removed.
+
+        // STEP 3: Handle Child Detail Records (Upsert based on Application_Step_Flag_CES)
+        function (cback) {
+          if (!detailList || detailList.length === 0) return cback();
+
+          const detailsToUpdate = detailList.filter(
+            (d) => d.Application_Step_Flag_CES === "E"
+          );
+          const detailsToInsert = detailList.filter(
+            (d) => d.Application_Step_Flag_CES !== "E"
+          );
+
+          async.series(
+            [
+              (updateCb) => {
+                if (detailsToUpdate.length === 0) return updateCb();
+                async.eachSeries(
+                  detailsToUpdate,
+                  (detail, eachCb) => {
+                    SHARED_SERVICE.validateAndUpdateInTable(
+                      dbkey,
+                      request,
+                      { table_name: "a_rec_app_score_field_detail", ...detail },
+                      sessionDetails,
+                      eachCb
+                    );
+                  },
+                  updateCb
+                );
+              },
+              (insertCb) => {
+                if (detailsToInsert.length === 0) return insertCb();
+                async.eachSeries(
+                  detailsToInsert,
+                  (detail, eachCb) => {
+                    SHARED_SERVICE.validateAndInsertInTable(
+                      dbkey,
+                      request,
+                      { table_name: "a_rec_app_score_field_detail", ...detail },
+                      sessionDetails,
+                      (err, res) => {
+                        if (err) return eachCb(err);
+                        const newId = res.data.insertId;
+                        paramList.forEach((p) => {
+                          if (
+                            p.score_field_parent_id ===
+                              detail.score_field_parent_id &&
+                            p.m_rec_score_field_id ===
+                              detail.m_rec_score_field_id
+                          ) {
+                            p.a_rec_app_score_field_detail_id = newId;
+                          }
+                        });
+                        eachCb();
+                      }
+                    );
+                  },
+                  insertCb
+                );
+              },
+            ],
+            cback
+          );
+        },
+
+        // STEP 4: Handle Parameter Records (Upsert based on Application_Step_Flag_CES)
+        function (cback) {
+          if (!paramList || paramList.length === 0) return cback();
+
+          const paramsToUpdate = paramList.filter(
+            (p) => p.Application_Step_Flag_CES === "E"
+          );
+          const paramsToInsert = paramList.filter(
+            (p) => p.Application_Step_Flag_CES !== "E"
+          );
+
+          async.series(
+            [
+              (updateCb) => {
+                if (paramsToUpdate.length === 0) return updateCb();
+                async.eachSeries(
+                  paramsToUpdate,
+                  (param, eachCb) => {
+                    SHARED_SERVICE.validateAndUpdateInTable(
+                      dbkey,
+                      request,
+                      {
+                        table_name: "a_rec_app_score_field_parameter_detail",
+                        ...param,
+                      },
+                      sessionDetails,
+                      eachCb
+                    );
+                  },
+                  updateCb
+                );
+              },
+              (insertCb) => {
+                if (paramsToInsert.length === 0) return insertCb();
+                async.eachSeries(
+                  paramsToInsert,
+                  (param, eachCb) => {
+                    SHARED_SERVICE.validateAndInsertInTable(
+                      dbkey,
+                      request,
+                      {
+                        table_name: "a_rec_app_score_field_parameter_detail",
+                        ...param,
+                      },
+                      sessionDetails,
+                      eachCb
+                    );
+                  },
+                  insertCb
+                );
+              },
+            ],
+            cback
+          );
+        },
+      ],
+      // Final callback
+      function (err) {
+        if (err) {
+          DB_SERVICE.rollbackPartialTransaction(tranObj, tranCallback, () =>
+            callback(err)
+          );
+        } else {
+          DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
+            callback(null, {
+              ...securityService.SECURITY_ERRORS.SUCCESS,
+              message: "Candidate Data saved successfully",
+            });
+          });
+        }
       }
     );
   },

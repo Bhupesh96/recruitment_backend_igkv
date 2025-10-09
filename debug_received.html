@@ -1,0 +1,1327 @@
+
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Application Form</title>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"><link rel="stylesheet" href="styles.css"><style>:root{--swal2-container-padding: 0.625em;--swal2-backdrop: rgba(0, 0, 0, 0.4);--swal2-width: 32em;--swal2-padding: 0 0 1.25em;--swal2-border: none;--swal2-border-radius: 0.3125rem;--swal2-background: white;--swal2-color: #545454;--swal2-footer-border-color: #eee;--swal2-input-background: transparent;--swal2-validation-message-background: #f0f0f0;--swal2-validation-message-color: #666}[data-swal2-theme=dark]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-color: var(--swal2-dark-theme-white)}@media(prefers-color-scheme: dark){[data-swal2-theme=auto]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-color: var(--swal2-dark-theme-white)}}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:rgba(0,0,0,0) !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px var(--swal2-backdrop)}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:rgba(0,0,0,0);pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{inset:0 auto auto 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{inset:0 0 auto auto}body.swal2-toast-shown .swal2-container.swal2-top-start,body.swal2-toast-shown .swal2-container.swal2-top-left{inset:0 auto auto 0}body.swal2-toast-shown .swal2-container.swal2-center-start,body.swal2-toast-shown .swal2-container.swal2-center-left{inset:50% auto auto 0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{inset:50% auto auto 50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{inset:50% 0 auto auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-start,body.swal2-toast-shown .swal2-container.swal2-bottom-left{inset:auto auto 0 0}body.swal2-toast-shown .swal2-container.swal2-bottom{inset:auto auto 0 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{inset:auto 0 0 auto}@media print{body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown) .swal2-container{position:static !important}}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);height:100%;padding:var(--swal2-container-padding);overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:var(--swal2-backdrop)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0) !important}div:where(.swal2-container).swal2-top-start,div:where(.swal2-container).swal2-center-start,div:where(.swal2-container).swal2-bottom-start{grid-template-columns:minmax(0, 1fr) auto auto}div:where(.swal2-container).swal2-top,div:where(.swal2-container).swal2-center,div:where(.swal2-container).swal2-bottom{grid-template-columns:auto minmax(0, 1fr) auto}div:where(.swal2-container).swal2-top-end,div:where(.swal2-container).swal2-center-end,div:where(.swal2-container).swal2-bottom-end{grid-template-columns:auto auto minmax(0, 1fr)}div:where(.swal2-container).swal2-top-start>.swal2-popup{align-self:start}div:where(.swal2-container).swal2-top>.swal2-popup{grid-column:2;place-self:start center}div:where(.swal2-container).swal2-top-end>.swal2-popup,div:where(.swal2-container).swal2-top-right>.swal2-popup{grid-column:3;place-self:start end}div:where(.swal2-container).swal2-center-start>.swal2-popup,div:where(.swal2-container).swal2-center-left>.swal2-popup{grid-row:2;align-self:center}div:where(.swal2-container).swal2-center>.swal2-popup{grid-column:2;grid-row:2;place-self:center center}div:where(.swal2-container).swal2-center-end>.swal2-popup,div:where(.swal2-container).swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;place-self:center end}div:where(.swal2-container).swal2-bottom-start>.swal2-popup,div:where(.swal2-container).swal2-bottom-left>.swal2-popup{grid-column:1;grid-row:3;align-self:end}div:where(.swal2-container).swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;place-self:end center}div:where(.swal2-container).swal2-bottom-end>.swal2-popup,div:where(.swal2-container).swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;place-self:end end}div:where(.swal2-container).swal2-grow-row>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-column:1/4;width:100%}div:where(.swal2-container).swal2-grow-column>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}div:where(.swal2-container).swal2-no-transition{transition:none !important}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:var(--swal2-width);max-width:100%;padding:var(--swal2-padding);border:var(--swal2-border);border-radius:var(--swal2-border-radius);background:var(--swal2-background);color:var(--swal2-color);font-family:inherit;font-size:1rem}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:none}div:where(.swal2-container) div:where(.swal2-popup).swal2-loading{overflow-y:hidden}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable{cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable div:where(.swal2-icon){cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging{cursor:grabbing}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging div:where(.swal2-icon){cursor:grabbing}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:.8em 1em 0;color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word;cursor:initial}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 rgba(0,0,0,0) #2778c4 rgba(0,0,0,0)}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px rgba(0,0,0,0);font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){border:0;border-radius:.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):focus-visible{box-shadow:0 0 0 3px rgba(112,102,224,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny){border:0;border-radius:.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):focus-visible{box-shadow:0 0 0 3px rgba(220,55,65,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel){border:0;border-radius:.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):focus-visible{box-shadow:0 0 0 3px rgba(110,120,129,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-default-outline:focus-visible{box-shadow:0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-styled):focus-visible{outline:none}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid var(--swal2-footer-border-color);color:inherit;font-size:1em;text-align:center;cursor:initial}div:where(.swal2-container) .swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:var(--swal2-border-radius);border-bottom-left-radius:var(--swal2-border-radius)}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:rgba(0,0,0,.2)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em;cursor:initial}div:where(.swal2-container) button:where(.swal2-close){z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:color .1s,box-shadow .1s;border:none;border-radius:var(--swal2-border-radius);background:rgba(0,0,0,0);color:#ccc;font-family:monospace;font-size:2.5em;cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:none;background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus-visible{outline:none;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-html-container){z-index:1;justify-content:center;margin:0;padding:1em 1.6em .3em;overflow:auto;color:inherit;font-size:1.125em;font-weight:normal;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word;cursor:initial}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) label:where(.swal2-checkbox){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:var(--swal2-input-background);box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-input).swal2-inputerror,div:where(.swal2-container) input:where(.swal2-file).swal2-inputerror,div:where(.swal2-container) textarea:where(.swal2-textarea).swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:1px solid #b4dbed;outline:none;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:var(--swal2-background)}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-input{height:2.625em;padding:0 .75em}div:where(.swal2-container) .swal2-file{width:75%;margin-right:auto;margin-left:auto;background:var(--swal2-input-background);font-size:1.125em}div:where(.swal2-container) .swal2-textarea{height:6.75em;padding:.75em}div:where(.swal2-container) .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:var(--swal2-input-background);color:inherit;font-size:1.125em}div:where(.swal2-container) .swal2-radio,div:where(.swal2-container) .swal2-checkbox{align-items:center;justify-content:center;background:var(--swal2-background);color:inherit}div:where(.swal2-container) .swal2-radio label,div:where(.swal2-container) .swal2-checkbox label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-radio input,div:where(.swal2-container) .swal2-checkbox input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:var(--swal2-validation-message-background);color:var(--swal2-validation-message-color);font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:#add8e6;color:#fff}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:#add8e6}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:.25em solid rgba(0,0,0,0);border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon) .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}div:where(.swal2-icon).swal2-error{border-color:#f27474;color:#f27474}div:where(.swal2-icon).swal2-error .swal2-x-mark{position:relative;flex-grow:1}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-error.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-error.swal2-icon-show .swal2-x-mark{animation:swal2-animate-error-x-mark .5s}div:where(.swal2-icon).swal2-warning{border-color:#f8bb86;color:#f8bb86}div:where(.swal2-icon).swal2-warning.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-warning.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .5s}div:where(.swal2-icon).swal2-info{border-color:#3fc3ee;color:#3fc3ee}div:where(.swal2-icon).swal2-info.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-info.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .8s}div:where(.swal2-icon).swal2-question{border-color:#87adbd;color:#87adbd}div:where(.swal2-icon).swal2-question.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-question.swal2-icon-show .swal2-icon-content{animation:swal2-animate-question-mark .8s}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-animate-success-line-tip .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-animate-success-line-long .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:swal2-rotate-success-circular-line 4.25s ease-in}[class^=swal2]{-webkit-tap-highlight-color:rgba(0,0,0,0)}.swal2-show{animation:swal2-show .3s}.swal2-hide{animation:swal2-hide .15s forwards}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:min-content auto min-content;padding:1em;overflow-y:hidden;background:#fff;box-shadow:0 0 1px rgba(0,0,0,.075),0 1px 2px rgba(0,0,0,.075),1px 2px 4px rgba(0,0,0,.075),1px 3px 8px rgba(0,0,0,.075),2px 4px 16px rgba(0,0,0,.075);pointer-events:all}.swal2-toast>*{grid-column:2}.swal2-toast h2:where(.swal2-title){margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-toast .swal2-loading{justify-content:center}.swal2-toast input:where(.swal2-input){height:2em;margin:.5em;font-size:1em}.swal2-toast .swal2-validation-message{font-size:1em}.swal2-toast div:where(.swal2-footer){margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-toast button:where(.swal2-close){grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-toast div:where(.swal2-html-container){margin:.5em 1em;padding:0;overflow:initial;font-size:1em;text-align:initial}.swal2-toast div:where(.swal2-html-container):empty{padding:0}.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:bold}.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-toast div:where(.swal2-actions){justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-toast button:where(.swal2-styled){margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;border-radius:50%}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-toast-animate-success-line-tip .75s}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-toast-animate-success-line-long .75s}.swal2-toast.swal2-show{animation:swal2-toast-show .5s}.swal2-toast.swal2-hide{animation:swal2-toast-hide .1s forwards}@keyframes swal2-show{0%{transform:scale(0.7)}45%{transform:scale(1.05)}80%{transform:scale(0.95)}100%{transform:scale(1)}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(0.5);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0deg);opacity:1}}@keyframes swal2-rotate-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0deg)}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}</style><style type="text/css"></style><style>
+
+.divLoader[_ngcontent-ng-c3137444021] {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.82);
+  z-index: 999999;
+  pointer-events: auto;
+}
+.dot-flashing[_ngcontent-ng-c3137444021] {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #388492;
+  color: #388492;
+  animation: _ngcontent-ng-c3137444021_dotFlashing 1s infinite linear alternate;
+  animation-delay: 0.5s;
+}
+.dot-flashing[_ngcontent-ng-c3137444021]::before, 
+.dot-flashing[_ngcontent-ng-c3137444021]::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+.dot-flashing[_ngcontent-ng-c3137444021]::before {
+  left: -15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #388492;
+  color: #388492;
+  animation: _ngcontent-ng-c3137444021_dotFlashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+.dot-flashing[_ngcontent-ng-c3137444021]::after {
+  left: 15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #388492;
+  color: #388492;
+  animation: _ngcontent-ng-c3137444021_dotFlashing 1s infinite alternate;
+  animation-delay: 1s;
+}
+@keyframes _ngcontent-ng-c3137444021_dotFlashing {
+  0% {
+    background-color: #388492;
+  }
+  50%, 100% {
+    background-color: #c7e1e6;
+  }
+}
+/*# sourceMappingURL=/dot-loader.component.css.map */</style><style>
+
+.stepper-container[_ngcontent-ng-c1460742328] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  font-family: "Source Sans Pro", sans-serif;
+}
+.step[_ngcontent-ng-c1460742328] {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 100px;
+  max-width: 140px;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .flex[_ngcontent-ng-c1460742328] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.stepper-container[_ngcontent-ng-c1460742328] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  font-family: "Source Sans Pro", sans-serif;
+}
+.step[_ngcontent-ng-c1460742328] {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 110px;
+  max-width: 160px;
+}
+.pdf-preview[_ngcontent-ng-c1460742328] {
+  width: 794px;
+  padding: 40px;
+  background: white;
+  margin: 20px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  font-family: "Arial", sans-serif;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .flex[_ngcontent-ng-c1460742328] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .rounded-md[_ngcontent-ng-c1460742328] {
+  border-radius: 0.375rem;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .w-5[_ngcontent-ng-c1460742328] {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .text-xs[_ngcontent-ng-c1460742328] {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .font-semibold[_ngcontent-ng-c1460742328] {
+  font-weight: 600;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .font-medium[_ngcontent-ng-c1460742328] {
+  font-weight: 500;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .leading-tight[_ngcontent-ng-c1460742328] {
+  line-height: 1.1;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .bg-white[_ngcontent-ng-c1460742328] {
+  background-color: #ffffff;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .bg-blue-50[_ngcontent-ng-c1460742328] {
+  background-color: #eff6ff;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .bg-blue-50\/50[_ngcontent-ng-c1460742328] {
+  background-color: rgba(239, 246, 255, 0.5);
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .bg-blue-400[_ngcontent-ng-c1460742328] {
+  background-color: #60a5fa;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .bg-blue-600[_ngcontent-ng-c1460742328] {
+  background-color: #2563eb;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .bg-green-600[_ngcontent-ng-c1460742328] {
+  background-color: #059669;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .bg-gray-200[_ngcontent-ng-c1460742328] {
+  background-color: #e5e7eb;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .text-blue-900[_ngcontent-ng-c1460742328] {
+  color: #1e3a8a;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .text-gray-600[_ngcontent-ng-c1460742328] {
+  color: #4b5563;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .text-gray-700[_ngcontent-ng-c1460742328] {
+  color: #374151;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .text-white[_ngcontent-ng-c1460742328] {
+  color: #ffffff;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .ring-1[_ngcontent-ng-c1460742328] {
+  box-shadow: 0 0 0 1px var(--tw-ring-color);
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .ring-blue-400[_ngcontent-ng-c1460742328] {
+  --tw-ring-color: #60a5fa;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .ring-blue-200[_ngcontent-ng-c1460742328] {
+  --tw-ring-color: #bfdbfe;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .ring-green-200[_ngcontent-ng-c1460742328] {
+  --tw-ring-color: #6ee7b7;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .shadow-sm[_ngcontent-ng-c1460742328] {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .transition-all[_ngcontent-ng-c1460742328] {
+  transition: all 0.3s ease;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .rounded-full[_ngcontent-ng-c1460742328] {
+  border-radius: 9999px;
+}
+.stepper-container[_ngcontent-ng-c1460742328]   .hover\:bg-blue-50\/50[_ngcontent-ng-c1460742328]:hover {
+  background-color: rgba(239, 246, 255, 0.5);
+}
+@media (max-width: 640px) {
+  .stepper-container[_ngcontent-ng-c1460742328]   .step[_ngcontent-ng-c1460742328] {
+    min-width: 90px;
+    max-width: 120px;
+  }
+  .stepper-container[_ngcontent-ng-c1460742328]   .text-xs[_ngcontent-ng-c1460742328] {
+    font-size: 0.6875rem;
+  }
+  .stepper-container[_ngcontent-ng-c1460742328]   .w-5[_ngcontent-ng-c1460742328] {
+    width: 1rem;
+    height: 1rem;
+  }
+  .stepper-container[_ngcontent-ng-c1460742328]   .flex[_ngcontent-ng-c1460742328] {
+    padding: 0.375rem;
+    gap: 0.375rem;
+  }
+  .stepper-container[_ngcontent-ng-c1460742328]   .max-w-\__ph-0__[_ngcontent-ng-c1460742328] {
+    max-width: 80px;
+  }
+  .stepper-container[_ngcontent-ng-c1460742328]   .w-5[_ngcontent-ng-c1460742328] {
+    width: 0.75rem;
+  }
+  .visually-hidden[_ngcontent-ng-c1460742328] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+}
+/*# sourceMappingURL=/stepper.component.css.map */</style><style>@charset "UTF-8";
+
+
+
+.header-container[_ngcontent-ng-c165683933] {
+  background-color: white;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.header-container[_ngcontent-ng-c165683933]   .header-content[_ngcontent-ng-c165683933] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+@media (min-width: 768px) {
+  .header-container[_ngcontent-ng-c165683933]   .header-content[_ngcontent-ng-c165683933] {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+}
+@media (min-width: 768px) {
+  .header-container[_ngcontent-ng-c165683933]   .logout-container[_ngcontent-ng-c165683933] {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+.header-container[_ngcontent-ng-c165683933]   .logout-button[_ngcontent-ng-c165683933] {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #574cf0;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.header-container[_ngcontent-ng-c165683933]   .logout-button[_ngcontent-ng-c165683933]   svg[_ngcontent-ng-c165683933] {
+  height: 1.1rem;
+  width: 1.1rem;
+}
+.header-container[_ngcontent-ng-c165683933]   .logout-button[_ngcontent-ng-c165683933]:hover {
+  background: #dc2626;
+}
+.header-container[_ngcontent-ng-c165683933]   .logout-button[_ngcontent-ng-c165683933]:active {
+  transform: scale(0.96);
+}
+.header-container[_ngcontent-ng-c165683933]   .university-logo[_ngcontent-ng-c165683933] {
+  height: 3rem;
+  width: auto;
+}
+@media (min-width: 768px) {
+  .header-container[_ngcontent-ng-c165683933]   .university-logo[_ngcontent-ng-c165683933] {
+    height: 3.25rem;
+    margin-right: 1rem;
+  }
+}
+.header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933] {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+.header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h1[_ngcontent-ng-c165683933], 
+.header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h2[_ngcontent-ng-c165683933] {
+  margin: 0;
+  line-height: 1.2;
+}
+.header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h1[_ngcontent-ng-c165683933] {
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-family: "UnifrakturCook", cursive;
+}
+@media (min-width: 768px) {
+  .header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h1[_ngcontent-ng-c165683933] {
+    font-size: 1.75rem;
+  }
+}
+.header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h2[_ngcontent-ng-c165683933] {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "UnifrakturCook", cursive;
+  margin-top: 0.25rem;
+}
+@media (min-width: 768px) {
+  .header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h2[_ngcontent-ng-c165683933] {
+    font-size: 1.25rem;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+/*# sourceMappingURL=/header.component.css.map */</style><style>
+
+/*# sourceMappingURL=/step-2.component.css.map */</style><style>
+
+section[_ngcontent-ng-c3251218394] {
+  margin-inline: auto;
+  width: 100%;
+}
+.checkbox-disabled[_ngcontent-ng-c3251218394] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+select[_ngcontent-ng-c3251218394]   option.option-disabled[_ngcontent-ng-c3251218394] {
+  color: #9ca3af;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+
+/*# sourceMappingURL=/step-3.component.css.map */</style><style>
+
+.hidden[_ngcontent-ng-c3680550497] {
+  display: none;
+}
+/*# sourceMappingURL=/step-5.component.css.map */</style><style>
+
+.preview-container[_ngcontent-ng-c2248404185] {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+h2[_ngcontent-ng-c2248404185] {
+  text-align: center;
+  color: #333;
+}
+h3[_ngcontent-ng-c2248404185] {
+  color: #555;
+  margin-top: 20px;
+}
+p[_ngcontent-ng-c2248404185] {
+  margin: 10px 0;
+}
+strong[_ngcontent-ng-c2248404185] {
+  color: #000;
+}
+.navigation-buttons[_ngcontent-ng-c2248404185] {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+button[_ngcontent-ng-c2248404185] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button[_ngcontent-ng-c2248404185]:hover {
+  background-color: #0056b3;
+}
+/*# sourceMappingURL=/step-9.component.css.map */</style><style>
+
+.a4-container[_ngcontent-ng-c2923130650] {
+  background: white;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1.3;
+  color: #222;
+  padding: 10pt;
+}
+.section[_ngcontent-ng-c2923130650] {
+  margin-bottom: 8pt;
+  break-inside: avoid;
+}
+.label[_ngcontent-ng-c2923130650] {
+  font-weight: 600;
+}
+.text-center[_ngcontent-ng-c2923130650] {
+  text-align: center;
+}
+.no-data[_ngcontent-ng-c2923130650] {
+  padding: 4px;
+  font-style: italic;
+  font-size: 9px;
+  color: #666;
+}
+.header[_ngcontent-ng-c2923130650] {
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  padding: 4px;
+}
+.logo-container[_ngcontent-ng-c2923130650] {
+  width: 60px;
+  height: 60px;
+}
+.logo-img[_ngcontent-ng-c2923130650] {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.university-title[_ngcontent-ng-c2923130650] {
+  flex: 1;
+  text-align: center;
+  line-height: 1.1;
+}
+.university-name-eng[_ngcontent-ng-c2923130650] {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.university-address[_ngcontent-ng-c2923130650] {
+  font-size: 11px;
+  font-weight: 600;
+  margin: 2px 0;
+}
+.university-name-hin[_ngcontent-ng-c2923130650] {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 2px 0;
+}
+.form-title-container[_ngcontent-ng-c2923130650] {
+  text-align: center;
+  margin: 6px 0;
+}
+.form-title[_ngcontent-ng-c2923130650] {
+  font-size: 10pt;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.info-photo-box[_ngcontent-ng-c2923130650] {
+  border: 1px solid black;
+  padding: 6px;
+  margin: 6px 0;
+}
+.info-photo-flex[_ngcontent-ng-c2923130650] {
+  display: flex;
+  gap: 6px;
+}
+.info-details-flex-item[_ngcontent-ng-c2923130650] {
+  flex: 1;
+}
+.info-grid[_ngcontent-ng-c2923130650] {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px 8px;
+}
+.photo-box[_ngcontent-ng-c2923130650] {
+  border: 1px solid black;
+  width: 90px;
+  height: 90px;
+}
+.photo-img[_ngcontent-ng-c2923130650] {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.bordered-section[_ngcontent-ng-c2923130650] {
+  border: 1px solid black;
+}
+.bordered-section[_ngcontent-ng-c2923130650]    > *[_ngcontent-ng-c2923130650]:first-child {
+  border-top: none;
+}
+.section-heading-bar[_ngcontent-ng-c2923130650] {
+  background: #e5e7eb;
+  font-weight: 600;
+  padding: 3px 6px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  min-height: 20px;
+  line-height: 20px;
+  border-top: 1px solid black;
+}
+.sub-section-heading-bar[_ngcontent-ng-c2923130650] {
+  background: #f9fafb;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  font-size: 9.5px;
+  display: flex;
+  align-items: center;
+  min-height: 20px;
+  line-height: 20px;
+}
+.section-content[_ngcontent-ng-c2923130650] {
+  padding: 6px;
+}
+.details-grid[_ngcontent-ng-c2923130650] {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 10px;
+}
+.data-table-header[_ngcontent-ng-c2923130650], 
+.data-table-row[_ngcontent-ng-c2923130650] {
+  display: grid;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+.data-table-row[_ngcontent-ng-c2923130650]:last-of-type {
+  border-bottom: none;
+}
+.data-table-cell[_ngcontent-ng-c2923130650] {
+  padding: 2px 4px;
+  border-right: 1px solid black;
+  word-break: break-word;
+  font-size: 9.5px;
+  display: flex;
+  align-items: center;
+  min-height: 18px;
+  line-height: 18px;
+}
+.data-table-cell[_ngcontent-ng-c2923130650]:last-child {
+  border-right: none;
+}
+.data-table-header[_ngcontent-ng-c2923130650] {
+  background: #f3f4f6;
+  font-weight: 600;
+  border-top: 1px solid black;
+}
+.lang-table-grid[_ngcontent-ng-c2923130650] {
+  grid-template-columns: 30px 1fr 1fr 1fr;
+}
+.qual-table-grid[_ngcontent-ng-c2923130650] {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.attach-table-grid[_ngcontent-ng-c2923130650] {
+  grid-template-columns: 30px 2fr 1fr;
+}
+.declaration-header[_ngcontent-ng-c2923130650] {
+  text-align: center;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-bottom: 1px solid black;
+  background: #f3f4f6;
+  font-size: 10px;
+  border-top: 1px solid black;
+}
+.declaration-text[_ngcontent-ng-c2923130650] {
+  margin-bottom: 6px;
+}
+.signature-grid[_ngcontent-ng-c2923130650] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 10px;
+}
+.signature-img[_ngcontent-ng-c2923130650] {
+  width: 70px;
+  height: auto;
+  margin: 0 auto;
+}
+.signature-caption[_ngcontent-ng-c2923130650] {
+  font-size: 9px;
+  margin-top: 2px;
+}
+.employer-remarks[_ngcontent-ng-c2923130650] {
+  border-top: 1px solid black;
+  margin-top: 10px;
+}
+.employer-remarks-subtitle[_ngcontent-ng-c2923130650] {
+  text-align: center;
+  font-size: 9px;
+  font-style: italic;
+  padding: 3px 0;
+  border-bottom: 1px solid black;
+}
+.underline-fill-sm[_ngcontent-ng-c2923130650] {
+  display: inline-block;
+  border-bottom: 1px solid black;
+  width: 80px;
+}
+.underline-fill-md[_ngcontent-ng-c2923130650] {
+  display: inline-block;
+  border-bottom: 1px solid black;
+  width: 110px;
+}
+.pdf-export-view[_nghost-ng-c2923130650]   .a4-container[_ngcontent-ng-c2923130650] {
+  width: 100%;
+  min-height: initial;
+  border: none;
+  box-sizing: border-box;
+  padding: 10pt;
+}
+.pdf-export-view[_nghost-ng-c2923130650]   .section[_ngcontent-ng-c2923130650] {
+  page-break-inside: avoid;
+}
+@media print {
+  body[_ngcontent-ng-c2923130650], 
+   html[_ngcontent-ng-c2923130650] {
+    margin: 0;
+    padding: 0;
+  }
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  body[_ngcontent-ng-c2923130650]   *[_ngcontent-ng-c2923130650] {
+    visibility: hidden;
+  }
+  .a4-container[_ngcontent-ng-c2923130650], 
+   .a4-container[_ngcontent-ng-c2923130650]   *[_ngcontent-ng-c2923130650] {
+    visibility: visible;
+  }
+  .a4-container[_ngcontent-ng-c2923130650] {
+    width: 100%;
+    min-height: initial;
+    border: none;
+    box-sizing: border-box;
+    padding: 10pt;
+  }
+  thead[_ngcontent-ng-c2923130650] {
+    display: table-header-group;
+  }
+  tr[_ngcontent-ng-c2923130650] {
+    page-break-inside: avoid;
+  }
+  .section[_ngcontent-ng-c2923130650] {
+    page-break-inside: avoid;
+  }
+}
+/*# sourceMappingURL=/pdf-download.component.css.map */</style>
+      </head>
+      <body>
+        <div _ngcontent-ng-c2923130650="" class="a4-container" style="display: block;"><div _ngcontent-ng-c2923130650="" class="section"><div _ngcontent-ng-c2923130650="" class="header"><div _ngcontent-ng-c2923130650="" class="logo-container"><img _ngcontent-ng-c2923130650="" src="http://192.168.1.57:4340/assets/logo.png" alt="Logo" class="logo-img"></div><div _ngcontent-ng-c2923130650="" class="university-title"><div _ngcontent-ng-c2923130650="" class="university-name-eng"> Indira Gandhi Krishi Vishwavidyalaya </div><div _ngcontent-ng-c2923130650="" class="university-address"> KRISHAK NAGAR, RAIPUR (CHHATTISGARH) - 492012 </div><div _ngcontent-ng-c2923130650="" class="university-name-hin"> इंदिरा गांधी कृषि विश्वविद्यालय, रायपुर (छत्तीसगढ़)-४९२०१२ </div></div></div></div><div _ngcontent-ng-c2923130650="" class="section"><div _ngcontent-ng-c2923130650="" class="section-divider"></div><div _ngcontent-ng-c2923130650="" class="form-title-container"><div _ngcontent-ng-c2923130650="" class="form-title"> APPLICATION FORM FOR Adv - Assitant Programmer </div></div></div><div _ngcontent-ng-c2923130650="" class="section"><div _ngcontent-ng-c2923130650="" class="info-photo-box"><div _ngcontent-ng-c2923130650="" class="info-photo-flex"><div _ngcontent-ng-c2923130650="" class="info-details-flex-item"><div _ngcontent-ng-c2923130650="" class="info-grid"><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Registration No.</span>: 25000002 </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Applied Post</span>: Technical Assistant </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Applied Subject</span>: - </div></div></div><div _ngcontent-ng-c2923130650="" class="photo-wrapper"><div _ngcontent-ng-c2923130650="" class="photo-box"><img _ngcontent-ng-c2923130650="" alt="Photo" class="photo-img" src="http://192.168.1.57:3500/recruitment/25000002/photo_25000002_1759126041032.jpg"></div></div></div></div></div><div _ngcontent-ng-c2923130650="" class="section"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Applicant Basic Detail</div><div _ngcontent-ng-c2923130650="" class="section-content"><div _ngcontent-ng-c2923130650="" class="details-grid"><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Full Name (Eng)</span>: Dr. ANKITA  GAUTAM </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Full Name (Hin)</span>: डॉ. अंकिता  गौतम </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Gender</span>: Female </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Date of Birth</span>: 10-02-1987 </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Age</span>: 38 years, 7 months, 26 days</div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Father's Name</span>: ARUN KUMAR GAUTAM </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Mother's Name</span>: DR MADHULIKA GAUTAM </div></div><div _ngcontent-ng-c2923130650="" class="subsection ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">Additional Information</div><div _ngcontent-ng-c2923130650="" class="details-grid"><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Marital Status</span>: Yes </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Marriage Date</span>: 2019-02-12 </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Spouse Name</span>: SHIVAM PANDEY </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">No. of Alive Children</span>: 0 </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">I declare that i do not have more than two wives (alive)</span>: Y </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Are you married before the fixed/prescribed age for marriage</span>: N </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Bonafide Resident of Chhattisgarh?</span>: No </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Applied Category for Post</span>: Unreserved (UR) </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Knowledge of Local Language/Dialect?</span>: No </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Do You Have Any Disability?</span>: No </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Are you an In-Service Candidate?</span>: No </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Are you applying through proper channel and submitting Advance copy?</span>: Yes </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Marital Status</span>: Yes </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Marriage Date</span>: 2019-02-12 </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Spouse Name</span>: SHIVAM PANDEY </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">No. of Alive Children</span>: 0 </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">I declare that i do not have more than two wives (alive)</span>: Y </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Are you married before the fixed/prescribed age for marriage</span>: N </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Bonafide Resident of Chhattisgarh?</span>: No </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Applied Category for Post</span>: Unreserved (UR) </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Knowledge of Local Language/Dialect?</span>: No </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Do You Have Any Disability?</span>: No </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Are you an In-Service Candidate?</span>: No </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Are you applying through proper channel and submitting Advance copy?</span>: Yes </div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--></div></div><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><div _ngcontent-ng-c2923130650="" class="subsection"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">Permanent Address</div><div _ngcontent-ng-c2923130650="" class="details-grid"><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Address</span>: 143/27 F15 PREETIVIHAR COLONY CHACKLAL MOHAMMAD NAINI </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">City</span>: PRAYAGRAJ </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">District</span>: Allahabad </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">State</span>: Uttar Pradesh </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Pincode</span>: 211008 </div></div></div><div _ngcontent-ng-c2923130650="" class="subsection"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar"> Present Address (For Correspondence) </div><div _ngcontent-ng-c2923130650="" class="details-grid"><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Address</span>: 143/27 F15 PREETIVIHAR COLONY CHACKLAL MOHAMMAD NAINI </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">City</span>: PRAYAGRAJ </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">District</span>: Allahabad </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">State</span>: Uttar Pradesh </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Pincode</span>: 211008 </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Mobile Number</span>: 7000046518 </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Email</span>: bhupeshsahu@gmail.com </div></div></div></div></div></div><div _ngcontent-ng-c2923130650="" class="section ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Language Detail</div><div _ngcontent-ng-c2923130650="" class="data-table-header lang-table-grid"><div _ngcontent-ng-c2923130650="" class="data-table-cell">S.No.</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Language Type</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Language</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Language Skill</div></div><div _ngcontent-ng-c2923130650="" class="data-table-row lang-table-grid ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="data-table-cell">1</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Mother Tongue
+</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Hindi</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">All</div></div><div _ngcontent-ng-c2923130650="" class="data-table-row lang-table-grid ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="data-table-cell">2</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Foreign Language
+</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">English</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">All</div></div><div _ngcontent-ng-c2923130650="" class="data-table-row lang-table-grid"><div _ngcontent-ng-c2923130650="" class="data-table-cell">1</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Mother Tongue
+</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Hindi</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">All</div></div><div _ngcontent-ng-c2923130650="" class="data-table-row lang-table-grid"><div _ngcontent-ng-c2923130650="" class="data-table-cell">2</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Foreign Language
+</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">English</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">All</div></div><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--></div></div><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><div _ngcontent-ng-c2923130650="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Educational Qualification/Examination Passed</div><!--bindings={
+  "ng-reflect-ng-switch-case": "qualification"
+}--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">10+2</div><div _ngcontent-ng-c2923130650="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> University/ Institute/ Board </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Subject(S)(Major)/ Group </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Division </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Passing  Year </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Percentage  Obtained </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> O G P A ( If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment For  Conversion  Formula (If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Certificate/ Marksheet </div><!--bindings={
+  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> hfgh </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> gfhgfhg </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> hgfhgf </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> First </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 2013 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 78 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> ✓ File Uploaded </div><!--bindings={
+  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object]"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if-else": "[object Object]"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">UG</div><div _ngcontent-ng-c2923130650="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> University/ Institute/ Board </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Subject(S)(Major)/ Group </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Division </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Passing  Year </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Percentage  Obtained </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> O G P A ( If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment For  Conversion  Formula (If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Certificate/ Marksheet </div><!--bindings={
+  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> hhfg </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> hfghgf </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> hfghgf </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> First </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 2017 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 88 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> ✓ File Uploaded </div><!--bindings={
+  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object]"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if-else": "[object Object]"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">PG</div><div _ngcontent-ng-c2923130650="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> University/ Institute/ Board </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Subject(S)(Major)/ Group </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Division </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Passing  Year </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Percentage  Obtained </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> O G P A ( If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment For  Conversion  Formula (If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Certificate/ Marksheet </div><!--bindings={
+  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> hgfh </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> gfhfgh </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> fghfgh </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> First </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 2016 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 78 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> ✓ File Uploaded </div><!--bindings={
+  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object]"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if-else": "[object Object]"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if-else": "[object Object]"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-switch-case": "experience"
+}--><!--bindings={
+  "ng-reflect-ng-switch-case": "details"
+}--><!--ng-container--></div></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Academic Excellence</div><!--bindings={
+  "ng-reflect-ng-switch-case": "qualification"
+}--><!--bindings={
+  "ng-reflect-ng-switch-case": "experience"
+}--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">University medal at UG/PG/Ph.D</div><div _ngcontent-ng-c2923130650="" class="data-table-header" style="grid-template-columns: repeat(4, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Description  If Any </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment  Certificate </div><!--bindings={
+  "ng-reflect-ng-for-of": "type,degree,description__if_an"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(4, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Gold Medal <!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->B.Tech.(Agril. Engg.) <!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Gold One<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,degree,description__if_an"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(4, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Gold Medal <!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->B.Tech.(Food Tech.) <!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Gold Two<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,degree,description__if_an"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(4, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Silver Medal<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->M.Sc.(Ag.) (Agronomy)<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Silver Two<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,degree,description__if_an"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">JRF/SRF of ICAR/CSIR/GATE/UGC etc. obtained through any examination/competition will only be considered</div><div _ngcontent-ng-c2923130650="" class="data-table-header" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Description  If Any </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment  Certificate </div><!--bindings={
+  "ng-reflect-ng-for-of": "type,description__if_any_,atta"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->SRF<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->SRF One<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,description__if_any_,atta"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->SRF<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->SRF Two<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,description__if_any_,atta"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->JRF<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->JRF One<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,description__if_any_,atta"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if-else": "[object Object]"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-switch-case": "details"
+}--><!--ng-container--></div></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Research Publication</div><!--bindings={
+  "ng-reflect-ng-switch-case": "qualification"
+}--><!--bindings={
+  "ng-reflect-ng-switch-case": "experience"
+}--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">Full Length Research paper/Review article ( in NAAS rated 3/peer reviewed journals)</div><div _ngcontent-ng-c2923130650="" class="data-table-header" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Title Of Paper </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Name Of Journal </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Name Of Author S </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Publication Year </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Volume </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Naas Rating </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Description </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Peer Review </div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->First Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->sfsfdsaff<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fdsfds<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fds<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2018<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->3<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->1<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->gg<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hg<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->First Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fsdf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fsdf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fds<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2017<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->4<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->gdfg<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hgh<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->First Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->dsfdsf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->sdfsd<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fdsf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2018<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->4<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->3<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->gfd<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hfgh<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->First Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->sfsdf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fsdsdff<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->sddsfsf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2018<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->4<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->gfg<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hfg<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->First Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->dsfdsf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->dsfsd<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fdsf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2016<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->1<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->4<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fdgfg<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hgf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->dsf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fdsf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->dsfd<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2015<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->3<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fg<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hgfh<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->dsfds<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->dsfdsf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fdsfdsf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2020<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->4<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->3<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fgf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->gfh<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fsdf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->dsfds<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->dfd<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2017<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->5<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->1<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->gfgf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->gfhgf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->dsfdsfsd<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fsdfdsfd<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->dsfds<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2015<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->3<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->gfgdf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hgfhfgh<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">Short Notes (In NAAS rated /peer reviewed Journals)</div><div _ngcontent-ng-c2923130650="" class="data-table-header" style="grid-template-columns: repeat(6, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Title Of Paper </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Name Of Journal </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Name Of Author S </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Publication Year </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Volume </div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(6, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hgf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fhgf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hgfh<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2019<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->4<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(6, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hhg<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hgf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->fghgf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2016<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(6, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->First Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hgfhg<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hgfhgf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->hgfhgf<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2019<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->3<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if-else": "[object Object]"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-switch-case": "details"
+}--><!--ng-container--></div></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Experience</div><!--bindings={
+  "ng-reflect-ng-switch-case": "qualification"
+}--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">As Teacher/Scientist/Subject Matter Specialist/Guest Faculty/Contractual Teacher/Part time Teacher/ RA/ RF/ SRF/ JRF/ TA/Farm Manager in any recognized University or Constituent/Affiliated Colleges of IGKV/ICAR/R &amp; D organization of International/National level. State/Central Government Service</div><div _ngcontent-ng-c2923130650="" class="data-table-header ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-for-of": ""
+}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-for-of": ""
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object]"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if-else": "[object Object]"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object]"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if-else": "[object Object]"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-switch-case": "experience"
+}--><!--bindings={
+  "ng-reflect-ng-switch-case": "details"
+}--><!--ng-container--></div></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--><div _ngcontent-ng-c2923130650="" class="section"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="declaration-header">DECLARATION</div><div _ngcontent-ng-c2923130650="" class="section-content"><p _ngcontent-ng-c2923130650="" class="declaration-text">Ah! I see the issue. The class fa fa-bot is not a valid Font Awesome icon. Font Awesome icons follow the naming convention fa fa-iconname (for version 4) or fas fa-iconname / fab fa-iconname (for version 5+).
+If you want a generic bot icon, Font Awesome has fa-robot.
+Here’s the corrected HTML:</p><div _ngcontent-ng-c2923130650="" class="signature-grid"><div _ngcontent-ng-c2923130650="" class="place-date"><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Place</span>: ____________</div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Date</span>: ____________</div></div><div _ngcontent-ng-c2923130650=""></div><div _ngcontent-ng-c2923130650="" class="text-center"><img _ngcontent-ng-c2923130650="" alt="Signature" class="signature-img" src="http://192.168.1.57:3500/recruitment/25000002/signature_25000002_1759126041033.png"><div _ngcontent-ng-c2923130650="" class="signature-caption">Signature of the Applicant</div></div></div></div><div _ngcontent-ng-c2923130650="" class="employer-remarks"><div _ngcontent-ng-c2923130650="" class="declaration-header">REMARKS OF THE PRESENT EMPLOYER</div><div _ngcontent-ng-c2923130650="" class="employer-remarks-subtitle"> (In case of those who are already in service) </div><div _ngcontent-ng-c2923130650="" class="section-content"><p _ngcontent-ng-c2923130650="" class="declaration-text"> The applicant <strong _ngcontent-ng-c2923130650=""> Dr. ANKITA  GAUTAM </strong> is holding a permanent/temporary post of <span _ngcontent-ng-c2923130650="" class="underline-fill-md">&nbsp;</span> in the scale of Rs. <span _ngcontent-ng-c2923130650="" class="underline-fill-sm">&nbsp;</span> per month. His/Her application is forwarded and he/she will be relieved in case he/she is selected for the post applied for. </p><div _ngcontent-ng-c2923130650="" class="signature-grid"><div _ngcontent-ng-c2923130650="" class="place-date"><div _ngcontent-ng-c2923130650="">Place <span _ngcontent-ng-c2923130650="" class="underline-fill-sm">&nbsp;</span></div><div _ngcontent-ng-c2923130650="">Date <span _ngcontent-ng-c2923130650="" class="underline-fill-sm">&nbsp;</span></div></div><div _ngcontent-ng-c2923130650=""></div><div _ngcontent-ng-c2923130650="" class="text-center"><div _ngcontent-ng-c2923130650="" class="employer-signature-box">&nbsp;</div><div _ngcontent-ng-c2923130650="" class="signature-caption"> Signature &amp; Designation of Officer (with official Seal) </div></div></div></div></div></div></div></div>
+      </body>
+    </html>
+  
