@@ -120,7 +120,11 @@ let noApiPermissionRequiredServices = {
     "saveOrUpdateQuantityBasedCandidateDetails",
     "updateFinalDeclaration",
     "saveOrUpdateCandidateScoreCardForScreening",
-    ""
+    "saveOrUpdateQuantityBasedCandidateDetailsForScreening",
+    "saveOrUpdateExperienceDetailsForScreening",
+    "saveOrUpdateAdditionalInformationForScreening",
+    "saveOrUpdateFullCandidateProfileForScreening",
+    "updateScreeningFinalDecision",
   ],
   publicApi: [],
 };
