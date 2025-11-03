@@ -125,6 +125,7 @@ let noApiPermissionRequiredServices = {
     "saveOrUpdateAdditionalInformationForScreening",
     "saveOrUpdateFullCandidateProfileForScreening",
     "updateScreeningFinalDecision",
+    "syncScreeningAndScoringData",
   ],
   publicApi: [],
 };

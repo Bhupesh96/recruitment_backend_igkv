@@ -1968,6 +1968,10 @@ let candidateService = {
     sessionDetails,
     callback
   ) {
+    console.log(
+      "--- [BACKEND LOG] Raw request.body.mainPayload ---:",
+      JSON.stringify(request.body.mainPayload, null, 2)
+    );
     let tranObj, tranCallback;
 
     // STEP 1: Parse Payloads
@@ -2357,6 +2361,295 @@ let candidateService = {
       }
     );
   },
+  logScreeningData: function (dbkey, registration_no, mainCallback) {
+    const tranObj = dbkey.connectionobj;
+    if (!tranObj) {
+      return mainCallback(
+        new Error("Transaction object not found for logging.")
+      );
+    }
+
+    console.log(
+      `---  archiving screening data for reg_no: ${registration_no} (using simple INSERT) ---`
+    );
+
+    async.series(
+      [
+        // 1. Log a_rec_app_main to a_rec_app_main_log
+        function (cback) {
+          const mainCols = [
+            "`a_rec_app_main_id`",
+            "`registration_no`",
+            "`a_rec_adv_main_id`",
+            "`session_id`",
+            "`post_code`",
+            "`subject_id`",
+            "`Salutation_E`",
+            "`Applicant_First_Name_E`",
+            "`Applicant_Middle_Name_E`",
+            "`Applicant_Last_Name_E`",
+            "`Applicant_First_Name_H`",
+            "`Applicant_Middle_Name_H`",
+            "`Applicant_Last_Name_H`",
+            "`Applicant_Father_Name_E`",
+            "`Applicant_Mother_Name_E`",
+            "`Applicant_Husband_Name_E`",
+            "`candidate_category_id`",
+            "`gender_id`",
+            "`DOB`",
+            "`DOB_Doc_Status_Flag_Id`",
+            "`DOB_Status_Remark`",
+            "`Mobile_No`",
+            "`Alternate_mobile_No`",
+            "`Email_Id`",
+            "`Birth_Place`",
+            "`Birth_District_Id`",
+            "`Birth_State_Id`",
+            "`Birth_Country_Id`",
+            "`Identification_Mark1`",
+            "`Identification_Mark2`",
+            "`religion_code`",
+            "`Is_CG_Domocile`",
+            "`Is_Local_Lang_Knowledge`",
+            "`Is_EWS_Section`",
+            "`Is_Married_YN`",
+            "`No_Of_Child`",
+            "`Is_Surviving_child_YN`",
+            "`Marriage_Date`",
+            "`Is_Mrg_Decl_YN`",
+            "`Is_Married_at_Prescribed_Age_YN`",
+            "`Is_Disability`",
+            "`Recruitment_Disability_Type_Id`",
+            "`Disability_Percentage`",
+            "`In_Service_YN`",
+            "`InService_OrganizationName`",
+            "`InService_PostName`",
+            "`InService_Fromdate`",
+            "`InService_Todate`",
+            "`Inservice_NOC_Doc`",
+            "`Permanent_Address1`",
+            "`Permanent_City`",
+            "`Permanent_District_Id`",
+            "`Permanent_State_Id`",
+            "`Permanent_Country_Id`",
+            "`Permanent_Pin_Code`",
+            "`Current_Address1`",
+            "`Current_City`",
+            "`Current_District_Id`",
+            "`Current_State_Id`",
+            "`Current_Country_Id`",
+            "`Current_Pin_Code`",
+            "`Is_Final_Decl_YN`",
+            "`is_Chk_AdvanceCopy_YN`",
+            "`Allow_Reopen_YN`",
+            "`File_Verified_By_CandidateYN`",
+            "`File_Verified_By_Candidate_dateTime`",
+            "`File_Verified_By_CandidatePublicIP`",
+            "`File_Verified_By_CandidatePrivateIP`",
+            "`candidate_photo`",
+            "`candidate_signature`",
+            "`Application_Step_Flag_CES`",
+            "`Verified_by`",
+            "`Verified_date`",
+            "`Verified_Remark`",
+            "`Round_No`",
+            "`Document_Status_Flag_Id`",
+            "`Document_Status_Remark_Id`",
+            "`Verification_Finalize_YN`",
+            "`active_status`",
+            "`action_type`",
+            "`action_date`",
+            "`action_ip_address`",
+            "`action_remark`",
+            "`action_order_copy`",
+            "`action_by`",
+            "`delete_flag`",
+          ];
+          const colNames = mainCols.join(", ");
+
+          // ✅ We removed ON DUPLICATE KEY UPDATE
+          const sql = `
+            INSERT INTO a_rec_app_main_log (${colNames})
+            SELECT ${colNames} FROM a_rec_app_main
+            WHERE registration_no = ? AND Application_Step_Flag_CES = 'E'
+          `;
+
+          tranObj.query(sql, [registration_no], (err, result) => {
+            if (err) return cback(err);
+            console.log(
+              ` -> Logged ${result.affectedRows} new row(s) to a_rec_app_main_log`
+            );
+            cback();
+          });
+        },
+
+        // 2. Log a_rec_app_main_addtional_info to a_rec_app_main_addtional_info_log
+        function (cback) {
+          const addtlCols = [
+            "`a_rec_app_main_addtional_info_id`",
+            "`registration_no`",
+            "`question_id`",
+            "`option_id`",
+            "`condition_id`",
+            "`input_field`",
+            "`Application_Step_Flag_CES`",
+            "`Verified_by`",
+            "`Verified_date`",
+            "`Verified_Remark`",
+            "`Round_No`",
+            "`Document_Status_Flag_Id`",
+            "`Document_Status_Remark_Id`",
+            "`Verification_Finalize_YN`",
+            "`active_status`",
+            "`action_type`",
+            "`action_date`",
+            "`action_ip_address`",
+            "`action_remark`",
+            "`action_order_copy`",
+            "`action_by`",
+          ];
+          const colNames = addtlCols.join(", ");
+
+          const sql = `
+            INSERT INTO a_rec_app_main_addtional_info_log (${colNames})
+            SELECT ${colNames} FROM a_rec_app_main_addtional_info
+            WHERE registration_no = ? AND Application_Step_Flag_CES = 'E'
+          `;
+
+          tranObj.query(sql, [registration_no], (err, result) => {
+            if (err) return cback(err);
+            console.log(
+              ` -> Logged ${result.affectedRows} new row(s) to a_rec_app_main_addtional_info_log`
+            );
+            cback();
+          });
+        },
+
+        // 3. Log a_rec_app_score_field_detail to a_rec_app_score_field_detail_log
+        function (cback) {
+          const detailCols = [
+            "`a_rec_app_score_field_detail_id`",
+            "`registration_no`",
+            "`a_rec_app_main_id`",
+            "`a_rec_adv_post_detail_id`",
+            "`score_field_parent_id`",
+            "`m_rec_score_field_id`",
+            "`score_field_value`",
+            "`score_field_actual_value`",
+            "`score_field_calculated_value`",
+            "`m_rec_score_field_method_id`",
+            "`field_marks`",
+            "`field_weightage`",
+            "`remark`",
+            "`unique_parameter_display_no`",
+            "`verified_by`",
+            "`verified_date`",
+            "`Application_Step_Flag_CES`",
+            "`Verified_Remark`",
+            "`Round_No`",
+            "`Document_Status_Flag_Id`",
+            "`Document_Status_Remark_Id`",
+            "`Verification_Finalize_YN`",
+            "`active_status`",
+            "`action_type`",
+            "`action_date`",
+            "`action_ip_address`",
+            "`action_remark`",
+            "`action_order_copy`",
+            "`action_by`",
+            "`delete_flag`",
+          ];
+          const colNames = detailCols.join(", ");
+
+          // ✅ We removed ON DUPLICATE KEY UPDATE
+          const sql = `
+            INSERT INTO a_rec_app_score_field_detail_log (${colNames})
+            SELECT ${colNames} FROM a_rec_app_score_field_detail
+            WHERE registration_no = ? AND Application_Step_Flag_CES = 'E'
+          `;
+
+          tranObj.query(sql, [registration_no], (err, result) => {
+            if (err) {
+              console.error(
+                " -> ERROR logging to 'a_rec_app_score_field_detail_log'.",
+                err.message
+              );
+              return cback(err);
+            }
+            console.log(
+              ` -> Logged ${result.affectedRows} new row(s) to a_rec_app_score_field_detail_log`
+            );
+            cback();
+          });
+        },
+
+        // 4. Log a_rec_app_score_field_parameter_detail to a_rec_app_score_field_parameter_detail_log
+        function (cback) {
+          const paramCols = [
+            "`a_rec_app_score_field_parameter_detail_id`",
+            "`a_rec_app_score_field_detail_id`",
+            "`registration_no`",
+            "`score_field_parent_id`",
+            "`m_rec_score_field_id`",
+            "`m_rec_score_field_parameter_new_id`",
+            "`parameter_row_index`",
+            "`parameter_value`",
+            "`verified_by`",
+            "`verified_date`",
+            "`Application_Step_Flag_CES`",
+            "`Verified_Remark`",
+            "`Round_No`",
+            "`Document_Status_Flag_Id`",
+            "`Document_Status_Remark_Id`",
+            "`Verification_Finalize_YN`",
+            "`is_active`",
+            "`parameter_display_no`",
+            "`obt_marks`",
+            "`unique_parameter_display_no`",
+            "`active_status`",
+            "`action_type`",
+            "`action_date`",
+            "`action_ip_address`",
+            "`action_remark`",
+            "`action_order_copy`",
+            "`action_by`",
+            "`delete_flag`",
+          ];
+          const colNames = paramCols.join(", ");
+
+          // ✅ We removed ON DUPLICATE KEY UPDATE
+          const sql = `
+            INSERT INTO a_rec_app_score_field_parameter_detail_log (${colNames})
+            SELECT ${colNames} FROM a_rec_app_score_field_parameter_detail
+            WHERE registration_no = ? AND Application_Step_Flag_CES = 'E'
+          `;
+
+          tranObj.query(sql, [registration_no], (err, result) => {
+            if (err) return cback(err);
+            console.log(
+              ` -> Logged ${result.affectedRows} new row(s) to a_rec_app_score_field_parameter_detail_log`
+            );
+            cback();
+          });
+        },
+      ],
+      (err) => {
+        if (err) {
+          console.error("--- Error during screening data logging ---", err);
+        } else {
+          console.log(
+            `--- Successfully archived screening data for reg_no: ${registration_no} ---`
+          );
+        }
+        mainCallback(err);
+      }
+    );
+  },
+
+  // ---------------------------------------------------------------------------------
+  // --- FINAL DECISION FUNCTION (This must replace your existing one) ---
+  // ---------------------------------------------------------------------------------
+
   updateScreeningFinalDecision: function (
     dbkey,
     request,
@@ -2367,8 +2660,11 @@ let candidateService = {
     let a_rec_app_main_id,
       verification_Finalize_YN,
       verified_Remark,
-      registration_no; // STEP 1: Parse and validate the request body
+      registration_no;
 
+    let tranObj, tranCallback;
+
+    // STEP 1: Parse and validate the request body
     try {
       a_rec_app_main_id = request.body.a_rec_app_main_id;
       verification_Finalize_YN = request.body.Verification_Finalize_YN;
@@ -2385,7 +2681,7 @@ let candidateService = {
         throw new Error(
           "Final decision (Verification_Finalize_YN) is required."
         );
-      } // Backend validation to ensure remarks are present on rejection
+      }
       if (verification_Finalize_YN === "N" && !verified_Remark) {
         throw new Error(
           "Remarks (Verified_Remark) are required when rejecting."
@@ -2400,38 +2696,323 @@ let candidateService = {
     }
 
     console.log(
-      `📝 Updating final screening decision for reg_no: ${registration_no}, app_id: ${a_rec_app_main_id}`
-    ); // STEP 2: Prepare the payload for the update
+      `📝 Starting final screening decision for reg_no: ${registration_no}, app_id: ${a_rec_app_main_id}`
+    );
 
+    // STEP 2: Prepare the payload for the update
     const updatePayload = {
-      table_name: "a_rec_app_main", // --- Fields for WHERE clause (to identify the row) ---
-
+      table_name: "a_rec_app_main",
+      // --- Fields for WHERE clause ---
       a_rec_app_main_id: a_rec_app_main_id,
-      registration_no: registration_no, // We also target the screening record specifically
-      Application_Step_Flag_CES: "E", // --- Fields to SET ---
-
+      registration_no: registration_no,
+      Application_Step_Flag_CES: "E",
+      // --- Fields to SET ---
       Verification_Finalize_YN: verification_Finalize_YN,
       Verified_Remark: verified_Remark,
-      Verified_by: sessionDetails.ip_address, // Capture who made the decision
-      Verified_date: new Date(), // Capture when the decision was made
-    }; // STEP 3: Call the shared service to perform the update // This function does not require a transaction as it's a single update.
+      Verified_by: sessionDetails.ip_address,
+      Verified_date: new Date(),
+    };
 
-    SHARED_SERVICE.validateAndUpdateInTable(
-      dbkey,
-      request,
-      updatePayload,
-      sessionDetails,
-      (err, result) => {
+    // STEP 3: Run operations in a transaction
+    async.series(
+      [
+        // 3a. Create Transaction
+        function (cback) {
+          DB_SERVICE.createTransaction(
+            dbkey,
+            function (err, tranobj, trancallback) {
+              if (err) return cback(err);
+              tranObj = tranobj;
+              tranCallback = trancallback;
+              // Re-assign dbkey to include the transaction object for shared services
+              dbkey = { dbkey: dbkey, connectionobj: tranObj };
+              return cback();
+            }
+          );
+        },
+
+        // 3b. Update the main application record
+        function (cback) {
+          console.log(` -> Updating a_rec_app_main...`);
+          SHARED_SERVICE.validateAndUpdateInTable(
+            dbkey,
+            request,
+            updatePayload,
+            sessionDetails,
+            cback
+          );
+        },
+
+        // 3c. Log all 'E' data to log tables
+        function (cback) {
+          console.log(` -> Calling logScreeningData helper...`);
+          // Only log if the update was successful and the decision is "Eligible" or "Not Eligible"
+          if (
+            verification_Finalize_YN === "Y" ||
+            verification_Finalize_YN === "N"
+          ) {
+            candidateService.logScreeningData(dbkey, registration_no, cback);
+          } else {
+            // Don't log if it's just a save (e.g., 'S' or null)
+            console.log(" -> Skipping logging, not a final decision.");
+            return cback();
+          }
+        },
+      ],
+      // STEP 4: Final callback (Commit/Rollback)
+      function (err) {
         if (err) {
           console.error("❌ Error updating final screening decision:", err);
-          return callback(err);
+          DB_SERVICE.rollbackPartialTransaction(tranObj, tranCallback, () =>
+            callback(err)
+          );
+        } else {
+          DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
+            console.log(
+              `✅ Successfully finalized and logged decision for ${registration_no}`
+            );
+            callback(null, {
+              ...securityService.SECURITY_ERRORS.SUCCESS,
+              message: "Final decision saved and logged successfully.",
+            });
+          });
         }
+      }
+    );
+  },
+  syncScreeningAndScoringData: function (
+    dbkey,
+    request,
+    params, // this will be {} from the frontend
+    sessionDetails,
+    callback
+  ) {
+    console.log("--- 🔄 Starting Sync: Copying 'C' data to 'E' ---");
+    console.log(
+      "Params received in sync screening: ",
+      JSON.stringify(params, null, 2)
+    );
+    let query308Data, query305Data;
+    let tranObj, tranCallback;
+
+    // This map is essential for linking the new parameters to their new parent details
+    // Key: old_C_detail_id, Value: new_E_detail_id
+    const detailIdMap = new Map();
+
+    async.series(
+      [
+        // 1. --- Execute Query 308 (Parameters) ---
+        function (cback) {
+          console.log(" -> Executing Query 308 (Get 'C' Parameters)...");
+          const queryParams_308 = {
+            registration_no: params.registration_no,
+            app_main_id: params.app_main_id,
+            post_detail_id: params.post_detail_id,
+            not_exists: "E",
+            Application_Step_Flag_CES: "C",
+          };
+          const modifiedSessionDetails_308 = {
+            ...sessionDetails,
+            query_id: 308,
+          };
+          DB_SERVICE.getQueryDataFromId(
+            dbkey,
+            request,
+            queryParams_308,
+            modifiedSessionDetails_308,
+            (err, data) => {
+              if (err) {
+                console.error("❌ ERROR executing query 308:", err);
+                return cback(err);
+              }
+              query308Data = data; // This is the full response object
+              cback();
+            }
+          );
+        },
+
+        // 2. --- Execute Query 305 (Details) ---
+        function (cback) {
+          console.log(" -> Executing Query 305 (Get 'C' Details)...");
+          const queryParams_305 = {
+            registration_no: params.registration_no,
+            app_main_id: params.app_main_id,
+            post_detail_id: params.post_detail_id,
+            not_exists: "E",
+            Application_Step_Flag_CES: "C",
+          };
+          const modifiedSessionDetails_305 = {
+            ...sessionDetails,
+            query_id: 305,
+          };
+          DB_SERVICE.getQueryDataFromId(
+            dbkey,
+            request,
+            queryParams_305,
+            modifiedSessionDetails_305,
+            (err, data) => {
+              if (err) {
+                console.error("❌ ERROR executing query 305:", err);
+                return cback(err);
+              }
+              query305Data = data; // This is the full response object
+              cback();
+            }
+          );
+        },
+
+        // 3. --- Start Transaction ---
+        function (cback) {
+          DB_SERVICE.createTransaction(
+            dbkey,
+            function (err, tranobj, trancallback) {
+              if (err) return cback(err);
+              tranObj = tranobj;
+              tranCallback = trancallback;
+              // Re-assign dbkey to be the transaction-aware object
+              dbkey = { dbkey: dbkey, connectionobj: tranObj };
+              console.log(" -> 🔑 Transaction started.");
+              return cback();
+            }
+          );
+        },
+
+        // 4. --- Process and Insert Detail Records (from 305) ---
+        function (cback) {
+          // ✅ FIX: Check the array directly, not .data
+          if (!query305Data || query305Data.length === 0) {
+            console.log(" -> No detail records ('C') to sync.");
+            return cback();
+          }
+
+          // ✅ FIX: Use the array directly, not .data
+          const detailsToInsert = query305Data;
+          console.log(
+            ` -> Processing ${detailsToInsert.length} 'C' detail records for sync...`
+          );
+
+          async.eachSeries(
+            detailsToInsert,
+            (detailRecord, eachCb) => {
+              const oldDetailId = detailRecord.a_rec_app_score_field_detail_id;
+
+              // Prepare the new 'E' record
+              const newRecordPayload = {
+                ...detailRecord,
+                table_name: "a_rec_app_score_field_detail",
+                Application_Step_Flag_CES: "E", // Set the new flag
+              };
+
+              // "delete the ids" - Remove the old PK so a new one is generated
+              delete newRecordPayload.a_rec_app_score_field_detail_id;
+
+              SHARED_SERVICE.validateAndInsertInTable(
+                dbkey,
+                request,
+                newRecordPayload,
+                sessionDetails,
+                (err, res) => {
+                  if (err) return eachCb(err);
+
+                  const newDetailId = res.data.insertId;
+                  if (!newDetailId) {
+                    return eachCb(
+                      new Error(
+                        "Insert did not return a new ID for detail record."
+                      )
+                    );
+                  }
+
+                  // Store the mapping from the old C primary key to the new E primary key
+                  detailIdMap.set(oldDetailId, newDetailId);
+                  console.log(
+                    `    -> Mapped old_C_id ${oldDetailId} to new_E_id ${newDetailId}`
+                  );
+                  eachCb();
+                }
+              );
+            },
+            cback // Callback for when all details are inserted
+          );
+        },
+
+        // 5. --- Process and Insert Parameter Records (from 308) ---
+        function (cback) {
+          // ✅ FIX: Check the array directly, not .data
+          if (!query308Data || query308Data.length === 0) {
+            console.log(" -> No parameter records ('C') to sync.");
+            return cback();
+          }
+
+          // ✅ FIX: Use the array directly, not .data
+          const paramsToInsert = query308Data;
+          console.log(
+            ` -> Processing ${paramsToInsert.length} 'C' parameter records for sync...`
+          );
+
+          async.eachSeries(
+            paramsToInsert,
+            (paramRecord, eachCb) => {
+              const oldParentDetailId =
+                paramRecord.a_rec_app_score_field_detail_id;
+              const newParentDetailId = detailIdMap.get(oldParentDetailId);
+
+              // This logic is still needed for the "mismatched data" problem
+              if (!newParentDetailId) {
+                console.warn(
+                  `    -> ⚠️ WARNING: Skipping parameter. Could not find new parent E_id for old C_id ${oldParentDetailId}.`
+                );
+                // This parameter's parent (e.g., 527, 528) already has an 'E' record,
+                // but this function isn't designed to look it up.
+                // We will skip this orphan parameter to prevent a crash.
+                return eachCb();
+              }
+
+              // Prepare the new 'E' record
+              const newParamPayload = {
+                ...paramRecord,
+                table_name: "a_rec_app_score_field_parameter_detail",
+                Application_Step_Flag_CES: "E", // Set the new flag
+                a_rec_app_score_field_detail_id: newParentDetailId, // Set the *new* foreign key
+              };
+
+              // "delete the ids" - Remove the old PK so a new one is generated
+              delete newParamPayload.a_rec_app_score_field_parameter_detail_id;
+
+              SHARED_SERVICE.validateAndInsertInTable(
+                dbkey,
+                request,
+                newParamPayload,
+                sessionDetails,
+                eachCb // Callback for when this parameter is inserted
+              );
+            },
+            cback // Callback for when all parameters are inserted
+          );
+        },
+      ],
+      // 6. --- Final Callback (Commit/Rollback) ---
+      function (err) {
+        if (err) {
+          console.error("❌ ERROR during C-to-E sync, rolling back:", err);
+          DB_SERVICE.rollbackPartialTransaction(tranObj, tranCallback, () =>
+            callback(err)
+          );
+          return;
+        }
+
         console.log(
-          `✅ Successfully updated final decision for ${registration_no}`
+          "✅ SUCCESS: C-to-E sync complete. Committing transaction."
         );
-        return callback(null, {
-          ...securityService.SECURITY_ERRORS.SUCCESS,
-          message: "Final decision saved successfully.",
+        DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
+          callback(null, {
+            ...securityService.SECURITY_ERRORS.SUCCESS,
+            message: "Data synced successfully from Candidate to Screening.",
+            data: {
+              details_copied: query305Data ? query305Data.length : 0,
+              parameters_copied: query308Data ? query308Data.length : 0,
+            },
+          });
         });
       }
     );
