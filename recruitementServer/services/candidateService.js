@@ -3017,6 +3017,162 @@ let candidateService = {
       }
     );
   },
+
+  saveCandidateDawapatti: function (
+    dbkey,
+    request,
+    params, // params will be {}
+    sessionDetails,
+    callback
+  ) {
+    let tranObj, tranCallback;
+    let uploadedFilePath = null; // To store the path of the uploaded file
+
+    // Step 0: Parse data from FormData body
+    try {
+      params.registration_no = request.body.registration_no;
+      params.a_rec_app_main_id = request.body.a_rec_app_main_id;
+      params.score_field_parent_id = request.body.score_field_parent_id;
+      params.m_rec_score_field_id = request.body.m_rec_score_field_id;
+      // REMOVED: a_rec_app_score_field_parameter_detail_id
+      params.remark = request.body.remark;
+      params.parameter_row_index = request.body.parameter_row_index;
+
+      if (
+        !params.registration_no ||
+        !params.a_rec_app_main_id ||
+        !params.m_rec_score_field_id ||
+        // REMOVED: !params.a_rec_app_score_field_parameter_detail_id ||
+        !params.remark ||
+        !params.parameter_row_index ||
+        !params.score_field_parent_id
+      ) {
+        throw new Error("Missing required fields from the frontend.");
+      }
+
+      if (!request.files || !request.files.file) {
+        throw new Error("Missing required file attachment.");
+      }
+    } catch (e) {
+      return callback({
+        status: "error",
+        message: "Invalid request body or missing file",
+        details: e.message,
+      });
+    }
+
+    async.series(
+      [
+        // Step 1: Handle File Upload
+        function (cback) {
+          const file = request.files.file;
+          if (!file || !file.name) {
+            return cback(new Error("File object is invalid."));
+          }
+
+          const baseName = path.parse(file.name).name;
+          const sanitizedName = baseName
+            .replace(/[^a-zA-Z0-9._-]/g, "_")
+            .replace(/_+/g, "_")
+            .replace(/^_+|_+$/g, "");
+
+          // UPDATED file name standard for dawapatti
+          const fileName = `dawapatti_${params.registration_no}_${params.score_field_parent_id}_${params.m_rec_score_field_id}_${params.parameter_row_index}_${sanitizedName}`;
+
+          // New folder path
+          const folderPath = `recruitment/${params.registration_no}/dawapatti`;
+
+          const uploadOptions = {
+            file_name: fileName,
+            file_buffer: file.data,
+            control_name: "file",
+            folder_name: folderPath,
+          };
+
+          DOC_UPLOAD_SERVICE.docUploadWithFolder(
+            dbkey,
+            request,
+            uploadOptions,
+            sessionDetails,
+            function (err, res) {
+              if (err) return cback(err);
+              if (res && res.file_path) {
+                const finalFileName = path.basename(res.file_path);
+                // Store the full path to be saved in the DB
+                uploadedFilePath = `${folderPath}/${finalFileName}`;
+                console.log(
+                  ` -> 📂 Dawapatti file uploaded to: ${uploadedFilePath}`
+                );
+                return cback();
+              } else {
+                return cback(new Error("File upload failed to return a path."));
+              }
+            }
+          );
+        },
+
+        // Step 2: Create Transaction
+        function (cback) {
+          DB_SERVICE.createTransaction(
+            dbkey,
+            function (err, tranobj, trancallback) {
+              if (err) return cback(err);
+              tranObj = tranobj;
+              tranCallback = trancallback;
+              dbkey = { dbkey: dbkey, connectionobj: tranObj };
+              console.log(" -> 🔑 Transaction started for dawapatti save.");
+              return cback();
+            }
+          );
+        },
+
+        // Step 3: Insert into m_rec_app_dawapatti
+        function (cback) {
+          console.log(" -> 💾 Saving dawapatti record to database...");
+
+          const insertPayload = {
+            table_name: "m_rec_app_dawapatti",
+            registration_no: params.registration_no,
+            a_rec_app_main_id: params.a_rec_app_main_id,
+            score_field_parent_id: params.score_field_parent_id,
+            m_rec_score_field_id: params.m_rec_score_field_id,
+            // REMOVED: a_rec_app_score_field_parameter_detail_id
+            parameter_row_index: params.parameter_row_index,
+            candidate_remark: params.remark,
+            candidate_document: uploadedFilePath, // Use the path from Step 1
+            action_ip_address: sessionDetails.ip_address,
+            action_by: 1,
+            // Other fields (active_status, action_type, action_date) have defaults
+          };
+
+          SHARED_SERVICE.validateAndInsertInTable(
+            dbkey,
+            request,
+            insertPayload,
+            sessionDetails,
+            cback // Pass the callback directly
+          );
+        },
+      ],
+      // Final Callback (Commit/Rollback)
+      function (err) {
+        if (err) {
+          console.error("❌ Error saving candidate dawapatti:", err);
+          DB_SERVICE.rollbackPartialTransaction(tranObj, tranCallback, () =>
+            callback(err)
+          );
+        } else {
+          DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
+            console.log("✅ Dawapatti claim saved successfully.");
+            callback(null, {
+              ...securityService.SECURITY_ERRORS.SUCCESS,
+              message: "Your claim has been submitted successfully.",
+            });
+          });
+        }
+      }
+    );
+  },
 };
 
 module.exports = candidateService;
