@@ -187,6 +187,9 @@ let scoreCardEntryService = {
                   academic_session_id: user["academic_session_id"],
                   a_rec_adv_main_id: user["a_rec_adv_main_id"],
                   a_rec_app_main_id: user["a_rec_app_main_id"],
+                  Applicant_First_Name_E: user["Applicant_First_Name_E"],
+                  Applicant_First_Name_H: user["Applicant_First_Name_H"],
+                  candidate_photo: user["candidate_photo"],
                 };
 
                 console.log("🍪 Payload for cookie:", payloadForCookie);

@@ -2,6 +2,7 @@ const fs = require("fs");
 const config = require("config");
 const PuppeteerHTMLPDF = require("puppeteer-html-pdf");
 const handlebars = require("handlebars");
+const puppeteer = require("puppeteer");
 const template_path = config.get("templated_path");
 
 const CONFIG_PARAMS = global.COMMON_CONFS;
@@ -23,7 +24,6 @@ let file = {
       console.log("--- Received HTML from client ---");
       if (params["html"]) {
         console.log(`HTML Length: ${params["html"].length} characters.`);
-        // Save the received HTML to a file for inspection
         fs.writeFileSync("debug_received.html", params["html"]);
         console.log("Saved received HTML to debug_received.html");
       } else {
@@ -42,19 +42,57 @@ let file = {
       filledTemplate = filledTemplate({ html: params["html"] });
 
       let landscape = params["orientation"] == "landscape";
+      // Your original pdf_config (format: A4, margin: 25px)
       const options = { ...pdf_config, landscape };
 
-      const htmlPDF = new PuppeteerHTMLPDF();
-      await htmlPDF.setOptions(options);
+      // --- START: Direct Puppeteer Implementation ---
 
       console.log("Starting PDF generation with Puppeteer...");
-      const buffer = await htmlPDF.create(filledTemplate);
+      let browser;
+      let buffer;
+
+      try {
+        // 1. Launch the browser
+        browser = await puppeteer.launch({
+          timeout: 60000, // Increase timeout to 60 seconds
+          headless: true,
+          args: [
+            "--no-sandbox", // Required for many server environments
+            "--disable-setuid-sandbox",
+          ],
+        });
+
+        // 2. Open a new page
+        const page = await browser.newPage();
+
+        // 3. 🎯 THIS IS THE CRITICAL FIX FOR YOUR LAYOUT 🎯
+        // This forces Puppeteer to render at 1280px wide,
+        // which will trigger your 'md:' and 'sm:' Tailwind classes.
+        await page.setViewport({ width: 1280, height: 1024 });
+
+        // 4. Set the HTML content
+        // We use waitUntil 'networkidle0' to ensure all external
+        // resources (like your styles.css) are fully loaded.
+        await page.setContent(filledTemplate, {
+          waitUntil: "networkidle0",
+          timeout: 60000, // Also increase page load timeout
+        });
+
+        // 5. Generate the PDF
+        buffer = await page.pdf(options); // 'options' is your pdf_config
+      } finally {
+        // 6. ALWAYS close the browser
+        if (browser) {
+          await browser.close();
+        }
+      }
+
+      // --- END: Direct Puppeteer Implementation ---
 
       // ✅ LOG 2: Check the generated PDF buffer
       console.log("--- Puppeteer Finished ---");
       if (buffer && buffer.length > 0) {
         console.log(`Generated PDF Buffer Length: ${buffer.length} bytes.`);
-        // Save the generated PDF directly to a file for inspection
         fs.writeFileSync("debug_generated.pdf", buffer);
         console.log("Saved generated PDF to debug_generated.pdf");
       } else {

@@ -63,7 +63,193 @@
 }
 /*# sourceMappingURL=/dot-loader.component.css.map */</style><style>
 
-.stepper-container[_ngcontent-ng-c1460742328] {
+.header-container[_ngcontent-ng-c3342368998] {
+  background-color: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.header-container[_ngcontent-ng-c3342368998]   .left-section[_ngcontent-ng-c3342368998] {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.header-container[_ngcontent-ng-c3342368998]   .left-section[_ngcontent-ng-c3342368998]   .university-logo[_ngcontent-ng-c3342368998] {
+  height: 3.5rem;
+  width: auto;
+}
+.header-container[_ngcontent-ng-c3342368998]   .left-section[_ngcontent-ng-c3342368998]   .university-text[_ngcontent-ng-c3342368998] {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.header-container[_ngcontent-ng-c3342368998]   .left-section[_ngcontent-ng-c3342368998]   .university-text[_ngcontent-ng-c3342368998]   h1[_ngcontent-ng-c3342368998] {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+.header-container[_ngcontent-ng-c3342368998]   .left-section[_ngcontent-ng-c3342368998]   .university-text[_ngcontent-ng-c3342368998]   h2[_ngcontent-ng-c3342368998] {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+.header-container[_ngcontent-ng-c3342368998]   .profile-container[_ngcontent-ng-c3342368998] {
+  position: relative;
+}
+.header-container[_ngcontent-ng-c3342368998]   .profile-button[_ngcontent-ng-c3342368998] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 50px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.header-container[_ngcontent-ng-c3342368998]   .profile-button[_ngcontent-ng-c3342368998]:hover {
+  background-color: #f3f4f6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.header-container[_ngcontent-ng-c3342368998]   .welcome-text[_ngcontent-ng-c3342368998] {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: right;
+  font-family: "Inter", sans-serif;
+  color: #374151;
+}
+.header-container[_ngcontent-ng-c3342368998]   .welcome-text[_ngcontent-ng-c3342368998]   .name-line[_ngcontent-ng-c3342368998] {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+.header-container[_ngcontent-ng-c3342368998]   .welcome-text[_ngcontent-ng-c3342368998]   .name-line[_ngcontent-ng-c3342368998]   .welcome-label[_ngcontent-ng-c3342368998] {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+.header-container[_ngcontent-ng-c3342368998]   .welcome-text[_ngcontent-ng-c3342368998]   .name-line[_ngcontent-ng-c3342368998]   .welcome-name[_ngcontent-ng-c3342368998] {
+  font-size: 1rem;
+  color: #111827;
+}
+.header-container[_ngcontent-ng-c3342368998]   .welcome-text[_ngcontent-ng-c3342368998]   .welcome-text-hindi[_ngcontent-ng-c3342368998] {
+  font-size: 0.85rem;
+  color: #555;
+  font-family: "Noto Sans Devanagari", sans-serif;
+  line-height: 1.2;
+}
+.header-container[_ngcontent-ng-c3342368998]   .profile-photo[_ngcontent-ng-c3342368998], 
+.header-container[_ngcontent-ng-c3342368998]   .profile-icon[_ngcontent-ng-c3342368998] {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #e5e7eb;
+  object-fit: cover;
+  background-color: #f0f0f0;
+}
+.header-container[_ngcontent-ng-c3342368998]   .profile-icon[_ngcontent-ng-c3342368998] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-container[_ngcontent-ng-c3342368998]   .profile-icon[_ngcontent-ng-c3342368998]   svg[_ngcontent-ng-c3342368998] {
+  width: 22px;
+  height: 22px;
+  color: #6b7280;
+}
+.header-container[_ngcontent-ng-c3342368998]   .profile-menu[_ngcontent-ng-c3342368998] {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 120px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  padding: 6px 0;
+  z-index: 100;
+  animation: _ngcontent-ng-c3342368998_fadeIn 0.15s ease-out;
+}
+.header-container[_ngcontent-ng-c3342368998]   .profile-menu[_ngcontent-ng-c3342368998]::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 20px;
+  width: 12px;
+  height: 12px;
+  background-color: white;
+  transform: rotate(45deg);
+  border-top: 1px solid #e5e7eb;
+  border-left: 1px solid #e5e7eb;
+}
+@keyframes _ngcontent-ng-c3342368998_fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.header-container[_ngcontent-ng-c3342368998]   .menu-item[_ngcontent-ng-c3342368998] {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  color: #1f2937;
+  background: none;
+  border: none;
+  width: 90%;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.header-container[_ngcontent-ng-c3342368998]   .menu-item[_ngcontent-ng-c3342368998]   svg[_ngcontent-ng-c3342368998] {
+  width: 18px;
+  height: 18px;
+  color: #2563eb;
+}
+.header-container[_ngcontent-ng-c3342368998]   .menu-item[_ngcontent-ng-c3342368998]:hover {
+  background-color: #f3f4f6;
+  color: #2563eb;
+}
+/*# sourceMappingURL=/dawapatti-header.component.css.map */</style><style>
+
+a[_ngcontent-ng-c1341930246] {
+  text-decoration: none !important;
+}
+.active-link[_ngcontent-ng-c1341930246] {
+  background-color: #2563eb !important;
+  color: white !important;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+.active-link[_ngcontent-ng-c1341930246]   svg[_ngcontent-ng-c1341930246] {
+  color: white !important;
+}
+ul[_ngcontent-ng-c1341930246]::-webkit-scrollbar {
+  width: 6px;
+}
+ul[_ngcontent-ng-c1341930246]::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+svg[_ngcontent-ng-c1341930246] {
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+}
+/*# sourceMappingURL=/sidenav.component.css.map */</style><style>
+
+.stepper-container[_ngcontent-ng-c1994527565] {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,14 +257,14 @@
   padding: 0.5rem;
   font-family: "Source Sans Pro", sans-serif;
 }
-.step[_ngcontent-ng-c1460742328] {
+.step[_ngcontent-ng-c1994527565] {
   display: flex;
   align-items: center;
   flex: 1;
   min-width: 100px;
   max-width: 140px;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .flex[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .flex[_ngcontent-ng-c1994527565] {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -87,7 +273,7 @@
   transition: all 0.3s ease;
   cursor: pointer;
 }
-.stepper-container[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565] {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,14 +281,14 @@
   padding: 0.5rem;
   font-family: "Source Sans Pro", sans-serif;
 }
-.step[_ngcontent-ng-c1460742328] {
+.step[_ngcontent-ng-c1994527565] {
   display: flex;
   align-items: center;
   flex: 1;
   min-width: 110px;
   max-width: 160px;
 }
-.pdf-preview[_ngcontent-ng-c1460742328] {
+.pdf-preview[_ngcontent-ng-c1994527565] {
   width: 794px;
   padding: 40px;
   background: white;
@@ -110,7 +296,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   font-family: "Arial", sans-serif;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .flex[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .flex[_ngcontent-ng-c1994527565] {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -119,106 +305,106 @@
   transition: all 0.3s ease;
   cursor: pointer;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .rounded-md[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .rounded-md[_ngcontent-ng-c1994527565] {
   border-radius: 0.375rem;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .w-5[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .w-5[_ngcontent-ng-c1994527565] {
   width: 1.25rem;
   height: 1.25rem;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .text-xs[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .text-xs[_ngcontent-ng-c1994527565] {
   font-size: 0.75rem;
   line-height: 1rem;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .font-semibold[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .font-semibold[_ngcontent-ng-c1994527565] {
   font-weight: 600;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .font-medium[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .font-medium[_ngcontent-ng-c1994527565] {
   font-weight: 500;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .leading-tight[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .leading-tight[_ngcontent-ng-c1994527565] {
   line-height: 1.1;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .bg-white[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .bg-white[_ngcontent-ng-c1994527565] {
   background-color: #ffffff;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .bg-blue-50[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .bg-blue-50[_ngcontent-ng-c1994527565] {
   background-color: #eff6ff;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .bg-blue-50\/50[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .bg-blue-50\/50[_ngcontent-ng-c1994527565] {
   background-color: rgba(239, 246, 255, 0.5);
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .bg-blue-400[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .bg-blue-400[_ngcontent-ng-c1994527565] {
   background-color: #60a5fa;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .bg-blue-600[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .bg-blue-600[_ngcontent-ng-c1994527565] {
   background-color: #2563eb;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .bg-green-600[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .bg-green-600[_ngcontent-ng-c1994527565] {
   background-color: #059669;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .bg-gray-200[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .bg-gray-200[_ngcontent-ng-c1994527565] {
   background-color: #e5e7eb;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .text-blue-900[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .text-blue-900[_ngcontent-ng-c1994527565] {
   color: #1e3a8a;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .text-gray-600[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .text-gray-600[_ngcontent-ng-c1994527565] {
   color: #4b5563;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .text-gray-700[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .text-gray-700[_ngcontent-ng-c1994527565] {
   color: #374151;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .text-white[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .text-white[_ngcontent-ng-c1994527565] {
   color: #ffffff;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .ring-1[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .ring-1[_ngcontent-ng-c1994527565] {
   box-shadow: 0 0 0 1px var(--tw-ring-color);
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .ring-blue-400[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .ring-blue-400[_ngcontent-ng-c1994527565] {
   --tw-ring-color: #60a5fa;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .ring-blue-200[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .ring-blue-200[_ngcontent-ng-c1994527565] {
   --tw-ring-color: #bfdbfe;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .ring-green-200[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .ring-green-200[_ngcontent-ng-c1994527565] {
   --tw-ring-color: #6ee7b7;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .shadow-sm[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .shadow-sm[_ngcontent-ng-c1994527565] {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .transition-all[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .transition-all[_ngcontent-ng-c1994527565] {
   transition: all 0.3s ease;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .rounded-full[_ngcontent-ng-c1460742328] {
+.stepper-container[_ngcontent-ng-c1994527565]   .rounded-full[_ngcontent-ng-c1994527565] {
   border-radius: 9999px;
 }
-.stepper-container[_ngcontent-ng-c1460742328]   .hover\:bg-blue-50\/50[_ngcontent-ng-c1460742328]:hover {
+.stepper-container[_ngcontent-ng-c1994527565]   .hover\:bg-blue-50\/50[_ngcontent-ng-c1994527565]:hover {
   background-color: rgba(239, 246, 255, 0.5);
 }
 @media (max-width: 640px) {
-  .stepper-container[_ngcontent-ng-c1460742328]   .step[_ngcontent-ng-c1460742328] {
+  .stepper-container[_ngcontent-ng-c1994527565]   .step[_ngcontent-ng-c1994527565] {
     min-width: 90px;
     max-width: 120px;
   }
-  .stepper-container[_ngcontent-ng-c1460742328]   .text-xs[_ngcontent-ng-c1460742328] {
+  .stepper-container[_ngcontent-ng-c1994527565]   .text-xs[_ngcontent-ng-c1994527565] {
     font-size: 0.6875rem;
   }
-  .stepper-container[_ngcontent-ng-c1460742328]   .w-5[_ngcontent-ng-c1460742328] {
+  .stepper-container[_ngcontent-ng-c1994527565]   .w-5[_ngcontent-ng-c1994527565] {
     width: 1rem;
     height: 1rem;
   }
-  .stepper-container[_ngcontent-ng-c1460742328]   .flex[_ngcontent-ng-c1460742328] {
+  .stepper-container[_ngcontent-ng-c1994527565]   .flex[_ngcontent-ng-c1994527565] {
     padding: 0.375rem;
     gap: 0.375rem;
   }
-  .stepper-container[_ngcontent-ng-c1460742328]   .max-w-\__ph-0__[_ngcontent-ng-c1460742328] {
+  .stepper-container[_ngcontent-ng-c1994527565]   .max-w-\__ph-0__[_ngcontent-ng-c1994527565] {
     max-width: 80px;
   }
-  .stepper-container[_ngcontent-ng-c1460742328]   .w-5[_ngcontent-ng-c1460742328] {
+  .stepper-container[_ngcontent-ng-c1994527565]   .w-5[_ngcontent-ng-c1994527565] {
     width: 0.75rem;
   }
-  .visually-hidden[_ngcontent-ng-c1460742328] {
+  .visually-hidden[_ngcontent-ng-c1994527565] {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -229,115 +415,7 @@
     border: 0;
   }
 }
-/*# sourceMappingURL=/stepper.component.css.map */</style><style>@charset "UTF-8";
-
-
-
-.header-container[_ngcontent-ng-c165683933] {
-  background-color: white;
-  padding: 0.5rem 1rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-.header-container[_ngcontent-ng-c165683933]   .header-content[_ngcontent-ng-c165683933] {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.5rem;
-}
-@media (min-width: 768px) {
-  .header-container[_ngcontent-ng-c165683933]   .header-content[_ngcontent-ng-c165683933] {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-}
-@media (min-width: 768px) {
-  .header-container[_ngcontent-ng-c165683933]   .logout-container[_ngcontent-ng-c165683933] {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-.header-container[_ngcontent-ng-c165683933]   .logout-button[_ngcontent-ng-c165683933] {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: #574cf0;
-  color: white;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.4rem 0.8rem;
-  border-radius: 9999px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-.header-container[_ngcontent-ng-c165683933]   .logout-button[_ngcontent-ng-c165683933]   svg[_ngcontent-ng-c165683933] {
-  height: 1.1rem;
-  width: 1.1rem;
-}
-.header-container[_ngcontent-ng-c165683933]   .logout-button[_ngcontent-ng-c165683933]:hover {
-  background: #dc2626;
-}
-.header-container[_ngcontent-ng-c165683933]   .logout-button[_ngcontent-ng-c165683933]:active {
-  transform: scale(0.96);
-}
-.header-container[_ngcontent-ng-c165683933]   .university-logo[_ngcontent-ng-c165683933] {
-  height: 3rem;
-  width: auto;
-}
-@media (min-width: 768px) {
-  .header-container[_ngcontent-ng-c165683933]   .university-logo[_ngcontent-ng-c165683933] {
-    height: 3.25rem;
-    margin-right: 1rem;
-  }
-}
-.header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933] {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-@media (min-width: 768px) {
-  .header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933] {
-    align-items: flex-start;
-    text-align: left;
-  }
-}
-.header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h1[_ngcontent-ng-c165683933], 
-.header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h2[_ngcontent-ng-c165683933] {
-  margin: 0;
-  line-height: 1.2;
-}
-.header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h1[_ngcontent-ng-c165683933] {
-  font-size: 1.25rem;
-  font-weight: 600;
-  font-family: "UnifrakturCook", cursive;
-}
-@media (min-width: 768px) {
-  .header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h1[_ngcontent-ng-c165683933] {
-    font-size: 1.75rem;
-  }
-}
-.header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h2[_ngcontent-ng-c165683933] {
-  font-size: 1rem;
-  font-weight: 500;
-  font-family: "UnifrakturCook", cursive;
-  margin-top: 0.25rem;
-}
-@media (min-width: 768px) {
-  .header-container[_ngcontent-ng-c165683933]   .university-text[_ngcontent-ng-c165683933]   h2[_ngcontent-ng-c165683933] {
-    font-size: 1.25rem;
-    display: table;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-/*# sourceMappingURL=/header.component.css.map */</style><style>
+/*# sourceMappingURL=/stepper.component.css.map */</style><style>
 
 /*# sourceMappingURL=/step-2.component.css.map */</style><style>
 
@@ -358,36 +436,36 @@ select[_ngcontent-ng-c3251218394]   option.option-disabled[_ngcontent-ng-c325121
 
 /*# sourceMappingURL=/step-3.component.css.map */</style><style>
 
-.hidden[_ngcontent-ng-c3680550497] {
+.hidden[_ngcontent-ng-c1755947673] {
   display: none;
 }
 /*# sourceMappingURL=/step-5.component.css.map */</style><style>
 
-.preview-container[_ngcontent-ng-c2248404185] {
+.preview-container[_ngcontent-ng-c3704682894] {
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
 }
-h2[_ngcontent-ng-c2248404185] {
+h2[_ngcontent-ng-c3704682894] {
   text-align: center;
   color: #333;
 }
-h3[_ngcontent-ng-c2248404185] {
+h3[_ngcontent-ng-c3704682894] {
   color: #555;
   margin-top: 20px;
 }
-p[_ngcontent-ng-c2248404185] {
+p[_ngcontent-ng-c3704682894] {
   margin: 10px 0;
 }
-strong[_ngcontent-ng-c2248404185] {
+strong[_ngcontent-ng-c3704682894] {
   color: #000;
 }
-.navigation-buttons[_ngcontent-ng-c2248404185] {
+.navigation-buttons[_ngcontent-ng-c3704682894] {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
-button[_ngcontent-ng-c2248404185] {
+button[_ngcontent-ng-c3704682894] {
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -395,12 +473,12 @@ button[_ngcontent-ng-c2248404185] {
   border-radius: 5px;
   cursor: pointer;
 }
-button[_ngcontent-ng-c2248404185]:hover {
+button[_ngcontent-ng-c3704682894]:hover {
   background-color: #0056b3;
 }
 /*# sourceMappingURL=/step-9.component.css.map */</style><style>
 
-.a4-container[_ngcontent-ng-c2923130650] {
+.a4-container[_ngcontent-ng-c844159842] {
   background: white;
   font-family: Arial, sans-serif;
   font-size: 10px;
@@ -408,101 +486,101 @@ button[_ngcontent-ng-c2248404185]:hover {
   color: #222;
   padding: 10pt;
 }
-.section[_ngcontent-ng-c2923130650] {
+.section[_ngcontent-ng-c844159842] {
   margin-bottom: 8pt;
   break-inside: avoid;
 }
-.label[_ngcontent-ng-c2923130650] {
+.label[_ngcontent-ng-c844159842] {
   font-weight: 600;
 }
-.text-center[_ngcontent-ng-c2923130650] {
+.text-center[_ngcontent-ng-c844159842] {
   text-align: center;
 }
-.no-data[_ngcontent-ng-c2923130650] {
+.no-data[_ngcontent-ng-c844159842] {
   padding: 4px;
   font-style: italic;
   font-size: 9px;
   color: #666;
 }
-.header[_ngcontent-ng-c2923130650] {
+.header[_ngcontent-ng-c844159842] {
   display: flex;
   align-items: center;
   border: 1px solid black;
   padding: 4px;
 }
-.logo-container[_ngcontent-ng-c2923130650] {
+.logo-container[_ngcontent-ng-c844159842] {
   width: 60px;
   height: 60px;
 }
-.logo-img[_ngcontent-ng-c2923130650] {
+.logo-img[_ngcontent-ng-c844159842] {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-.university-title[_ngcontent-ng-c2923130650] {
+.university-title[_ngcontent-ng-c844159842] {
   flex: 1;
   text-align: center;
   line-height: 1.1;
 }
-.university-name-eng[_ngcontent-ng-c2923130650] {
+.university-name-eng[_ngcontent-ng-c844159842] {
   font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;
 }
-.university-address[_ngcontent-ng-c2923130650] {
+.university-address[_ngcontent-ng-c844159842] {
   font-size: 11px;
   font-weight: 600;
   margin: 2px 0;
 }
-.university-name-hin[_ngcontent-ng-c2923130650] {
+.university-name-hin[_ngcontent-ng-c844159842] {
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   margin: 2px 0;
 }
-.form-title-container[_ngcontent-ng-c2923130650] {
+.form-title-container[_ngcontent-ng-c844159842] {
   text-align: center;
   margin: 6px 0;
 }
-.form-title[_ngcontent-ng-c2923130650] {
+.form-title[_ngcontent-ng-c844159842] {
   font-size: 10pt;
   font-weight: 700;
   text-transform: uppercase;
 }
-.info-photo-box[_ngcontent-ng-c2923130650] {
+.info-photo-box[_ngcontent-ng-c844159842] {
   border: 1px solid black;
   padding: 6px;
   margin: 6px 0;
 }
-.info-photo-flex[_ngcontent-ng-c2923130650] {
+.info-photo-flex[_ngcontent-ng-c844159842] {
   display: flex;
   gap: 6px;
 }
-.info-details-flex-item[_ngcontent-ng-c2923130650] {
+.info-details-flex-item[_ngcontent-ng-c844159842] {
   flex: 1;
 }
-.info-grid[_ngcontent-ng-c2923130650] {
+.info-grid[_ngcontent-ng-c844159842] {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2px 8px;
 }
-.photo-box[_ngcontent-ng-c2923130650] {
+.photo-box[_ngcontent-ng-c844159842] {
   border: 1px solid black;
   width: 90px;
   height: 90px;
 }
-.photo-img[_ngcontent-ng-c2923130650] {
+.photo-img[_ngcontent-ng-c844159842] {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.bordered-section[_ngcontent-ng-c2923130650] {
+.bordered-section[_ngcontent-ng-c844159842] {
   border: 1px solid black;
 }
-.bordered-section[_ngcontent-ng-c2923130650]    > *[_ngcontent-ng-c2923130650]:first-child {
+.bordered-section[_ngcontent-ng-c844159842]    > *[_ngcontent-ng-c844159842]:first-child {
   border-top: none;
 }
-.section-heading-bar[_ngcontent-ng-c2923130650] {
+.section-heading-bar[_ngcontent-ng-c844159842] {
   background: #e5e7eb;
   font-weight: 600;
   padding: 3px 6px;
@@ -513,7 +591,7 @@ button[_ngcontent-ng-c2248404185]:hover {
   line-height: 20px;
   border-top: 1px solid black;
 }
-.sub-section-heading-bar[_ngcontent-ng-c2923130650] {
+.sub-section-heading-bar[_ngcontent-ng-c844159842] {
   background: #f9fafb;
   font-weight: 600;
   padding: 3px 6px;
@@ -525,24 +603,24 @@ button[_ngcontent-ng-c2248404185]:hover {
   min-height: 20px;
   line-height: 20px;
 }
-.section-content[_ngcontent-ng-c2923130650] {
+.section-content[_ngcontent-ng-c844159842] {
   padding: 6px;
 }
-.details-grid[_ngcontent-ng-c2923130650] {
+.details-grid[_ngcontent-ng-c844159842] {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 4px 10px;
 }
-.data-table-header[_ngcontent-ng-c2923130650], 
-.data-table-row[_ngcontent-ng-c2923130650] {
+.data-table-header[_ngcontent-ng-c844159842], 
+.data-table-row[_ngcontent-ng-c844159842] {
   display: grid;
   border-bottom: 1px solid black;
   border-top: 1px solid black;
 }
-.data-table-row[_ngcontent-ng-c2923130650]:last-of-type {
+.data-table-row[_ngcontent-ng-c844159842]:last-of-type {
   border-bottom: none;
 }
-.data-table-cell[_ngcontent-ng-c2923130650] {
+.data-table-cell[_ngcontent-ng-c844159842] {
   padding: 2px 4px;
   border-right: 1px solid black;
   word-break: break-word;
@@ -552,24 +630,24 @@ button[_ngcontent-ng-c2248404185]:hover {
   min-height: 18px;
   line-height: 18px;
 }
-.data-table-cell[_ngcontent-ng-c2923130650]:last-child {
+.data-table-cell[_ngcontent-ng-c844159842]:last-child {
   border-right: none;
 }
-.data-table-header[_ngcontent-ng-c2923130650] {
+.data-table-header[_ngcontent-ng-c844159842] {
   background: #f3f4f6;
   font-weight: 600;
   border-top: 1px solid black;
 }
-.lang-table-grid[_ngcontent-ng-c2923130650] {
+.lang-table-grid[_ngcontent-ng-c844159842] {
   grid-template-columns: 30px 1fr 1fr 1fr;
 }
-.qual-table-grid[_ngcontent-ng-c2923130650] {
+.qual-table-grid[_ngcontent-ng-c844159842] {
   grid-template-columns: repeat(7, minmax(0, 1fr));
 }
-.attach-table-grid[_ngcontent-ng-c2923130650] {
+.attach-table-grid[_ngcontent-ng-c844159842] {
   grid-template-columns: 30px 2fr 1fr;
 }
-.declaration-header[_ngcontent-ng-c2923130650] {
+.declaration-header[_ngcontent-ng-c844159842] {
   text-align: center;
   font-weight: 600;
   padding: 3px 6px;
@@ -578,57 +656,57 @@ button[_ngcontent-ng-c2248404185]:hover {
   font-size: 10px;
   border-top: 1px solid black;
 }
-.declaration-text[_ngcontent-ng-c2923130650] {
+.declaration-text[_ngcontent-ng-c844159842] {
   margin-bottom: 6px;
 }
-.signature-grid[_ngcontent-ng-c2923130650] {
+.signature-grid[_ngcontent-ng-c844159842] {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-top: 10px;
 }
-.signature-img[_ngcontent-ng-c2923130650] {
+.signature-img[_ngcontent-ng-c844159842] {
   width: 70px;
   height: auto;
   margin: 0 auto;
 }
-.signature-caption[_ngcontent-ng-c2923130650] {
+.signature-caption[_ngcontent-ng-c844159842] {
   font-size: 9px;
   margin-top: 2px;
 }
-.employer-remarks[_ngcontent-ng-c2923130650] {
+.employer-remarks[_ngcontent-ng-c844159842] {
   border-top: 1px solid black;
   margin-top: 10px;
 }
-.employer-remarks-subtitle[_ngcontent-ng-c2923130650] {
+.employer-remarks-subtitle[_ngcontent-ng-c844159842] {
   text-align: center;
   font-size: 9px;
   font-style: italic;
   padding: 3px 0;
   border-bottom: 1px solid black;
 }
-.underline-fill-sm[_ngcontent-ng-c2923130650] {
+.underline-fill-sm[_ngcontent-ng-c844159842] {
   display: inline-block;
   border-bottom: 1px solid black;
   width: 80px;
 }
-.underline-fill-md[_ngcontent-ng-c2923130650] {
+.underline-fill-md[_ngcontent-ng-c844159842] {
   display: inline-block;
   border-bottom: 1px solid black;
   width: 110px;
 }
-.pdf-export-view[_nghost-ng-c2923130650]   .a4-container[_ngcontent-ng-c2923130650] {
+.pdf-export-view[_nghost-ng-c844159842]   .a4-container[_ngcontent-ng-c844159842] {
   width: 100%;
   min-height: initial;
   border: none;
   box-sizing: border-box;
   padding: 10pt;
 }
-.pdf-export-view[_nghost-ng-c2923130650]   .section[_ngcontent-ng-c2923130650] {
+.pdf-export-view[_nghost-ng-c844159842]   .section[_ngcontent-ng-c844159842] {
   page-break-inside: avoid;
 }
 @media print {
-  body[_ngcontent-ng-c2923130650], 
-   html[_ngcontent-ng-c2923130650] {
+  body[_ngcontent-ng-c844159842], 
+   html[_ngcontent-ng-c844159842] {
     margin: 0;
     padding: 0;
   }
@@ -636,66 +714,73 @@ button[_ngcontent-ng-c2248404185]:hover {
     size: A4;
     margin: 0;
   }
-  body[_ngcontent-ng-c2923130650]   *[_ngcontent-ng-c2923130650] {
+  body[_ngcontent-ng-c844159842]   *[_ngcontent-ng-c844159842] {
     visibility: hidden;
   }
-  .a4-container[_ngcontent-ng-c2923130650], 
-   .a4-container[_ngcontent-ng-c2923130650]   *[_ngcontent-ng-c2923130650] {
+  .a4-container[_ngcontent-ng-c844159842], 
+   .a4-container[_ngcontent-ng-c844159842]   *[_ngcontent-ng-c844159842] {
     visibility: visible;
   }
-  .a4-container[_ngcontent-ng-c2923130650] {
+  .a4-container[_ngcontent-ng-c844159842] {
     width: 100%;
     min-height: initial;
     border: none;
     box-sizing: border-box;
     padding: 10pt;
   }
-  thead[_ngcontent-ng-c2923130650] {
+  thead[_ngcontent-ng-c844159842] {
     display: table-header-group;
   }
-  tr[_ngcontent-ng-c2923130650] {
+  tr[_ngcontent-ng-c844159842] {
     page-break-inside: avoid;
   }
-  .section[_ngcontent-ng-c2923130650] {
+  .section[_ngcontent-ng-c844159842] {
     page-break-inside: avoid;
   }
 }
 /*# sourceMappingURL=/pdf-download.component.css.map */</style>
       </head>
       <body>
-        <div _ngcontent-ng-c2923130650="" class="a4-container" style="display: block;"><div _ngcontent-ng-c2923130650="" class="section"><div _ngcontent-ng-c2923130650="" class="header"><div _ngcontent-ng-c2923130650="" class="logo-container"><img _ngcontent-ng-c2923130650="" src="http://192.168.1.57:4340/assets/logo.png" alt="Logo" class="logo-img"></div><div _ngcontent-ng-c2923130650="" class="university-title"><div _ngcontent-ng-c2923130650="" class="university-name-eng"> Indira Gandhi Krishi Vishwavidyalaya </div><div _ngcontent-ng-c2923130650="" class="university-address"> KRISHAK NAGAR, RAIPUR (CHHATTISGARH) - 492012 </div><div _ngcontent-ng-c2923130650="" class="university-name-hin"> इंदिरा गांधी कृषि विश्वविद्यालय, रायपुर (छत्तीसगढ़)-४९२०१२ </div></div></div></div><div _ngcontent-ng-c2923130650="" class="section"><div _ngcontent-ng-c2923130650="" class="section-divider"></div><div _ngcontent-ng-c2923130650="" class="form-title-container"><div _ngcontent-ng-c2923130650="" class="form-title"> APPLICATION FORM FOR Adv - Assitant Programmer </div></div></div><div _ngcontent-ng-c2923130650="" class="section"><div _ngcontent-ng-c2923130650="" class="info-photo-box"><div _ngcontent-ng-c2923130650="" class="info-photo-flex"><div _ngcontent-ng-c2923130650="" class="info-details-flex-item"><div _ngcontent-ng-c2923130650="" class="info-grid"><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Registration No.</span>: 25000002 </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Applied Post</span>: Technical Assistant - (Regular) </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Applied Subject</span>: - </div></div></div><div _ngcontent-ng-c2923130650="" class="photo-wrapper"><div _ngcontent-ng-c2923130650="" class="photo-box"><img _ngcontent-ng-c2923130650="" alt="Photo" class="photo-img" src="http://192.168.1.57:3500/recruitment/25000002/photo_25000002_1759126041032.jpg"></div></div></div></div></div><div _ngcontent-ng-c2923130650="" class="section"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Applicant Basic Detail</div><div _ngcontent-ng-c2923130650="" class="section-content"><div _ngcontent-ng-c2923130650="" class="details-grid"><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Full Name (Eng)</span>: Dr. ANKITA Kumari GAUTAM </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Full Name (Hin)</span>: डॉ. अंकिता कुमारी गौतम </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Gender</span>: Female </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Date of Birth</span>: 10-02-1987 </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Age</span>: 38 years, 8 months, 27 days</div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Father's Name</span>: ARUN KUMAR GAUTAM </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Mother's Name</span>: DR MADHULIKA GAUTAM </div></div><div _ngcontent-ng-c2923130650="" class="subsection ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">Additional Information</div><div _ngcontent-ng-c2923130650="" class="details-grid"><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Marital Status</span>: Yes </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Marriage Date</span>: 2015-03-28 </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Spouse Name</span>: Sakshi Saxena </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">No. of Alive Children</span>: 0 </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">I declare that i do not have more than two wives (alive)</span>: Y </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Are you married before the fixed/prescribed age for marriage</span>: N </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Bonafide Resident of Chhattisgarh?</span>: Yes </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Upload Domicile Certificate</span>: File Uploaded </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Applied Category for Post</span>: Unreserved (UR) </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Knowledge of Local Language/Dialect?</span>: Yes </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Do You Have Any Disability?</span>: No </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Are you an In-Service Candidate?</span>: No </div><div _ngcontent-ng-c2923130650="" class="ng-star-inserted"><span _ngcontent-ng-c2923130650="" class="label">Are you applying through proper channel and submitting Advance copy?</span>: No </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Marital Status</span>: Yes </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Marriage Date</span>: 2015-03-28 </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Spouse Name</span>: Sakshi Saxena </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">No. of Alive Children</span>: 0 </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">I declare that i do not have more than two wives (alive)</span>: Y </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Are you married before the fixed/prescribed age for marriage</span>: N </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Bonafide Resident of Chhattisgarh?</span>: Yes </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Upload Domicile Certificate</span>: File Uploaded </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Applied Category for Post</span>: Unreserved (UR) </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Knowledge of Local Language/Dialect?</span>: Yes </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Do You Have Any Disability?</span>: No </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Are you an In-Service Candidate?</span>: No </div><!--ng-container--><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Are you applying through proper channel and submitting Advance copy?</span>: No </div><!--ng-container--><!--bindings={
+        <div _ngcontent-ng-c844159842="" class="a4-container" style="display: block;"><div _ngcontent-ng-c844159842="" class="section"><div _ngcontent-ng-c844159842="" class="header"><div _ngcontent-ng-c844159842="" class="logo-container"><img _ngcontent-ng-c844159842="" src="http://192.168.1.57:4340/assets/logo.png" alt="Logo" class="logo-img"></div><div _ngcontent-ng-c844159842="" class="university-title"><div _ngcontent-ng-c844159842="" class="university-name-eng"> Indira Gandhi Krishi Vishwavidyalaya </div><div _ngcontent-ng-c844159842="" class="university-address"> KRISHAK NAGAR, RAIPUR (CHHATTISGARH) - 492012 </div><div _ngcontent-ng-c844159842="" class="university-name-hin"> इंदिरा गांधी कृषि विश्वविद्यालय, रायपुर (छत्तीसगढ़)-४९२०१२ </div></div></div></div><div _ngcontent-ng-c844159842="" class="section"><div _ngcontent-ng-c844159842="" class="section-divider"></div><div _ngcontent-ng-c844159842="" class="form-title-container"><div _ngcontent-ng-c844159842="" class="form-title"> APPLICATION FORM FOR SMS SDF F </div></div></div><div _ngcontent-ng-c844159842="" class="section"><div _ngcontent-ng-c844159842="" class="info-photo-box"><div _ngcontent-ng-c844159842="" class="info-photo-flex"><div _ngcontent-ng-c844159842="" class="info-details-flex-item"><div _ngcontent-ng-c844159842="" class="info-grid"><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Registration No.</span>: 24000002 </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Applied Post</span>: Subject Matter Specialist </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Applied Subject</span>: Soil Science and Agricultural Chemistry </div></div></div><div _ngcontent-ng-c844159842="" class="photo-wrapper"><div _ngcontent-ng-c844159842="" class="photo-box"><img _ngcontent-ng-c844159842="" alt="Photo" class="photo-img" src="http://192.168.1.57:3500/recruitment/24000002/photo_24000002_1763796427740.png"></div></div></div></div></div><div _ngcontent-ng-c844159842="" class="section"><div _ngcontent-ng-c844159842="" class="bordered-section"><div _ngcontent-ng-c844159842="" class="section-heading-bar">Applicant Basic Detail</div><div _ngcontent-ng-c844159842="" class="section-content"><div _ngcontent-ng-c844159842="" class="details-grid"><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Full Name (Eng)</span>: Dr. BIPLAB  CHOUDHARI </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Full Name (Hin)</span>: डॉ. बिप्लब  चौधरी </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Gender</span>: Male </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Date of Birth</span>: 17-06-1992 </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Age</span>: 33 years, 5 months, 5 days</div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Father's Name</span>: BIMAL </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Mother's Name</span>: SANDHA </div></div><div _ngcontent-ng-c844159842="" class="subsection ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">Additional Information</div><div _ngcontent-ng-c844159842="" class="details-grid"><div _ngcontent-ng-c844159842="" class="ng-star-inserted"><span _ngcontent-ng-c844159842="" class="label">Marital Status</span>: No </div><!--ng-container--><div _ngcontent-ng-c844159842="" class="ng-star-inserted"><span _ngcontent-ng-c844159842="" class="label">Bonafide Resident of Chhattisgarh?</span>: Yes </div><!--ng-container--><div _ngcontent-ng-c844159842="" class="ng-star-inserted"><span _ngcontent-ng-c844159842="" class="label">Upload Domicile Certificate</span>: File Uploaded </div><!--ng-container--><div _ngcontent-ng-c844159842="" class="ng-star-inserted"><span _ngcontent-ng-c844159842="" class="label">Applied Category for Post</span>: Unreserved (UR) </div><!--ng-container--><div _ngcontent-ng-c844159842="" class="ng-star-inserted"><span _ngcontent-ng-c844159842="" class="label">Knowledge of Local Language/Dialect?</span>: Yes </div><!--ng-container--><div _ngcontent-ng-c844159842="" class="ng-star-inserted"><span _ngcontent-ng-c844159842="" class="label">Do You Have Any Disability?</span>: No </div><!--ng-container--><div _ngcontent-ng-c844159842="" class="ng-star-inserted"><span _ngcontent-ng-c844159842="" class="label">Are you an In-Service Candidate?</span>: No </div><!--ng-container--><div _ngcontent-ng-c844159842="" class="ng-star-inserted"><span _ngcontent-ng-c844159842="" class="label">Are you applying through proper channel and submitting Advance copy?</span>: No </div><!--ng-container--><!--bindings={
   "ng-reflect-ng-for-of": "[object Object],[object Object"
 }--></div></div><!--bindings={
   "ng-reflect-ng-if": "true"
-}--><div _ngcontent-ng-c2923130650="" class="subsection"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">Permanent Address</div><div _ngcontent-ng-c2923130650="" class="details-grid"><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Address</span>: 143/27 F15 PREETIVIHAR COLONY CHACKLAL MOHAMMAD NAINI </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">City</span>: PRAYAGRAJ </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">District</span>: Durg </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">State</span>: Chhattisgarh </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Pincode</span>: 211008 </div></div></div><div _ngcontent-ng-c2923130650="" class="subsection"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar"> Present Address (For Correspondence) </div><div _ngcontent-ng-c2923130650="" class="details-grid"><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Address</span>: 143/27 F15 PREETIVIHAR COLONY CHACKLAL MOHAMMAD NAINI </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">City</span>: PRAYAGRAJ </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">District</span>: Durg </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">State</span>: Chhattisgarh </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Pincode</span>: 211008 </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Mobile Number</span>: 7000046518 </div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Email</span>: bhupeshsahu@gmail.com </div></div></div></div></div></div><div _ngcontent-ng-c2923130650="" class="section ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Language Detail</div><div _ngcontent-ng-c2923130650="" class="data-table-header lang-table-grid"><div _ngcontent-ng-c2923130650="" class="data-table-cell">S.No.</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Language Type</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Language</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Language Skill</div></div><div _ngcontent-ng-c2923130650="" class="data-table-row lang-table-grid ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="data-table-cell">1</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Mother Tongue
-</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Hindi</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">All</div></div><div _ngcontent-ng-c2923130650="" class="data-table-row lang-table-grid ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="data-table-cell">2</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Foreign Language
-</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">English</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">All</div></div><div _ngcontent-ng-c2923130650="" class="data-table-row lang-table-grid"><div _ngcontent-ng-c2923130650="" class="data-table-cell">1</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Mother Tongue
-</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Hindi</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">All</div></div><div _ngcontent-ng-c2923130650="" class="data-table-row lang-table-grid"><div _ngcontent-ng-c2923130650="" class="data-table-cell">2</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">Foreign Language
-</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">English</div><div _ngcontent-ng-c2923130650="" class="data-table-cell">All</div></div><!--bindings={
+}--><div _ngcontent-ng-c844159842="" class="subsection"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">Permanent Address</div><div _ngcontent-ng-c844159842="" class="details-grid"><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Address</span>: VILLAGE 42 VIDHYANAGAR , HOUSE NO 56 </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">City</span>: PAKHANJURE </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">District</span>: Korea </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">State</span>: Chhattisgarh </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Pincode</span>: 494776 </div></div></div><div _ngcontent-ng-c844159842="" class="subsection"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar"> Present Address (For Correspondence) </div><div _ngcontent-ng-c844159842="" class="details-grid"><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Address</span>: VILLAGE 42 VIDHYANAGAR , HOUSE NO 56 </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">City</span>: PAKHANJURE </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">District</span>: Korea </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">State</span>: Chhattisgarh </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Pincode</span>: 494776 </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Mobile Number</span>: 7024604763 </div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Email</span>: CHOUDHARIBIPLAB@GMAIL.COM </div></div></div></div></div></div><div _ngcontent-ng-c844159842="" class="section ng-star-inserted"><div _ngcontent-ng-c844159842="" class="bordered-section"><div _ngcontent-ng-c844159842="" class="section-heading-bar">Language Detail</div><div _ngcontent-ng-c844159842="" class="data-table-header lang-table-grid"><div _ngcontent-ng-c844159842="" class="data-table-cell">S.No.</div><div _ngcontent-ng-c844159842="" class="data-table-cell">Language Type</div><div _ngcontent-ng-c844159842="" class="data-table-cell">Language</div><div _ngcontent-ng-c844159842="" class="data-table-cell">Language Skill</div></div><div _ngcontent-ng-c844159842="" class="data-table-row lang-table-grid ng-star-inserted"><div _ngcontent-ng-c844159842="" class="data-table-cell">1</div><div _ngcontent-ng-c844159842="" class="data-table-cell">National Language
+</div><div _ngcontent-ng-c844159842="" class="data-table-cell">Hindi</div><div _ngcontent-ng-c844159842="" class="data-table-cell">All</div></div><div _ngcontent-ng-c844159842="" class="data-table-row lang-table-grid ng-star-inserted"><div _ngcontent-ng-c844159842="" class="data-table-cell">2</div><div _ngcontent-ng-c844159842="" class="data-table-cell">Regional Language
+</div><div _ngcontent-ng-c844159842="" class="data-table-cell">Chhattisgarhi</div><div _ngcontent-ng-c844159842="" class="data-table-cell">All</div></div><div _ngcontent-ng-c844159842="" class="data-table-row lang-table-grid ng-star-inserted"><div _ngcontent-ng-c844159842="" class="data-table-cell">3</div><div _ngcontent-ng-c844159842="" class="data-table-cell">Mother Tongue
+</div><div _ngcontent-ng-c844159842="" class="data-table-cell">Bengali/Bangla</div><div _ngcontent-ng-c844159842="" class="data-table-cell">All</div></div><!--bindings={
   "ng-reflect-ng-for-of": "[object Object],[object Object"
 }--></div></div><!--bindings={
   "ng-reflect-ng-if": "true"
-}--><div _ngcontent-ng-c2923130650="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Educational Qualification/Examination Passed</div><!--bindings={
+}--><div _ngcontent-ng-c844159842="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c844159842="" class="bordered-section"><div _ngcontent-ng-c844159842="" class="section-heading-bar">Educational Qualification/Examination Passed</div><!--bindings={
   "ng-reflect-ng-switch-case": "qualification"
-}--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">10+2</div><div _ngcontent-ng-c2923130650="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> University/ Institute/ Board </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Subject(S)(Major)/ Group </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Division </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Passing  Year </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Percentage  Obtained </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> O G P A ( If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment For  Conversion  Formula (If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Certificate/ Marksheet </div><!--bindings={
+}--><div _ngcontent-ng-c844159842="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">10+2</div><div _ngcontent-ng-c844159842="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> University/ Institute/ Board </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Subject(S)(Major)/ Group </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Division </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Passing  Year </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Percentage  Obtained </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> O G P A ( If Any) </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Attachment For  Conversion  Formula (If Any) </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Certificate/ Marksheet </div><!--bindings={
   "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> hgfhgf </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> hgfhg </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> hfhfg </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 1 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 48 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 88 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 9 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> [object Object] </div><!--bindings={
-  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
-}--></div><!--ng-container--><!--bindings={
-  "ng-reflect-ng-for-of": "[object Object]"
-}--><!--ng-container--><!--bindings={
-  "ng-reflect-ng-if-else": "[object Object]"
-}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">UG</div><div _ngcontent-ng-c2923130650="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> University/ Institute/ Board </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Subject(S)(Major)/ Group </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Division </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Passing  Year </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Percentage  Obtained </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> O G P A ( If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment For  Conversion  Formula (If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Certificate/ Marksheet </div><!--bindings={
-  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> khjk </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> jhkhjk </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> hjkjhkhj </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 2 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 49 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 87 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 8 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> [object Object] </div><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Chhattisgarh Board of Secondary Education Raipur </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> HSSC Exam </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Agriculture </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> First </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 2010 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 82.60 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 8.26 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> ✓ File Uploaded </div><!--bindings={
   "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
 }--></div><!--ng-container--><!--bindings={
   "ng-reflect-ng-for-of": "[object Object]"
 }--><!--ng-container--><!--bindings={
   "ng-reflect-ng-if-else": "[object Object]"
-}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">PG</div><div _ngcontent-ng-c2923130650="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> University/ Institute/ Board </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Subject(S)(Major)/ Group </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Division </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Passing  Year </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Percentage  Obtained </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> O G P A ( If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment For  Conversion  Formula (If Any) </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Certificate/ Marksheet </div><!--bindings={
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">UG</div><div _ngcontent-ng-c844159842="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> University/ Institute/ Board </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Subject(S)(Major)/ Group </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Division </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Passing  Year </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Percentage  Obtained </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> O G P A ( If Any) </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Attachment For  Conversion  Formula (If Any) </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Certificate/ Marksheet </div><!--bindings={
   "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> khjkj </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> khkh </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> khjkhjk </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 1 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 49 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 66 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 7 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> [object Object] </div><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> INDIRA GANDHI KRISHI VISHWAVIDYALAYA RAIPUR </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Bachelor Degree Exam </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Agriculture </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> First </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 2015 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 72.20 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 7.22 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> ✓ File Uploaded </div><!--bindings={
+  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object]"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if-else": "[object Object]"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">PG</div><div _ngcontent-ng-c844159842="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> University/ Institute/ Board </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Subject(S)(Major)/ Group </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Division </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Passing  Year </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Percentage  Obtained </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> O G P A ( If Any) </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Attachment For  Conversion  Formula (If Any) </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Certificate/ Marksheet </div><!--bindings={
+  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Assam Agricultural University Jorhat Assam </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Master Degree Exam </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Soil Science </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> First </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 2017 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 74.10 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 7.41 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> ✓ File Uploaded </div><!--bindings={
+  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object]"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if-else": "[object Object]"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">PhD</div><div _ngcontent-ng-c844159842="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> University/ Institute/ Board </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Subject(S)(Major)/ Group </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Division </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Passing  Year </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Percentage  Obtained </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> O G P A ( If Any) </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Attachment For  Conversion  Formula (If Any) </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Certificate/ Marksheet </div><!--bindings={
+  "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(9, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> INDIRA GANDHI KRISHI VISHWAVIDYALAYA RAIPUR </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Doctoral Degree Exam </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> soil science and agricultural chemistry </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> First </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 2023 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 83.70 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 8.37 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> — </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> ✓ File Uploaded </div><!--bindings={
   "ng-reflect-ng-for-of": "University/Institute/Board,Deg"
 }--></div><!--ng-container--><!--bindings={
   "ng-reflect-ng-for-of": "[object Object]"
@@ -709,176 +794,558 @@ button[_ngcontent-ng-c2248404185]:hover {
   "ng-reflect-ng-switch-case": "experience"
 }--><!--bindings={
   "ng-reflect-ng-switch-case": "details"
-}--><!--ng-container--></div></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Academic Excellence</div><!--bindings={
+}--><!--ng-container--></div></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c844159842="" class="bordered-section"><div _ngcontent-ng-c844159842="" class="section-heading-bar">Academic Excellence</div><!--bindings={
   "ng-reflect-ng-switch-case": "qualification"
 }--><!--bindings={
   "ng-reflect-ng-switch-case": "experience"
-}--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">University medal at UG/PG/Ph.D</div><div _ngcontent-ng-c2923130650="" class="data-table-header" style="grid-template-columns: repeat(4, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Degree </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Description  If Any </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment  Certificate </div><!--bindings={
-  "ng-reflect-ng-for-of": "type,degree,description__if_an"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(4, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->Gold Medal <!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->9<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->jgjgh<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->[object Object]<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><!--bindings={
-  "ng-reflect-ng-for-of": "type,degree,description__if_an"
-}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(4, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->Gold Medal <!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->11<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->jhgj<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->[object Object]<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><!--bindings={
-  "ng-reflect-ng-for-of": "type,degree,description__if_an"
-}--></div><!--ng-container--><!--bindings={
-  "ng-reflect-ng-for-of": "[object Object],[object Object"
-}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">JRF/SRF of ICAR/CSIR/GATE/UGC etc. obtained through any examination/competition will only be considered</div><div _ngcontent-ng-c2923130650="" class="data-table-header" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Description  If Any </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment  Certificate </div><!--bindings={
+}--><div _ngcontent-ng-c844159842="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">JRF/SRF of ICAR/CSIR/GATE/UGC etc. obtained through any examination/competition will only be considered</div><div _ngcontent-ng-c844159842="" class="data-table-header" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Description  If Any </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Attachment  Certificate </div><!--bindings={
   "ng-reflect-ng-for-of": "type,description__if_any_,atta"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->SRF<!--ng-container--><!--bindings={
+}-->JRF<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->ghj<!--ng-container--><!--bindings={
+}-->I got scholorship during post graduation study its avail through JRFF Exam<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->[object Object]<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
 }--></div><!--bindings={
   "ng-reflect-ng-for-of": "type,description__if_any_,atta"
 }--></div><!--ng-container--><!--bindings={
   "ng-reflect-ng-for-of": "[object Object]"
 }--></div><!--ng-container--><!--bindings={
-  "ng-reflect-ng-for-of": "[object Object],[object Object"
+  "ng-reflect-ng-for-of": "[object Object]"
 }--><!--ng-container--><!--bindings={
   "ng-reflect-ng-if-else": "[object Object]"
 }--><!--ng-container--><!--bindings={
   "ng-reflect-ng-switch-case": "details"
-}--><!--ng-container--></div></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Research Publication</div><!--bindings={
+}--><!--ng-container--></div></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c844159842="" class="bordered-section"><div _ngcontent-ng-c844159842="" class="section-heading-bar">Research Publication</div><!--bindings={
   "ng-reflect-ng-switch-case": "qualification"
 }--><!--bindings={
   "ng-reflect-ng-switch-case": "experience"
-}--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">Full Length Research paper/Review article ( in NAAS rated 3/peer reviewed journals)</div><div _ngcontent-ng-c2923130650="" class="data-table-header" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Title Of Paper </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Name Of Journal </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Name Of Author S </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Publication Year </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Volume </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Naas Rating </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Description </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Peer Review </div><!--bindings={
+}--><div _ngcontent-ng-c844159842="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">Full Length Research paper/Review article ( in NAAS rated 3/peer reviewed journals)</div><div _ngcontent-ng-c844159842="" class="data-table-header" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Title Of Paper </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Name Of Journal </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Name Of Author S </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Publication Year </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Volume </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Naas Rating </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Description </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Attachment </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Peer Review </div><!--bindings={
   "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
 }-->First Author<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->jk<!--ng-container--><!--bindings={
+}-->Development of Soil Test based Fertilizer Prescription Equation Using Integrated Nutrient Management Approach for Targeted Yield of Maize Crop in a Vertisol of Chhattisgarh Plain, India<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->jgh<!--ng-container--><!--bindings={
+}-->International Journal of Plant &amp; Soil Science<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->jhgjgj<!--ng-container--><!--bindings={
+}-->Biplab Choudhari, Ramakant Bajpai, Lalit Srivastava, Gourav Jatav, Rakesh Banvasi, Koshlendra Tedia, Vinay Bchkaiya, Ipsita Pattanaik, Alpana Kusum, Deepika Sahu, Jyoti Bala, Khemadas mahant, Naincy Naya and Rakesh Paul<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->51<!--ng-container--><!--bindings={
+}-->2023<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->35<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->5.70<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->NA<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Yes<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->First Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->To evaluate STCR based nutrient requirement to achieve targeted yield of maize in a Vertisol of Chhattisgarh<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->The Pharma Innovation Journal<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Biplab Choudhari, Ramakant Bajpai, Lalit Srivastava, Gourav Jatav, Rakesh Banvasi, Koshlendra Tedia, Vinay Bchkaiya, Ipsita Pattanaik, Alpana Kusum, Deepika Sahu, Jyoti Bala, Khemadas mahant, Naincy Naya and Rakesh Paul<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2023<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->12<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->5.23<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->NA<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Yes<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->First Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Critical limit of boron for cauliflower (Brassica oleracea var Girija) in soils of Assam<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->International Journal of Chemical Studies<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Biplab Choudhari, Anjali Basumatary, Gayatri Goswami Kandali, Kulen Das and Chandrabhoosha n Singh<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2018<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
 }-->6<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->5.31<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->NA<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Yes<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->First Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->To evaluation of suitability of soil extractants for assessing boron availability to cauliflower (Brassica oleracea)<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->International Journal of Chemical Studies<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Biplab Choudhari, Anjali Basumatary, Gayatri Goswami Kandali, Kulen Das, Vinay Bachkaiya, Sweta Chauhan, Sajan Singh and Namrata Kashyap<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2019<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->7<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->5.31<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->NA<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Yes<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Relative performance of neem coated urea on the basis of need based nitrogen management using customized leaf colour chart in low land rice (Oryza sativa) of eastern India<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Annals of Plant and Soil Research<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->IPSITA PATTANAIK1*, VN MISHRA1, A.K. NAYAK2, CHINMAYA KUMAR SWAIN2, UTTAM KUMAR1, BIPLAB CHOUDHARI1<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2022<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->24<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->5.1<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->NA<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Yes<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Effect of fly ash in combination of farm yard manure, vermicompost on economics of rice<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->International Journal of Research in Agronomy 20<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Dev Narayan, GP Pali, Uttam Dewangan, Biplab Choudhary, Nagendra Verma, Dipendra Pankaj Porte, Ravindra Bhagat and Ramnath<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2025<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
 }-->8<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->jhg<!--ng-container--><!--bindings={
+}-->5.2<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->[object Object]<!--ng-container--><!--bindings={
+}-->NA<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->hgjghj<!--ng-container--><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Yes<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Assessment and Comparison of Soil Quality Using Principal Components Analysis (PCA) &amp; Expert Opinion (EO) Methods in different Rice-based Cropping Systems in Alfisol<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->International Journal of Environment and Climate Change<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Ranjeet Singh Rajput a* , Satyendra Patley a , Biplab Choudhary a and Satyendra Gupta b<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2023<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->13<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->5.16<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->NA<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Yes<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(10, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Comparative examination of different soil physical and chemical attributes under long term rice-based croplands under Vertisols in Dhamtari district of Chhattisgarh<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->The Pharma Innovation Journal<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Ipsita Pattanaik, Vidyanand Mishra, Anusuiya Panda, Uttam Kumar, Biplab Choudhari, Chandrabhoosha n Singh and Sushma<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2021<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->10<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->5.23<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->NA<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Yes<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
 }--></div><!--bindings={
   "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
 }--></div><!--ng-container--><!--bindings={
-  "ng-reflect-ng-for-of": "[object Object]"
-}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">Short Notes (In NAAS rated /peer reviewed Journals)</div><div _ngcontent-ng-c2923130650="" class="data-table-header" style="grid-template-columns: repeat(6, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Title Of Paper </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Name Of Journal </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Name Of Author S </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Publication Year </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Volume </div><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">Short Notes (In NAAS rated /peer reviewed Journals)</div><div _ngcontent-ng-c844159842="" class="data-table-header" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Title Of Paper </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Name Of Journal </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Name Of Author S </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Publication Year </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Volume </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Attachment </div><!--bindings={
   "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(6, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->First Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Boron status of soils of Assam<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->National conference<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Biplab choudhari,Ipsita Pattanaik<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2022<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->12<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->First Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Organic kheti ke liye jaivik kitnashak ki taiyari<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Research article published in Roman<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Biplab choudhari,Ipsita Pattanaik<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2021<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->19<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
 }-->Co-Author<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->jhgj<!--ng-container--><!--bindings={
+}-->Organic kheti ke liye jaivik kitnashak ki taiyari<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->jhgj<!--ng-container--><!--bindings={
+}-->National conference<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->jhgjghj<!--ng-container--><!--bindings={
+}-->Bhupendra Kumar, Biplab Choudhari, Praveen Gupta, Saurabh Toppo and Garima Diwan<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->47<!--ng-container--><!--bindings={
+}-->2023<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->12<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Krishi Utpadan me biochar ka upyog<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Research article in Roman<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Bhupendra Kumar, Biplab Choudhari, Praveen Gupta, Saurabh Toppo and Garima Diwan<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2023<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
 }-->5<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
 }--></div><!--bindings={
   "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
-}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(6, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
 }-->Co-Author<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->hgjhg<!--ng-container--><!--bindings={
+}-->fasal ke liye salphur ka upyog avam mahatva<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->jhg<!--ng-container--><!--bindings={
+}-->Research article in Roman<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->hgjgh<!--ng-container--><!--bindings={
+}-->Bhupendra Kumar, Biplab Choudhari, Praveen Gupta, Saurabh Toppo and Garima Diwan<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->49<!--ng-container--><!--bindings={
+}-->2023<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->6<!--ng-container--><!--bindings={
+}-->4<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Co-Author<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Management and Utilization of by- products an<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->National conference<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Bhupendra Kumar, Biplab Choudhari, Praveen Gupta, Saurabh Toppo and Garima Diwan<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->2022<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->12<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
 }--></div><!--bindings={
   "ng-reflect-ng-for-of": "type,title_of_paper,name_of_jo"
 }--></div><!--ng-container--><!--bindings={
@@ -889,13 +1356,15 @@ button[_ngcontent-ng-c2248404185]:hover {
   "ng-reflect-ng-if-else": "[object Object]"
 }--><!--ng-container--><!--bindings={
   "ng-reflect-ng-switch-case": "details"
-}--><!--ng-container--></div></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Experience</div><!--bindings={
+}--><!--ng-container--></div></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c844159842="" class="bordered-section"><div _ngcontent-ng-c844159842="" class="section-heading-bar">Experience</div><!--bindings={
   "ng-reflect-ng-switch-case": "qualification"
-}--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">As Teacher/Scientist/Subject Matter Specialist/Guest Faculty/Contractual Teacher/Part time Teacher/ RA/ RF/ SRF/ JRF/ TA/Farm Manager in any recognized University or Constituent/Affiliated Colleges of IGKV/ICAR/R &amp; D organization of International/National level. State/Central Government Service</div><div _ngcontent-ng-c2923130650="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Name Of  Post  Held </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Pay  Scale </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Organization  Name &amp;  Address </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Period  From </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Period  To </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Type Of  Employment </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment </div><!--bindings={
+}--><div _ngcontent-ng-c844159842="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">As Teacher/Scientist/Subject Matter Specialist/Guest Faculty/Contractual Teacher/Part time Teacher/ RA/ RF/ SRF/ JRF/ TA/Farm Manager in any recognized University or Constituent/Affiliated Colleges of IGKV/ICAR/R &amp; D organization of International/National level. State/Central Government Service</div><div _ngcontent-ng-c844159842="" class="data-table-header ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Name Of  Post  Held </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Pay  Scale </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Organization  Name &amp;  Address </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Period  From </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Period  To </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Type Of  Employment </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Attachment </div><!--bindings={
   "ng-reflect-ng-for-of": "Name of Post Held,Pay Scale,Or"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> tyu </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 25000 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> jh </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 2022-07-06 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 2025-11-06 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 2 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> [object Object] </div><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> SENIOR RESEARCH FELLOW </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 38500 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> DEPARTMENT OF SOIL SCIENCE COA IGKV RAIPUR I </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 2019-03-08 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 2022-03-31 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Contractual </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> ✓ File Uploaded </div><!--bindings={
   "ng-reflect-ng-for-of": "Name of Post Held,Pay Scale,Or"
-}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> ljl </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 36000 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> lklkj </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 2019-07-06 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 2025-11-06 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> 1 </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> [object Object] </div><!--bindings={
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> SENIOR RESEARCH FELLOW </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 46200 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> DEPARTMENT OF SOIL SCIENCE COA IGKV RAIPUR I </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 2022-09-13 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 2025-01-15 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Contractual </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> ✓ File Uploaded </div><!--bindings={
+  "ng-reflect-ng-for-of": "Name of Post Held,Pay Scale,Or"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(7, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> GUEST TEACHER (ASSISTAT PROFESSOR) IN SOIL SCIENCE </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 12000 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Danteshwari College of Horticulture Raipur </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 2017-09-17 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> 2019-01-16 </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Contractual </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> ✓ File Uploaded </div><!--bindings={
   "ng-reflect-ng-for-of": "Name of Post Held,Pay Scale,Or"
 }--></div><!--ng-container--><!--bindings={
   "ng-reflect-ng-for-of": "[object Object],[object Object"
@@ -909,60 +1378,78 @@ button[_ngcontent-ng-c2248404185]:hover {
   "ng-reflect-ng-switch-case": "experience"
 }--><!--bindings={
   "ng-reflect-ng-switch-case": "details"
-}--><!--ng-container--></div></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="section-heading-bar">Perfomance in Extra Curricular activities - NCC/NSS, Games and sports ,Cultural Activities</div><!--bindings={
+}--><!--ng-container--></div></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="section page-break-before ng-star-inserted"><div _ngcontent-ng-c844159842="" class="bordered-section"><div _ngcontent-ng-c844159842="" class="section-heading-bar">Perfomance in Extra Curricular activities - NCC/NSS, Games and sports ,Cultural Activities</div><!--bindings={
   "ng-reflect-ng-switch-case": "qualification"
 }--><!--bindings={
   "ng-reflect-ng-switch-case": "experience"
-}--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">NCC</div><div _ngcontent-ng-c2923130650="" class="data-table-header" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Description </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment  Certificate </div><!--bindings={
+}--><div _ngcontent-ng-c844159842="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">NCC</div><div _ngcontent-ng-c844159842="" class="data-table-header" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Description </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Attachment  Certificate </div><!--bindings={
   "ng-reflect-ng-for-of": "type,description,attachment__c"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
 }-->B Certificate<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->lj<!--ng-container--><!--bindings={
+}-->NCC B certificate<!--ng-container--><!--bindings={
   "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
   "ng-reflect-ng-if": "false"
-}-->[object Object]<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><!--bindings={
-  "ng-reflect-ng-for-of": "type,description,attachment__c"
-}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->B Certificate<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->lkljkll<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->[object Object]<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><!--bindings={
-  "ng-reflect-ng-for-of": "type,description,attachment__c"
-}--></div><!--ng-container--><!--bindings={
-  "ng-reflect-ng-for-of": "[object Object],[object Object"
-}--></div><!--ng-container--><div _ngcontent-ng-c2923130650="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c2923130650="" class="sub-section-heading-bar">NSS</div><div _ngcontent-ng-c2923130650="" class="data-table-header" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Description </div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"> Attachment  Certificate </div><!--bindings={
-  "ng-reflect-ng-for-of": "type,description,attachment__c"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->C Certificate<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->kljkl<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
-}--></div><div _ngcontent-ng-c2923130650="" class="data-table-cell ng-star-inserted"><!--bindings={
-  "ng-reflect-ng-if": "false"
-}-->[object Object]<!--ng-container--><!--bindings={
-  "ng-reflect-ng-if": "true"
 }--></div><!--bindings={
   "ng-reflect-ng-for-of": "type,description,attachment__c"
 }--></div><!--ng-container--><!--bindings={
   "ng-reflect-ng-for-of": "[object Object]"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">NSS</div><div _ngcontent-ng-c844159842="" class="data-table-header" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Description </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Attachment  Certificate </div><!--bindings={
+  "ng-reflect-ng-for-of": "type,description,attachment__c"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->B Certificate<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->NSS B CERTIFICATE<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,description,attachment__c"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object]"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="subsection-table ng-star-inserted"><div _ngcontent-ng-c844159842="" class="sub-section-heading-bar">Sports/cultural</div><div _ngcontent-ng-c844159842="" class="data-table-header" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Type </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Description </div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"> Attachment  Certificate </div><!--bindings={
+  "ng-reflect-ng-for-of": "type,description,attachment__c"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Inter University/National level<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->AAL INDIA UNIVERSITY NATIONAL LEVEL VOLLEYBALL GAMES AT JORHAT ASSAM<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,description,attachment__c"
+}--></div><!--ng-container--><div _ngcontent-ng-c844159842="" class="data-table-row ng-star-inserted" style="grid-template-columns: repeat(3, 1fr);"><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->Inter University/National level<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}-->AAL INDIA UNIVERSITY NATIONAL LEVEL VOLLEYBALL GAMES AT GWALIOR<!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><div _ngcontent-ng-c844159842="" class="data-table-cell ng-star-inserted"><span _ngcontent-ng-c844159842="" class="file-uploaded-check ng-star-inserted">✓ File Uploaded</span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><!--bindings={
+  "ng-reflect-ng-for-of": "type,description,attachment__c"
+}--></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
 }--></div><!--ng-container--><!--bindings={
   "ng-reflect-ng-for-of": "[object Object],[object Object"
 }--><!--ng-container--><!--bindings={
@@ -973,9 +1460,7 @@ button[_ngcontent-ng-c2248404185]:hover {
   "ng-reflect-ng-for-of": "[object Object],[object Object"
 }--><!--bindings={
   "ng-reflect-ng-if": "false"
-}--><div _ngcontent-ng-c2923130650="" class="section"><div _ngcontent-ng-c2923130650="" class="bordered-section"><div _ngcontent-ng-c2923130650="" class="declaration-header">DECLARATION</div><div _ngcontent-ng-c2923130650="" class="section-content"><p _ngcontent-ng-c2923130650="" class="declaration-text">Ah! I see the issue. The class fa fa-bot is not a valid Font Awesome icon. Font Awesome icons follow the naming convention fa fa-iconname (for version 4) or fas fa-iconname / fab fa-iconname (for version 5+).
-If you want a generic bot icon, Font Awesome has fa-robot.
-Here’s the corrected HTML:</p><div _ngcontent-ng-c2923130650="" class="signature-grid"><div _ngcontent-ng-c2923130650="" class="place-date"><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Place</span>: ____________</div><div _ngcontent-ng-c2923130650=""><span _ngcontent-ng-c2923130650="" class="label">Date</span>: ____________</div></div><div _ngcontent-ng-c2923130650=""></div><div _ngcontent-ng-c2923130650="" class="text-center"><img _ngcontent-ng-c2923130650="" alt="Signature" class="signature-img" src="http://192.168.1.57:3500/recruitment/25000002/signature_25000002_1759126041033.png"><div _ngcontent-ng-c2923130650="" class="signature-caption">Signature of the Applicant</div></div></div></div><div _ngcontent-ng-c2923130650="" class="employer-remarks"><div _ngcontent-ng-c2923130650="" class="declaration-header">REMARKS OF THE PRESENT EMPLOYER</div><div _ngcontent-ng-c2923130650="" class="employer-remarks-subtitle"> (In case of those who are already in service) </div><div _ngcontent-ng-c2923130650="" class="section-content"><p _ngcontent-ng-c2923130650="" class="declaration-text"> The applicant <strong _ngcontent-ng-c2923130650=""> Dr. ANKITA Kumari GAUTAM </strong> is holding a permanent/temporary post of <span _ngcontent-ng-c2923130650="" class="underline-fill-md">&nbsp;</span> in the scale of Rs. <span _ngcontent-ng-c2923130650="" class="underline-fill-sm">&nbsp;</span> per month. His/Her application is forwarded and he/she will be relieved in case he/she is selected for the post applied for. </p><div _ngcontent-ng-c2923130650="" class="signature-grid"><div _ngcontent-ng-c2923130650="" class="place-date"><div _ngcontent-ng-c2923130650="">Place <span _ngcontent-ng-c2923130650="" class="underline-fill-sm">&nbsp;</span></div><div _ngcontent-ng-c2923130650="">Date <span _ngcontent-ng-c2923130650="" class="underline-fill-sm">&nbsp;</span></div></div><div _ngcontent-ng-c2923130650=""></div><div _ngcontent-ng-c2923130650="" class="text-center"><div _ngcontent-ng-c2923130650="" class="employer-signature-box">&nbsp;</div><div _ngcontent-ng-c2923130650="" class="signature-caption"> Signature &amp; Designation of Officer (with official Seal) </div></div></div></div></div></div></div></div>
+}--><div _ngcontent-ng-c844159842="" class="section"><div _ngcontent-ng-c844159842="" class="bordered-section"><div _ngcontent-ng-c844159842="" class="declaration-header">DECLARATION</div><div _ngcontent-ng-c844159842="" class="section-content"><p _ngcontent-ng-c844159842="" class="declaration-text">tESTING dARA </p><div _ngcontent-ng-c844159842="" class="signature-grid"><div _ngcontent-ng-c844159842="" class="place-date"><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Place</span>: ____________</div><div _ngcontent-ng-c844159842=""><span _ngcontent-ng-c844159842="" class="label">Date</span>: ____________</div></div><div _ngcontent-ng-c844159842=""></div><div _ngcontent-ng-c844159842="" class="text-center"><img _ngcontent-ng-c844159842="" alt="Signature" class="signature-img" src="http://192.168.1.57:3500/recruitment/24000002/signature_24000002_1763796427741.png"><div _ngcontent-ng-c844159842="" class="signature-caption">Signature of the Applicant</div></div></div></div><div _ngcontent-ng-c844159842="" class="employer-remarks"><div _ngcontent-ng-c844159842="" class="declaration-header">REMARKS OF THE PRESENT EMPLOYER</div><div _ngcontent-ng-c844159842="" class="employer-remarks-subtitle"> (In case of those who are already in service) </div><div _ngcontent-ng-c844159842="" class="section-content"><p _ngcontent-ng-c844159842="" class="declaration-text"> The applicant <strong _ngcontent-ng-c844159842=""> Dr. BIPLAB  CHOUDHARI </strong> is holding a permanent/temporary post of <span _ngcontent-ng-c844159842="" class="underline-fill-md">&nbsp;</span> in the scale of Rs. <span _ngcontent-ng-c844159842="" class="underline-fill-sm">&nbsp;</span> per month. His/Her application is forwarded and he/she will be relieved in case he/she is selected for the post applied for. </p><div _ngcontent-ng-c844159842="" class="signature-grid"><div _ngcontent-ng-c844159842="" class="place-date"><div _ngcontent-ng-c844159842="">Place <span _ngcontent-ng-c844159842="" class="underline-fill-sm">&nbsp;</span></div><div _ngcontent-ng-c844159842="">Date <span _ngcontent-ng-c844159842="" class="underline-fill-sm">&nbsp;</span></div></div><div _ngcontent-ng-c844159842=""></div><div _ngcontent-ng-c844159842="" class="text-center"><div _ngcontent-ng-c844159842="" class="employer-signature-box">&nbsp;</div><div _ngcontent-ng-c844159842="" class="signature-caption"> Signature &amp; Designation of Officer (with official Seal) </div></div></div></div></div></div></div></div>
       </body>
     </html>
   

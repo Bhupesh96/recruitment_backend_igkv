@@ -127,6 +127,14 @@ let noApiPermissionRequiredServices = {
     "updateScreeningFinalDecision",
     "syncScreeningAndScoringData",
     "saveCandidateDawapatti",
+    "saveOrUpdateCandidateScoreCardForScoring",
+    "saveOrUpdateExperienceDetailsForScoring",
+    "saveOrUpdateQuantityBasedCandidateDetailsForScoring",
+    "saveOrUpdateFullCandidateProfileForScoring",
+    "saveOrUpdateAdditionalInformationForScoring",
+    "updateScoringFinalDecision",
+    "syncScoringData",
+    
   ],
   publicApi: [],
 };

@@ -54,7 +54,14 @@ var init = function (app) {
       false,
       (err, buffer) => {
         if (err) return res.status(204).send({ error: err });
-        res.setHeader("X-Filename", "report.pdf");
+        const filename = req.body.filename || "report.pdf";
+
+        console.log(">>> Sending PDF to browser with filename:", filename);
+        res.setHeader(
+          "Content-Disposition",
+          `attachment; filename="${req.body.filename || "report.pdf"}"`
+        );
+        res.setHeader("Content-Type", "application/pdf");
         return res.status(200).end(buffer);
       }
     );

@@ -158,7 +158,7 @@ let publicApiService = {
             a_rec_adv_main_id: params.a_rec_adv_main_id,
             post_code: params.post_code || 0,
             subject_id: params.subject_id || null,
-
+            category_id: params.category_id,
             // Audit fields
             action_type: params.actionType || "C",
             action_date: new Date(),
@@ -229,6 +229,22 @@ let publicApiService = {
           );
         }
       }
+    );
+  },
+  getAdvCategoryList: function (
+    dbkey,
+    request,
+    params,
+    sessionDetails,
+    callback
+  ) {
+    sessionDetails.query_id = 176;
+    return DB_SERVICE.getQueryDataFromId(
+      dbkey,
+      request,
+      params,
+      sessionDetails,
+      callback
     );
   },
 };

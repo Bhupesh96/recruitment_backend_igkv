@@ -1,97 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Report</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF to HTML</title>
+    <link rel="stylesheet" href="http://192.168.1.57:4340/styles.css" />
+
     <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 210mm;
+        height: 297mm;
+        font-family: "Roboto", Arial, sans-serif;
+        background: white;
+      }
+
+      /* Full-width printable wrapper */
+      .a4-page {
+        width: 210mm;
+        height: 297mm;
+        margin: 0;
+        padding: 1mm 2mm;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        transform: scale(0.94);
+        transform-origin: top left;
+      }
+
+      /* Print optimization */
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
         body {
-            margin: 0;
-            font-size: 14px;
+          margin: 0;
+          padding: 0;
+          background: white !important;
         }
-
-        h3 {
-            margin-top: 20px;
-            margin-bottom: 5px;
-            font-size: 15px;
-            font-weight: bold !important;
+        .a4-page {
+          border: none;
+          box-shadow: none;
+          transform: scale(1);
+          transform-origin: top left;
+          margin: 0;
+          padding: 1mm 2mm;
         }
+      }
 
-        header {
-            border-bottom: 1px solid #000;
-            padding-bottom: 15px !important;
+      /* General image style */
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* 🔹 Logo-specific size control */
+      img#logo,
+      .logo img {
+        width: 100px !important; /* Adjust as needed */
+        height: auto !important;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto; /* center it if needed */
+      }
+
+      table {
+        page-break-inside: auto;
+      }
+
+      tr {
+        page-break-inside: avoid;
+      }
+
+      h3,
+      h4,
+      h5 {
+        margin: 1px 0;
+        line-height: 1.1;
+      }
+
+      #scorecard-to-print {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Slight font size compression */
+      body,
+      table,
+      p,
+      td,
+      th,
+      span {
+        font-size: 96%;
+        line-height: 1.1;
+      }
+      img#logo {
+        width: 70px !important; /* smaller than before */
+        height: auto !important;
+        max-height: 70px !important;
+        object-fit: contain !important;
+        display: block;
+        margin: 0 auto;
+      }
+
+      @media print {
+        img#logo {
+          width: 70px !important;
+          max-height: 70px !important;
         }
-
-        footer {
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100% !important;
-        }
-
-        thead>tr>td,
-        thead>tr>th,
-        .table-footer>td {
-            font-size: 15px;
-            text-align: center !important;
-            font-weight: bold !important;
-            text-decoration: underline !important;
-            border: 1px solid #000
-        }
-
-        td {
-            padding: 2px;
-        }
-
-        table>tbody>tr>td {
-            border: 0.7px solid #000;
-            text-align: center !important;
-            font-size: 15px;
-        }
-
-        /* Watermark style */
-        .watermark::before,
-        .watermark::after {
-            content: '';
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-
-            color: rgba(0, 0, 0, 0.2);
-            z-index: 0;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-
-        .watermark::before {
-            content: '  Unified Farmer Portal';
-            font-size: 80px;
-            margin-top: -20px;
-        }
-
-        .watermark::after {
-            content: 'For Internal Use Only';
-            font-size: 40px;
-            margin-top: 80px;
-        }
-
-        .text-start {
-            text-align: left !important;
-        }
-
-        .text-end {
-            text-align: right !important;
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    {{{html}}}
-</body>
-
+  <body>
+    <div class="a4-page">{{{html}}}</div>
+  </body>
 </html>
