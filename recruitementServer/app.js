@@ -9,6 +9,24 @@ const MySQLStore = require("express-mysql-session")(session);
 const config = require("config");
 const app = express();
 const path = require("path");
+const { swaggerUi, specs } = require("./swagger");
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, {
+    customJs: "/swagger-custom.js",
+    swaggerOptions: {
+      withCredentials: true,
+      persistAuthorization: true,
+    },
+  })
+);
+
 app.use(helmet());
 app.use(express.json({ limit: "10mb" }));
 app.use(morgan("dev"));
@@ -72,17 +90,17 @@ app.use((req, res, next) => {
 let sessionStore = new MySQLStore(option);
 
 const session_config = {
-  secret: 'secret_key',
-  name: 'session',
+  secret: "secret_key",
+  name: "session",
   resave: false,
   saveUninitialized: false,
   store: sessionStore,
   cookie: {
     httpOnly: false,
     maxAge: 6 * 60 * 60 * 1000, // 6 hours
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
-  }
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  },
 };
 
 app.use(session(session_config));
@@ -111,7 +129,7 @@ var initAllFiles = function () {
   global.COMMON_SECURITY_SERVICE = require("../commonutils/securityservice.js");
   global.SHARED_SERVICE = require("../commonutils/sharedService.js");
   global.DOC_UPLOAD_SERVICE = require("../commonutils/fileUploadService.js");
-  
+
   //only init method of all below files are called and pass app.
   require("./routes/commonroutes").init(app);
 };

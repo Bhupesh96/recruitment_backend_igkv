@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Scorecard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="http://192.168.1.57:4340/styles.css" />
+    <style>
+      /* ⭐ FORCE LANDSCAPE VIA CSS ⭐ */
+      @page {
+        size: A4 landscape; /* This rotates the paper */
+        margin: 10mm; /* Set margins here instead of in Node.js */
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: white;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .landscape-wrapper {
+        width: 100%;
+      }
+
+      /* Ensure table takes up space */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 100%;
+      }
+
+      th,
+      td {
+        border: 1px solid #444;
+        padding: 4px;
+        font-size: 10px;
+        page-break-inside: avoid; /* Try to keep rows together */
+      }
+
+      th {
+        background-color: #f3f4f6;
+        font-weight: bold;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="landscape-wrapper">{{{html}}}</div>
+  </body>
+</html>

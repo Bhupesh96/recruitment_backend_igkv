@@ -2,6 +2,13 @@ let COMMON_SECURITY_SERVICE = global.COMMON_SECURITY_SERVICE;
 
 let masterService = require('./masterService.js');
 let courseService = require('./courseService.js');
+let attendanceService = require('./attendanceService.js');
+const timeTableService = require('./timeTableService.js');
+let studentProfileService = require('./studentProfileService.js')
+let srcService = require('./srcService.js')
+let fileService = require('./fileService.js');
+let markEntryService = require("./markEntryService.js");
+let acStatusService = require("./scademicStatusService.js");
 
 var security = {
     commonFunctionToCall: function (service_name, funcName, req, res, params, ispermreq, resSendCallback) {
@@ -31,7 +38,7 @@ var security = {
                     console.error(error);
                     COMMON_SECURITY_SERVICE.sendErrorResponse(COMMON_SECURITY_SERVICE.SECURITY_ERRORS.UNKNOWN_ERROR, res, resSendCallback, 500);
                 }
-            }else {
+            } else {
                 return COMMON_SECURITY_SERVICE.handleAuthorizationError(err, ispermit, sessionDetails, res);
             }
         });
@@ -41,7 +48,12 @@ var security = {
 let service_files = {
     
  "master" : masterService,
- "course": courseService
+ "course": courseService,
+ "attendance": attendanceService,
+ "timeTable": timeTableService,
+ "studentProfile": studentProfileService,
+ "src": srcService,
+ "academicStatus": acStatusService,
 
 }
 
@@ -49,7 +61,7 @@ let service_files = {
 // no need to check designation_id in header 
 // add file and function name here 
 let noApiPermissionRequiredServices = {
-    
+
 }
 
 module.exports = security

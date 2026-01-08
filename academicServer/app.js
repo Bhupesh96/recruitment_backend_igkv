@@ -7,19 +7,24 @@ const rateLimit = require('express-rate-limit');
 var session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const config = require('config');
+
+
 const app = express();
 
 app.use(helmet());
 app.use(express.json({ limit: '10mb' }));
 app.use(morgan('dev'));
+
+
+
 app.use(bodyParser.json());
 app.use(cors({
     credentials: true,
     origin: true,
 }));
 
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
+app.use(bodyParser.json({ limit: '200mb' }));
+app.use(bodyParser.urlencoded({ limit: '200mb', extended: true, parameterLimit: 200000 }));
 
 
 
@@ -42,6 +47,8 @@ var option = {
     user: config.get('common_db.user'),
     password: config.get('common_db.password'),
     database: config.get('common_db.database'),
+    // port: config.get('common_db.port') || 3306,
+    // port: config.get('common_db.port'),
     clearExpired: true,
     // How frequently expired sessions will be cleared; milliseconds:
     checkExpirationInterval: 900000,
@@ -91,7 +98,6 @@ if (app.get('env') === 'production') {
 }
 
 
-
 var initAllFiles = function () {
     global.apiPrefix = '/academicApi'; // this is used to set the prefix for all the routes.
     global.COMMON_CONFS = require('../commonutils/commonconfs.js').ConfigParams;// call configParams, common configurations are stored here.
@@ -101,6 +107,7 @@ var initAllFiles = function () {
     global.COMMON_SECURITY_SERVICE = require('../commonutils/securityservice.js');
     global.SHARED_SERVICE = require('../commonutils/sharedService.js');
     global.DOC_UPLOAD_SERVICE = require('../commonutils/fileUploadService.js');
+    global.COMMON_SERVICE = require('../commonutils/commonServices.js');
     //only init method of all below files are called and pass app.
     require('./routes/commonroutes').init(app);
 }

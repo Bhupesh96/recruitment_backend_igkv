@@ -1,0 +1,59 @@
+//SERVICE 
+
+
+ getTransliterationHindi: function (
+    dbkey,
+    request,
+    params,
+    sessionDetails,
+    callback
+  ) {
+    const text = params.text;
+    if (!text || typeof text !== "string" || !text.trim()) {
+      return callback(null, { success: false, message: "Invalid text input" });
+    }
+
+    const apiUrl = `https://inputtools.google.com/request?text=${encodeURIComponent(
+      text
+    )}&itc=hi-t-i0-und&num=1`;
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        if (response.data[0] === "SUCCESS") {
+          const hindiWord = response.data[1][0][1][0];
+          return callback(null, { success: true, transliteration: hindiWord });
+        } else {
+          return callback(null, {
+            success: false,
+            message: "Google API returned failure",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(
+          "Error calling Google Transliteration API:",
+          error.message
+        );
+        return callback(error);
+      });
+  },
+
+//FRONTEND
+
+  translateToHindi(text: string): Observable<string | null> {
+    return this.HTTP.getParam(
+      '/master/get/getTransliterationHindi',
+      { text },
+      'recruitement'
+    ).pipe(
+      map((response: any) => {
+        const transliteration = response?.body?.data?.transliteration;
+        return transliteration || null;
+      }),
+      catchError((err) => {
+        console.error('Transliteration API error:', err);
+        throw err;
+      })
+    );
+  }

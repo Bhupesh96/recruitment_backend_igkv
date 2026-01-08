@@ -110,6 +110,71 @@ let file = {
       return callback({ err: `pdf generation failed - ${error}` }, null);
     }
   },
+  htmltoPdfScorecard: async function (
+    dbkey,
+    request,
+    params,
+    sessionDetails,
+    callback
+  ) {
+    try {
+      console.log("--- Received HTML from client ---");
+      if (!params.html) return callback({ err: "No HTML received" }, null);
+
+      const raw_html = fs.readFileSync(
+        template_path + "templates/scorecard_landscape.html",
+        "utf8"
+      );
+      const compiled = handlebars.compile(raw_html);
+      const filledTemplate = compiled({ html: params.html });
+
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      });
+
+      const page = await browser.newPage();
+
+      // 1. SET A HUGE VIEWPORT
+      // 1600px is usually wide enough for complex tables.
+      await page.setViewport({
+        width: 1600,
+        height: 1200,
+        deviceScaleFactor: 2,
+      });
+
+      await page.setContent(filledTemplate, {
+        waitUntil: "networkidle0",
+        timeout: 60000,
+      });
+
+      const pdfOptions = {
+        format: "A4",
+        landscape: true, // ✅ Force Landscape
+        printBackground: true,
+        preferCSSPageSize: false, // ✅ IGNORE CSS @page rules (prevents conflicts)
+
+        // 2. SHRINK TO FIT
+        // Math: 1123px (A4 width) / 1600px (Viewport) ≈ 0.70
+        scale: 0.7,
+
+        margin: {
+          top: "10mm",
+          bottom: "10mm",
+          left: "5mm",
+          right: "5mm",
+        },
+      };
+
+      const buffer = await page.pdf(pdfOptions);
+      await browser.close();
+
+      return callback(null, buffer);
+    } catch (err) {
+      console.error("PDF Generation Error:", err);
+      return callback({ err: "pdf generation failed - " + err }, null);
+    }
+  },
 
   farmerReceipt: async function (
     dbkey,

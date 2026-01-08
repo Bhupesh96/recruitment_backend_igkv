@@ -2689,29 +2689,21 @@ let candidateService = {
       registration_no;
 
     let tranObj, tranCallback;
+    let newRoundNo = 1; // Default to 1
 
-    // STEP 1: Parse and validate the request body
+    // STEP 1: Parse and validate
     try {
       a_rec_app_main_id = request.body.a_rec_app_main_id;
       verification_Finalize_YN = request.body.Verification_Finalize_YN;
       verified_Remark = request.body.Verified_Remark || null;
       registration_no = request.body.registration_no;
 
-      if (!a_rec_app_main_id) {
-        throw new Error("Application ID (a_rec_app_main_id) is required.");
-      }
-      if (!registration_no) {
-        throw new Error("Registration number is required.");
-      }
-      if (!verification_Finalize_YN) {
-        throw new Error(
-          "Final decision (Verification_Finalize_YN) is required."
-        );
-      }
+      if (!a_rec_app_main_id) throw new Error("Application ID is required.");
+      if (!registration_no) throw new Error("Registration number is required.");
+      if (!verification_Finalize_YN)
+        throw new Error("Final decision is required.");
       if (verification_Finalize_YN === "N" && !verified_Remark) {
-        throw new Error(
-          "Remarks (Verified_Remark) are required when rejecting."
-        );
+        throw new Error("Remarks are required when rejecting.");
       }
     } catch (e) {
       return callback({
@@ -2721,18 +2713,14 @@ let candidateService = {
       });
     }
 
-    console.log(
-      `📝 Starting final screening decision for reg_no: ${registration_no}, app_id: ${a_rec_app_main_id}`
-    );
+    console.log(`📝 Starting final decision for Reg: ${registration_no}`);
 
-    // STEP 2: Prepare the payload for the update
+    // STEP 2: Prepare base payload
     const updatePayload = {
       table_name: "a_rec_app_main",
-      // --- Fields for WHERE clause ---
       a_rec_app_main_id: a_rec_app_main_id,
       registration_no: registration_no,
       Application_Step_Flag_CES: "E",
-      // --- Fields to SET ---
       Verification_Finalize_YN: verification_Finalize_YN,
       Verified_Remark: verified_Remark,
       Verified_by: String(sessionDetails.user_id),
@@ -2740,10 +2728,10 @@ let candidateService = {
       Verified_date: new Date(),
     };
 
-    // STEP 3: Run operations in a transaction
+    // STEP 3: Transaction Execution
     async.series(
       [
-        // 3a. Create Transaction
+        // 3a. Start Transaction
         function (cback) {
           DB_SERVICE.createTransaction(
             dbkey,
@@ -2751,16 +2739,45 @@ let candidateService = {
               if (err) return cback(err);
               tranObj = tranobj;
               tranCallback = trancallback;
-              // Re-assign dbkey to include the transaction object for shared services
+              // Attach transaction to dbkey so all subsequent Shared Services use it
               dbkey = { dbkey: dbkey, connectionobj: tranObj };
               return cback();
             }
           );
         },
 
-        // 3b. Update the main application record
+        // 3b. Fetch current Round_No (FIXED: Using tranObj.query)
         function (cback) {
-          console.log(` -> Updating a_rec_app_main...`);
+          const sql = `SELECT Round_No FROM a_rec_app_main WHERE a_rec_app_main_id = ?`;
+
+          tranObj.query(sql, [a_rec_app_main_id], function (err, rows) {
+            if (err) return cback(err);
+
+            if (rows && rows.length > 0) {
+              const currentRound = rows[0].Round_No;
+
+              // Logic: If null => 1, else => increment by 1
+              if (currentRound === null || currentRound === undefined) {
+                newRoundNo = 1;
+              } else {
+                newRoundNo = parseInt(currentRound) + 1;
+              }
+
+              // Add Round_No to the payload for Step 3c
+              updatePayload.Round_No = newRoundNo;
+              console.log(
+                `🔄 Round Number logic: Prev=${currentRound}, New=${newRoundNo}`
+              );
+            }
+            return cback();
+          });
+        },
+
+        // 3c. Update Main Table (Shared Service)
+        function (cback) {
+          console.log(
+            ` -> Updating a_rec_app_main with Round_No: ${newRoundNo}...`
+          );
           SHARED_SERVICE.validateAndUpdateInTable(
             dbkey,
             request,
@@ -2770,37 +2787,69 @@ let candidateService = {
           );
         },
 
-        // 3c. Log all 'E' data to log tables
+        // 3d. Update Dependent Tables (FIXED: Using tranObj.query)
         function (cback) {
-          console.log(` -> Calling logScreeningData helper...`);
-          // Only log if the update was successful and the decision is "Eligible" or "Not Eligible"
+          console.log(` -> Updating Round_No in dependent tables...`);
+
+          const userId = sessionDetails.user_id;
+          const queryParams = [newRoundNo, userId, registration_no, "E"];
+
+          const sqlAdditionalInfo = `
+            UPDATE a_rec_app_main_addtional_info 
+            SET Round_No = ?, Verified_by = ?, Verified_date = NOW() 
+            WHERE registration_no = ? AND Application_Step_Flag_CES = ?`;
+
+          const sqlScoreDetail = `
+            UPDATE a_rec_app_score_field_detail 
+            SET Round_No = ?, verified_by = ?, verified_date = NOW() 
+            WHERE registration_no = ? AND Application_Step_Flag_CES = ?`;
+
+          const sqlParamDetail = `
+            UPDATE a_rec_app_score_field_parameter_detail 
+            SET Round_No = ?, verified_by = ?, verified_date = NOW() 
+            WHERE registration_no = ? AND Application_Step_Flag_CES = ?`;
+
+          // Execute parallel updates using the transaction object directly
+          async.parallel(
+            [
+              (pCback) => tranObj.query(sqlAdditionalInfo, queryParams, pCback),
+              (pCback) => tranObj.query(sqlScoreDetail, queryParams, pCback),
+              (pCback) => tranObj.query(sqlParamDetail, queryParams, pCback),
+            ],
+            function (err, results) {
+              if (err) {
+                console.error("Error updating dependent tables Round_No", err);
+              }
+              return cback(err);
+            }
+          );
+        },
+
+        // 3e. Logging
+        function (cback) {
           if (
             verification_Finalize_YN === "Y" ||
             verification_Finalize_YN === "N"
           ) {
             candidateService.logScreeningData(dbkey, registration_no, cback);
           } else {
-            // Don't log if it's just a save (e.g., 'S' or null)
-            console.log(" -> Skipping logging, not a final decision.");
             return cback();
           }
         },
       ],
-      // STEP 4: Final callback (Commit/Rollback)
+      // STEP 4: Commit/Rollback
       function (err) {
         if (err) {
-          console.error("❌ Error updating final screening decision:", err);
+          console.error("❌ Error updating final decision:", err);
           DB_SERVICE.rollbackPartialTransaction(tranObj, tranCallback, () =>
             callback(err)
           );
         } else {
           DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
-            console.log(
-              `✅ Successfully finalized and logged decision for ${registration_no}`
-            );
+            console.log(`✅ Success. Round No updated to ${newRoundNo}`);
             callback(null, {
-              ...securityService.SECURITY_ERRORS.SUCCESS,
-              message: "Final decision saved and logged successfully.",
+              status: "success",
+              message: "Final decision saved successfully.",
             });
           });
         }
@@ -3147,7 +3196,6 @@ let candidateService = {
               tranObj = tranobj;
               tranCallback = trancallback;
               dbkey = { dbkey: dbkey, connectionobj: tranObj };
-              console.log(" -> 🔑 Transaction started for dawapatti save.");
               return cback();
             }
           );
@@ -3155,8 +3203,6 @@ let candidateService = {
 
         // Step 3: Insert into m_rec_app_dawapatti
         function (cback) {
-          console.log(" -> 💾 Saving dawapatti record to database...");
-
           const insertPayload = {
             table_name: "m_rec_app_dawapatti",
             registration_no: params.registration_no,
@@ -3167,8 +3213,9 @@ let candidateService = {
             parameter_row_index: params.parameter_row_index,
             candidate_remark: params.remark,
             candidate_document: uploadedFilePath, // Use the path from Step 1
+            dawapatti_applied_after_ES: params.dawapatti_applied_after_ES,
             action_ip_address: sessionDetails.ip_address,
-            action_by: 1,
+            action_by: sessionDetails.user_id,
             // Other fields (active_status, action_type, action_date) have defaults
           };
 
@@ -4624,29 +4671,21 @@ let candidateService = {
       registration_no;
 
     let tranObj, tranCallback;
+    let newRoundNo = 1; // Default to 1
 
-    // STEP 1: Parse and validate the request body
+    // STEP 1: Parse and validate
     try {
       a_rec_app_main_id = request.body.a_rec_app_main_id;
       verification_Finalize_YN = request.body.Verification_Finalize_YN;
       verified_Remark = request.body.Verified_Remark || null;
       registration_no = request.body.registration_no;
 
-      if (!a_rec_app_main_id) {
-        throw new Error("Application ID (a_rec_app_main_id) is required.");
-      }
-      if (!registration_no) {
-        throw new Error("Registration number is required.");
-      }
-      if (!verification_Finalize_YN) {
-        throw new Error(
-          "Final decision (Verification_Finalize_YN) is required."
-        );
-      }
+      if (!a_rec_app_main_id) throw new Error("Application ID is required.");
+      if (!registration_no) throw new Error("Registration number is required.");
+      if (!verification_Finalize_YN)
+        throw new Error("Final decision is required.");
       if (verification_Finalize_YN === "N" && !verified_Remark) {
-        throw new Error(
-          "Remarks (Verified_Remark) are required when rejecting."
-        );
+        throw new Error("Remarks are required when rejecting.");
       }
     } catch (e) {
       return callback({
@@ -4657,17 +4696,15 @@ let candidateService = {
     }
 
     console.log(
-      `📝 Starting final screening decision for reg_no: ${registration_no}, app_id: ${a_rec_app_main_id}`
+      `📝 Starting final SCORING decision for Reg: ${registration_no}`
     );
 
-    // STEP 2: Prepare the payload for the update
+    // STEP 2: Prepare base payload
     const updatePayload = {
       table_name: "a_rec_app_main",
-      // --- Fields for WHERE clause ---
       a_rec_app_main_id: a_rec_app_main_id,
       registration_no: registration_no,
-      Application_Step_Flag_CES: "S",
-      // --- Fields to SET ---
+      Application_Step_Flag_CES: "S", // ✅ Flag is 'S' for Scoring
       Verification_Finalize_YN: verification_Finalize_YN,
       Verified_Remark: verified_Remark,
       Verified_by: String(sessionDetails.user_id),
@@ -4675,10 +4712,10 @@ let candidateService = {
       Verified_date: new Date(),
     };
 
-    // STEP 3: Run operations in a transaction
+    // STEP 3: Transaction Execution
     async.series(
       [
-        // 3a. Create Transaction
+        // 3a. Start Transaction
         function (cback) {
           DB_SERVICE.createTransaction(
             dbkey,
@@ -4686,16 +4723,45 @@ let candidateService = {
               if (err) return cback(err);
               tranObj = tranobj;
               tranCallback = trancallback;
-              // Re-assign dbkey to include the transaction object for shared services
+              // Attach transaction to dbkey so all subsequent services use it
               dbkey = { dbkey: dbkey, connectionobj: tranObj };
               return cback();
             }
           );
         },
 
-        // 3b. Update the main application record
+        // 3b. Fetch current Round_No (Using tranObj.query)
         function (cback) {
-          console.log(` -> Updating a_rec_app_main...`);
+          const sql = `SELECT Round_No FROM a_rec_app_main WHERE a_rec_app_main_id = ?`;
+
+          tranObj.query(sql, [a_rec_app_main_id], function (err, rows) {
+            if (err) return cback(err);
+
+            if (rows && rows.length > 0) {
+              const currentRound = rows[0].Round_No;
+
+              // Logic: If null => 1, else => increment by 1
+              if (currentRound === null || currentRound === undefined) {
+                newRoundNo = 1;
+              } else {
+                newRoundNo = parseInt(currentRound) + 1;
+              }
+
+              // Add Round_No to the payload for Step 3c
+              updatePayload.Round_No = newRoundNo;
+              console.log(
+                `🔄 Round Number logic: Prev=${currentRound}, New=${newRoundNo}`
+              );
+            }
+            return cback();
+          });
+        },
+
+        // 3c. Update Main Table (Shared Service)
+        function (cback) {
+          console.log(
+            ` -> Updating a_rec_app_main (Scoring) with Round_No: ${newRoundNo}...`
+          );
           SHARED_SERVICE.validateAndUpdateInTable(
             dbkey,
             request,
@@ -4705,37 +4771,110 @@ let candidateService = {
           );
         },
 
-        // 3c. Log all 'S' data to log tables
+        // 3d. Update Dependent Tables (Using tranObj.query)
         function (cback) {
-          console.log(` -> Calling logScoringData helper...`);
-          // Only log if the update was successful and the decision is "Eligible" or "Not Eligible"
+          console.log(
+            ` -> Updating Round_No in dependent tables (Flag 'S')...`
+          );
+
+          const userId = sessionDetails.user_id;
+          // ✅ Ensure we filter by 'S' so we don't mess up Screening ('E') or Candidate ('C') data
+          const queryParams = [newRoundNo, userId, registration_no, "S"];
+
+          const sqlAdditionalInfo = `
+            UPDATE a_rec_app_main_addtional_info 
+            SET Round_No = ?, Verified_by = ?, Verified_date = NOW() 
+            WHERE registration_no = ? AND Application_Step_Flag_CES = ?`;
+
+          const sqlScoreDetail = `
+            UPDATE a_rec_app_score_field_detail 
+            SET Round_No = ?, verified_by = ?, verified_date = NOW() 
+            WHERE registration_no = ? AND Application_Step_Flag_CES = ?`;
+
+          const sqlParamDetail = `
+            UPDATE a_rec_app_score_field_parameter_detail 
+            SET Round_No = ?, verified_by = ?, verified_date = NOW() 
+            WHERE registration_no = ? AND Application_Step_Flag_CES = ?`;
+
+          // Execute parallel updates
+          async.parallel(
+            [
+              (pCback) => tranObj.query(sqlAdditionalInfo, queryParams, pCback),
+              (pCback) => tranObj.query(sqlScoreDetail, queryParams, pCback),
+              (pCback) => tranObj.query(sqlParamDetail, queryParams, pCback),
+            ],
+            function (err, results) {
+              if (err) {
+                console.error("Error updating dependent tables Round_No", err);
+              }
+              return cback(err);
+            }
+          );
+        },
+
+        // ============================================================
+        // ✅ NEW STEP: Update Dawapatti Status to 'Y'
+        // ============================================================
+        function (cback) {
+          console.log(
+            ` -> Updating Dawapatti Status to 'Y' for Reg: ${registration_no}...`
+          );
+
+          const userId = sessionDetails.user_id;
+
+          // We update dawapatti_status to 'Y' (Resolved/Finalized)
+          // We strictly check for 'S' (Scoring) to avoid touching Screening dawapatti
+          const sqlDawapatti = `
+            UPDATE m_rec_app_dawapatti 
+            SET dawapatti_status = 'Y', 
+                action_by = ?, 
+                action_date = NOW()
+            WHERE registration_no = ? 
+              AND dawapatti_applied_after_ES = 'S'
+              AND active_status = 'Y'`;
+
+          tranObj.query(
+            sqlDawapatti,
+            [userId, registration_no],
+            function (err, result) {
+              if (err) {
+                console.error("❌ Error updating Dawapatti Status:", err);
+                return cback(err);
+              }
+              console.log(
+                `✅ Dawapatti records updated: ${result.affectedRows}`
+              );
+              return cback();
+            }
+          );
+        },
+
+        // 3e. Logging (Calls logScoringData)
+        function (cback) {
           if (
             verification_Finalize_YN === "Y" ||
             verification_Finalize_YN === "N"
           ) {
+            // ✅ Using logScoringData specific to scoring
             candidateService.logScoringData(dbkey, registration_no, cback);
           } else {
-            // Don't log if it's just a save (e.g., 'S' or null)
-            console.log(" -> Skipping logging, not a final decision.");
             return cback();
           }
         },
       ],
-      // STEP 4: Final callback (Commit/Rollback)
+      // STEP 4: Commit/Rollback
       function (err) {
         if (err) {
-          console.error("❌ Error updating final screening decision:", err);
+          console.error("❌ Error updating final Scoring decision:", err);
           DB_SERVICE.rollbackPartialTransaction(tranObj, tranCallback, () =>
             callback(err)
           );
         } else {
           DB_SERVICE.commitPartialTransaction(tranObj, tranCallback, () => {
-            console.log(
-              `✅ Successfully finalized and logged decision for ${registration_no}`
-            );
+            console.log(`✅ Success. Round No updated to ${newRoundNo}`);
             callback(null, {
-              ...securityService.SECURITY_ERRORS.SUCCESS,
-              message: "Final decision saved and logged successfully.",
+              status: "success",
+              message: "Final decision saved successfully.",
             });
           });
         }

@@ -199,7 +199,7 @@ let scoreCardEntryService = {
                   "UFP_secret_key"
                 ).toString();
 
-                console.log("✅ Cookie string generated.");
+              
 
                 const successobj = { cookieString: cookieString };
                 return cback(null, successobj);
